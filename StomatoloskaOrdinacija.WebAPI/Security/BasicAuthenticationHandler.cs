@@ -10,12 +10,14 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
 namespace StomatoloskaOrdinacija.WebAPI.Security
 {
     public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
         private readonly IKorisniciService _userService;
+        public static Model.Korisnici PrijavljeniKorisnik;
 
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
@@ -33,7 +35,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");
 
-            Model.Korisnici user = null;
+            //Model.Korisnici user = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
@@ -41,7 +43,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
                 var username = credentials[0];
                 var password = credentials[1];
-                user = _userService.Login(
+                PrijavljeniKorisnik = _userService.Login(
                     new Model.Requests.KorisniciLoginRequest()
                     {
                         Username = username,
@@ -53,18 +55,21 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
 
-            if (user == null)
+            if (PrijavljeniKorisnik == null)
                 return AuthenticateResult.Fail("Invalid Username or Password");
 
             var claims = new List<Claim> {
-                new Claim(ClaimTypes.NameIdentifier, user.KorisnickoIme),
-                new Claim(ClaimTypes.Name, user.Ime),
+                new Claim(ClaimTypes.NameIdentifier, PrijavljeniKorisnik.KorisnickoIme),
+                new Claim(ClaimTypes.Name, PrijavljeniKorisnik.Ime),
             };
 
-            foreach (var role in user.KorisniciUloge)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role.Uloga.Naziv));
-            }
+            //foreach (var role in user.KorisniciUloge)
+            //{
+            //    claims.Add(new Claim(ClaimTypes.Role, role.Uloga.Naziv));
+            //}
+            claims.Add(new Claim(ClaimTypes.Role, PrijavljeniKorisnik.Uloga.Naziv));
+
+
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

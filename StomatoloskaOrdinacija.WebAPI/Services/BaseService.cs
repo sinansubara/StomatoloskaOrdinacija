@@ -4,14 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
 {
     public class BaseService<T, TSearch, TDb> : IService<T, TSearch> where TDb : class
     {
-        protected eProdajaContext _context;
+        protected MyContext _context;
         protected IMapper _mapper;
-        public BaseService(eProdajaContext context, IMapper mapper)
+        public BaseService(MyContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

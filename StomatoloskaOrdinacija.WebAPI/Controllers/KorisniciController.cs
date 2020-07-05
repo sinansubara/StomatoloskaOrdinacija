@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using StomatoloskaOrdinacija.Model.Requests;
 using StomatoloskaOrdinacija.WebAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
 namespace StomatoloskaOrdinacija.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class KorisniciController : ControllerBase
@@ -49,6 +52,57 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         {
             return _service.Login(request);
         }
+        [HttpPost("registracija")]
+        public Model.Korisnici Registracija(KorisniciRegistracijaRequest request)
+        {
+            return _service.Registracija(request);
+        }
 
+        [HttpGet("pacijenti")]
+        public IList<Model.Pacijent> GetAllPacijenti([FromQuery]KorisniciSearchRequest request)
+        {
+            return _service.GetAllPacijenti(request);
+        }
+        [HttpPut("pacijenti")]
+        public Model.Pacijent Update(int id, [FromBody] KorisniciPacijentUpdateRequest request)
+        {
+            return _service.Update(id, request);
+        }
+        [HttpGet("korisnikpacijenti")]
+        public IList<Model.KorisnikPacijent> GetAllKorisnikPacijenti([FromQuery]KorisniciSearchRequest request)
+        {
+            return _service.GetAllKorisnikPacijenti(request);
+        }
+        [HttpGet("pacijenti/{id}")]
+        public Model.KorisnikPacijent GetByIdKorisnikPacijent(int id)
+        {
+            return _service.GetByIdKorisnikPacijent(id);
+        }
+        [HttpPut("pacijenti/{id}")]
+        public Model.KorisnikPacijent UpdateKorisniciPacijent(int id, [FromBody]KorisniciPacijentUpdateRequest request)
+        {
+            return _service.UpdateKorisniciPacijent(id, request);
+        }
+        [HttpPost("najboljistomatolog")]
+        public Model.Korisnici GetNajboljiStomatolog([FromQuery]KorisniciSearchRequest request)
+        {
+            return _service.GetNajboljiStomatolog();
+        }
+        [HttpPost("najboljeosoblje")]
+        public Model.Korisnici GetNajboljeOsoblje([FromQuery]KorisniciSearchRequest request)
+        {
+            return _service.GetNajboljeOsoblje();
+        }
+        [HttpPost("najboljipacijent")]
+        public Model.Korisnici GetNajBoljiPacijent([FromQuery]KorisniciSearchRequest request)
+        {
+            return _service.GetNajBoljiPacijent();
+        }
+
+        [HttpGet("getalldatumoddo")]
+        public IList<Model.Korisnici> GetAllDatumOdDo([FromQuery] KorisniciSearchRequest search = default)
+        {
+            return _service.GetAllDatumOdDo(search);
+        }
     }
 }

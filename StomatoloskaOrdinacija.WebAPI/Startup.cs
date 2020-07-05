@@ -15,8 +15,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StomatoloskaOrdinacija.Model.Requests;
 using StomatoloskaOrdinacija.WebAPI.Database;
+using StomatoloskaOrdinacija.WebAPI.Filters;
 using StomatoloskaOrdinacija.WebAPI.Services;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 
 namespace StomatoloskaOrdinacija.WebAPI
@@ -33,6 +38,9 @@ namespace StomatoloskaOrdinacija.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(x => x.Filters.Add<ErrorFilter>()).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -58,21 +66,37 @@ namespace StomatoloskaOrdinacija.WebAPI
             });
 
 
-
             services.AddAutoMapper(typeof(Startup));
 
             services.AddAuthentication("BasicAuthentication")
                 .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-            var connection = Configuration.GetConnectionString("eProdaja");
-            services.AddDbContext<eProdajaContext>(options => options.UseSqlServer(connection));
+            var connection = Configuration.GetConnectionString("StomatoloskaOrdinacija");
+            services.AddDbContext<MyContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<IKorisniciService, KorisniciService>();
-            //services.AddScoped<IUlogeService, UlogeService>();
-            //services.AddScoped<IVrsteProizvodaService, VrsteProizvodaService>();
 
-            //services.AddScoped<IService<Model.JediniceMjere, object>, BaseService<Model.JediniceMjere, object, Database.JediniceMjere>>();
-            //services.AddScoped<IProizvodiService, ProizvodiService>();
+
+
+            services.AddScoped<IService<Model.Lijek, object>, BaseService<Model.Lijek, object, Database.Lijek>>();
+            services.AddScoped<IService<Model.Dijagnoza, object>, BaseService<Model.Dijagnoza, object, Database.Dijagnoza>>();
+            services.AddScoped<IService<Model.Drzava, object>, BaseService<Model.Drzava, object, Database.Drzava>>();
+            services.AddScoped<IService<Model.Uloge, object>, BaseService<Model.Uloge, object, Database.Uloge>>();
+            services.AddScoped<IService<Model.MedicinskiKarton, MedicinskiKartonSearchRequest>, MedicinskiKartonService>();
+
+
+
+            services.AddScoped<ICRUDService<Model.Grad, GradSearchRequest, GradUpsertRequest, GradUpsertRequest>, GradService>();
+            services.AddScoped<ICRUDService<Model.Ocjene, OcjeneSearchRequest, OcjeneUpsertRequest, OcjeneUpsertRequest>, OcjeneService>();
+            services.AddScoped<ICRUDService<Model.Usluga, UslugaSearchRequest, UslugaInsertRequest, UslugaInsertRequest>, UslugaService>();
+            services.AddScoped<ICRUDService<Model.Termin, TerminSearchRequest, TerminInsertRequest, TerminInsertRequest>, TerminService>();
+            services.AddScoped<ICRUDService<Model.UlazUSkladiste, UlazUSkladisteSearchRequest, UlazUSkladisteInsertRequest, UlazUSkladisteInsertRequest>, UlazUSkladisteService>();
+            services.AddScoped<ICRUDService<Model.Skladiste, SkladisteSearchRequest, SkladisteInsertRequest, SkladisteInsertRequest>, SkladisteService>();
+            services.AddScoped<ICRUDService<Model.Pretplata, PretplataSearchRequest, PretplataInsertRequest, PretplataInsertRequest>, PretplataService>();
+            services.AddScoped<ICRUDService<Model.Popust, PopustSearchRequest, PopustInsertRequest, PopustInsertRequest>, PopustService>();
+            services.AddScoped<ICRUDService<Model.Pregled, PregledSearchRequest, PregledInsertRequest, PregledInsertRequest>, PregledService>();
+            services.AddScoped<ICRUDService<Model.Racun, RacunSearchRequest, RacunInsertRequest, RacunUpdateRequest>, RacunService>();
+
 
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -88,7 +112,7 @@ namespace StomatoloskaOrdinacija.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

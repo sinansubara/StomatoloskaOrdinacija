@@ -11,22 +11,93 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using StomatoloskaOrdinacija.WebAPI.Services;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
+using Korisnici = StomatoloskaOrdinacija.Model.Korisnici;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
 {
-    public class KorisniciService : IKorisniciService
+    public class KorisniciService : BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Database.Korisnici>, IKorisniciService
     {
-        protected eProdajaContext _context;
-        protected IMapper _mapper;
-        public KorisniciService(eProdajaContext context, IMapper mapper)
+
+        public KorisniciService(MyContext context, IMapper mapper) : base(context, mapper)
         {
-            _context = context;
-            _mapper = mapper;
         }
 
-        public IList<Model.Korisnici> GetAll(KorisniciSearchRequest search)
+
+        public Model.Korisnici Login(KorisniciLoginRequest request)
         {
-            var query = _context.Korisnici.AsQueryable();
+            var entity = _context.Korisnici
+                .Include(i=>i.Uloga)
+                .Include(i=>i.Grad)
+                .Include(i=>i.Grad.Drzava)
+                .FirstOrDefault(x => x.KorisnickoIme == request.Username);
+
+            if (entity == null)
+            {
+                throw new UserException("Pogrešan username!");
+            }
+
+            var hash = GenerateHash(entity.LozinkaSalt, request.Password);
+
+            if (hash != entity.LozinkaHash)
+            {
+                throw new UserException("Pogrešan password!");
+            }
+
+            return _mapper.Map<Model.Korisnici>(entity);
+        }
+
+        public Model.Korisnici Registracija(KorisniciRegistracijaRequest request)
+        {
+            var entity = _mapper.Map<Database.Korisnici>(request);
+            
+            if (request.Password != request.PasswordPotvrda)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
+
+            var korisnici = _context.Korisnici.ToList();
+            foreach (var korisnik in korisnici)
+            {
+                if(korisnik.KorisnickoIme == request.KorisnickoIme)
+                    throw new UserException("Korisnicko ime koje ste unijeli je zauzeto!");
+                if(korisnik.Email == request.Email)
+                    throw new UserException("Email koji ste unijeli je zauzet!");
+            }
+
+            _context.Add(entity);
+
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+            entity.Kreirano = DateTime.Now;
+            //pacijent uloga ID = 4
+            entity.UlogaId = 4;
+            _context.SaveChanges();
+
+            var noviPacijent = new Database.Pacijent
+            {
+                AlergijaNaLijek = request.AlergijaNaLijek,
+                Aparatic = request.Aparatic,
+                KorisnikId = entity.KorisnikId,
+                Navlake = request.Navlake,
+                Proteza = request.Proteza,
+                Terapija = request.Terapija
+            };
+            _context.Pacijents.Add(noviPacijent);
+            _context.SaveChanges();
+            
+            
+            return _mapper.Map<Model.Korisnici>(entity);
+        }
+
+
+        public override IList<Model.Korisnici> GetAll(KorisniciSearchRequest search)
+        {
+            var query = _context.Korisnici
+                .Include(i=>i.Grad)
+                .Include(i=>i.Grad.Drzava)
+                .Include(i=>i.Uloga)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(search?.Ime))
             {
@@ -38,64 +109,276 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 query = query.Where(x => x.Prezime == search.PrezimeFilter);
             }
 
+            if (!string.IsNullOrWhiteSpace(search?.Email))
+            {
+                query = query.Where(x => x.Email == search.Email);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.JMBG))
+            {
+                query = query.Where(x => x.JMBG == search.JMBG);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Grad))
+            {
+                query = query.Where(x => x.Grad.Naziv == search.Grad);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Drzava))
+            {
+                query = query.Where(x => x.Grad.Drzava.Naziv == search.Drzava);
+            }
+            
             var entities = query.ToList();
-            //List<Model.Korisnici> result = new List<Model.Korisnici>();
-            //entities
-            //    .Where(x  => !string.IsNullOrEmpty(x.Email)).ToList()
-            //    .ForEach(x => result.Add(new Model.Korisnici()
-            //{
-            //    Email = x.Email,
-            //    Ime = x.Ime,
-            //    KorisnickoIme = x.KorisnickoIme,
-            //    KorisnikId = x.KorisnikId,
-            //    Prezime = x.Ime,
-            //    Status = x.Status,
-            //    Telefon = x.Telefon,
-            //    Index = 1000
-            //}));
-
-            var result = _mapper.Map<IList<Model.Korisnici>>(entities.Where(x => 1 == 1));
-
+            
+            var result = _mapper.Map<IList<Model.Korisnici>>(entities);
+            
 
             return result;
         }
-
-        public Model.Korisnici GetById(int id)
+        public IList<Model.Korisnici> GetAllDatumOdDo(KorisniciSearchRequest search = default)
         {
-            var entity = _context.Korisnici.Find(id);
+            var korisnici = _context.Korisnici.ToList();
 
+            var novalista = new List<Database.Korisnici>();
+            foreach (var korisnik in korisnici)
+            {
+                if (korisnik.Kreirano > search.OD && korisnik.Kreirano < search.DO)
+                {
+                    novalista.Add(korisnik);
+                }
+            }
+            
+            var result = _mapper.Map<IList<Model.Korisnici>>(novalista);
+            
+            return result;
+        }
+
+        public override Model.Korisnici Insert(KorisniciInsertRequest request)
+        {
+            var entity = _mapper.Map<Database.Korisnici>(request);
+            
+            if (request.Password != request.PasswordPotvrda)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
+
+            var korisnici = _context.Korisnici.ToList();
+            foreach (var korisnik in korisnici)
+            {
+                if(korisnik.KorisnickoIme == request.KorisnickoIme)
+                    throw new UserException("Korisnicko ime koje ste unijeli je zauzeto!");
+                if(korisnik.Email == request.Email)
+                    throw new UserException("Email koji ste unijeli je zauzet!");
+            }
+
+            _context.Add(entity);
+
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
+            entity.Kreirano = DateTime.Now;
+            _context.SaveChanges();
+            //Tu dodati provjeru za pacijenta
+            var temp = _context.Uloges.FirstOrDefault(i => i.UlogaId == entity.UlogaId);
+            if (temp != null && temp.Naziv == "Pacijent")
+            {
+                var noviPacijent = new Database.Pacijent
+                {
+                    AlergijaNaLijek = false,
+                    Aparatic = false,
+                    KorisnikId = entity.KorisnikId,
+                    Navlake = false,
+                    Proteza = false,
+                    Terapija = false
+                };
+                _context.Pacijents.Add(noviPacijent);
+                _context.SaveChanges();
+            }
+            
             return _mapper.Map<Model.Korisnici>(entity);
         }
 
-        public Model.Korisnici Insert(KorisniciInsertRequest request)
+        public override Model.Korisnici Update(int id, KorisniciUpdateRequest request)
         {
-            var entity = _mapper.Map<Database.Korisnici>(request);
-            _context.Add(entity);
-
-            if(request.Password != request.PasswordPotvrda)
+            var entity = _context.Korisnici.Find(id);
+            var exSlika=request.Slika;
+            if (request.Slika == null)
             {
-                throw new Exception("Password i potvrda se ne slažu");
+                exSlika = entity.Slika;
+
             }
 
+
+
+            _mapper.Map(request, entity);
+            entity.Slika = exSlika;
+            if (request.Password != request.PasswordConfirm)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
             entity.LozinkaSalt = GenerateSalt();
             entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
 
             _context.SaveChanges();
 
-            foreach (var uloga in request.Uloge)
-            {
-                Database.KorisniciUloge korisniciUloge = new Database.KorisniciUloge();
-                korisniciUloge.KorisnikId = entity.KorisnikId;
-                korisniciUloge.UlogaId = uloga;
-                korisniciUloge.DatumIzmjene = DateTime.Now;
-                _context.KorisniciUloge.Add(korisniciUloge);
-            }
-            _context.SaveChanges();
-
-
             return _mapper.Map<Model.Korisnici>(entity);
         }
 
+        public IList<Model.Pacijent> GetAllPacijenti(KorisniciSearchRequest search = default)
+        {
+            var query = _context.Pacijents
+                .Include(i=>i.Korisnici)
+                .Include(i=>i.Korisnici.Grad)
+                .Include(i=>i.Korisnici.Grad.Drzava)
+                .Include(i=>i.Korisnici.Uloga)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search?.Ime))
+            {
+                query = query.Where(x => x.Korisnici.Ime == search.Ime);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.PrezimeFilter))
+            {
+                query = query.Where(x => x.Korisnici.Prezime == search.PrezimeFilter);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Email))
+            {
+                query = query.Where(x => x.Korisnici.Email == search.Email);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.JMBG))
+            {
+                query = query.Where(x => x.Korisnici.JMBG == search.JMBG);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Grad))
+            {
+                query = query.Where(x => x.Korisnici.Grad.Naziv == search.Grad);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Drzava))
+            {
+                query = query.Where(x => x.Korisnici.Grad.Drzava.Naziv == search.Drzava);
+            }
+            
+            var entities = query.ToList();
+            
+            var result = _mapper.Map<IList<Model.Pacijent>>(entities);
+            
+
+            return result;
+        }
+
+        public IList<Model.KorisnikPacijent> GetAllKorisnikPacijenti(KorisniciSearchRequest search = default)
+        {
+            var pacijenti = _context.Korisnici
+                .Include(i=>i.Grad)
+                .Include(i=>i.Grad.Drzava)
+                .Include(i=>i.Uloga)
+                .Where(i=>i.UlogaId == 4)
+                .AsQueryable();
+
+
+            if (!string.IsNullOrWhiteSpace(search?.Ime))
+            {
+                pacijenti = pacijenti.Where(x => x.Ime == search.Ime);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.PrezimeFilter))
+            {
+                pacijenti = pacijenti.Where(x => x.Prezime == search.PrezimeFilter);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Email))
+            {
+                pacijenti = pacijenti.Where(x => x.Email == search.Email);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.JMBG))
+            {
+                pacijenti = pacijenti.Where(x => x.JMBG == search.JMBG);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Grad))
+            {
+                pacijenti = pacijenti.Where(x => x.Grad.Naziv == search.Grad);
+            }
+
+            if (!string.IsNullOrWhiteSpace(search?.Drzava))
+            {
+                pacijenti = pacijenti.Where(x => x.Grad.Drzava.Naziv == search.Drzava);
+            }
+            
+            var entities = pacijenti.ToList();
+            //nisu ubaceni podaci od pacijenta, samo od korisnika-pacijenta
+            var result = _mapper.Map<IList<Model.KorisnikPacijent>>(entities);
+            
+
+            return result;
+        }
+        public Model.Pacijent Update(int id, KorisniciPacijentUpdateRequest request)
+        {
+            var korisnik = _context.Korisnici.Find(id);
+            var pacijent = _context.Pacijents.FirstOrDefault(i => i.KorisnikId == korisnik.KorisnikId);
+
+            var exSlika=request.Slika;
+            if (request.Slika == null)
+            {
+                exSlika = korisnik.Slika;
+
+            }
+
+
+            //update tabelu korisnik
+            _mapper.Map(request, korisnik);
+            //update tabelu pacijent
+            _mapper.Map(request, pacijent);
+            korisnik.Slika = exSlika;
+            if (request.Password != request.PasswordConfirm)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
+            korisnik.LozinkaSalt = GenerateSalt();
+            korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Password);
+
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Pacijent>(pacijent);
+
+        }
+
+        public Model.KorisnikPacijent GetByIdKorisnikPacijent(int id)
+        {
+            var entity = _context.Korisnici.Find(id);
+            var specpodaci = _context.Pacijents.FirstOrDefault(i => i.KorisnikId == entity.KorisnikId);
+            
+            var result = _mapper.Map<Model.KorisnikPacijent>(entity);
+            _mapper.Map(specpodaci, result);
+            return result;
+        }
+
+        public Model.KorisnikPacijent UpdateKorisniciPacijent(int id, KorisniciPacijentUpdateRequest request)
+        {
+            var korisnik = _context.Korisnici.Find(id);
+            var pacijent = _context.Pacijents.FirstOrDefault(i => i.KorisnikId == korisnik.KorisnikId);
+            //update tabelu korisnik
+            _mapper.Map(request, korisnik);
+            //update tabelu pacijent
+            _mapper.Map(request, pacijent);
+
+            if (request.Password != request.PasswordConfirm)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
+            korisnik.LozinkaSalt = GenerateSalt();
+            korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Password);
+
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.KorisnikPacijent>(korisnik);
+        }
         public static string GenerateSalt()
         {
             var buf = new byte[16];
@@ -116,35 +399,64 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             return Convert.ToBase64String(inArray);
         }
 
-        public Model.Korisnici Update(int id, KorisniciUpdateRequest request)
+
+        public Model.Korisnici GetNajboljiStomatolog()
         {
-            //doboavljanje iz baze
-            var entity = _context.Korisnici.Find(id);
-
-            _mapper.Map(request, entity);
-
-            _context.SaveChanges();
-
-            return _mapper.Map<Model.Korisnici>(entity);
+            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 2).ToList();
+            var brojac = 0;
+            var noviKorisnik = new Database.Korisnici();
+            foreach (var korisnik in korisnici)
+            {
+                var pregledi = _context.Pregleds.Count(i => i.KorisnikId == korisnik.KorisnikId);
+                if (pregledi > brojac)
+                {
+                    brojac = pregledi;
+                    noviKorisnik = korisnik;
+                }
+            }
+            var tempMap = _mapper.Map<Model.Korisnici>(noviKorisnik);
+            tempMap.obavljenoPregleda = brojac;
+            return tempMap;
+        }
+        public Model.Korisnici GetNajboljeOsoblje()
+        {
+            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 3).ToList();
+            var brojac = 0;
+            var noviKorisnik = new Database.Korisnici();
+            foreach (var korisnik in korisnici)
+            {
+                var ulazakuSkladiste = _context.UlazUSkladistes.Count(i => i.KorisnikId == korisnik.KorisnikId);
+                if (ulazakuSkladiste > brojac)
+                {
+                    brojac = ulazakuSkladiste;
+                    noviKorisnik = korisnik;
+                }
+            }
+            var tempMap = _mapper.Map<Model.Korisnici>(noviKorisnik);
+            tempMap.obavljenoPregleda = brojac;
+            return tempMap;
         }
 
-        public Model.Korisnici Login(KorisniciLoginRequest request)
+        public Model.Korisnici GetNajBoljiPacijent()
         {
-            var entity = _context.Korisnici.Include("KorisniciUloge.Uloga").FirstOrDefault(x => x.KorisnickoIme == request.Username);
-
-            if (entity == null)
+            var pacijenti = _context.Pacijents.ToList();
+            int brojac = 0;
+            var noviKorisnik = 0;
+            foreach (var pacijent in pacijenti)
             {
-                throw new UserException("Pogrešan username ili password");
+                var racun = _context.MedicinskiKartons.Count(i => i.PacijentId == pacijent.PacijentId);
+                if (racun > brojac)
+                {
+                    brojac = racun;
+                    noviKorisnik = pacijent.KorisnikId;
+                }
             }
 
-            var hash = GenerateHash(entity.LozinkaSalt, request.Password);
-
-            if (hash != entity.LozinkaHash)
-            {
-                throw new UserException("Pogrešan username ili password");
-            }
-
-            return _mapper.Map<Model.Korisnici>(entity);
+            var finalkorisnik = _context.Korisnici.Find(noviKorisnik);
+            var tempMap = _mapper.Map<Model.Korisnici>(finalkorisnik);
+            tempMap.obavljenoPregleda = brojac;
+            return tempMap;
         }
+
     }
 }

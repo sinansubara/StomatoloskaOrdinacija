@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
 {
     public class BaseCRUDService<T, TSearch, TInsert, TUpdate, TDb> : BaseService<T, TSearch, TDb>, ICRUDService<T, TSearch, TInsert, TUpdate> where TDb : class
     {
-        public BaseCRUDService(eProdajaContext context, IMapper mapper) : base(context, mapper)
+        public BaseCRUDService(MyContext context, IMapper mapper) : base(context, mapper)
         {
         }
 
