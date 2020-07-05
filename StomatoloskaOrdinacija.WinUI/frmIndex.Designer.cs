@@ -50,7 +50,6 @@
             this.najboljiKorisniciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.korisniciPoDatumuRegistrovanjaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.top10MaterijalaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.top10NajboljeOcjenjenihUslugaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
@@ -192,7 +191,7 @@
             // dodajNoviPopustToolStripMenuItem
             // 
             this.dodajNoviPopustToolStripMenuItem.Name = "dodajNoviPopustToolStripMenuItem";
-            this.dodajNoviPopustToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.dodajNoviPopustToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.dodajNoviPopustToolStripMenuItem.Text = "Dodaj novi popust";
             this.dodajNoviPopustToolStripMenuItem.Click += new System.EventHandler(this.dodajNoviPopustToolStripMenuItem_Click);
             // 
@@ -201,8 +200,7 @@
             this.reportiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.najboljiKorisniciToolStripMenuItem,
             this.korisniciPoDatumuRegistrovanjaToolStripMenuItem,
-            this.top10MaterijalaToolStripMenuItem,
-            this.top10NajboljeOcjenjenihUslugaToolStripMenuItem});
+            this.top10MaterijalaToolStripMenuItem});
             this.reportiToolStripMenuItem.Name = "reportiToolStripMenuItem";
             this.reportiToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.reportiToolStripMenuItem.Text = "Reporti";
@@ -227,12 +225,6 @@
             this.top10MaterijalaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.top10MaterijalaToolStripMenuItem.Text = "Top 10 materijala";
             this.top10MaterijalaToolStripMenuItem.Click += new System.EventHandler(this.top10MaterijalaToolStripMenuItem_Click);
-            // 
-            // top10NajboljeOcjenjenihUslugaToolStripMenuItem
-            // 
-            this.top10NajboljeOcjenjenihUslugaToolStripMenuItem.Name = "top10NajboljeOcjenjenihUslugaToolStripMenuItem";
-            this.top10NajboljeOcjenjenihUslugaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.top10NajboljeOcjenjenihUslugaToolStripMenuItem.Text = "Top 10 najbolje ocjenjenih usluga";
             // 
             // statusStrip
             // 
@@ -298,7 +290,6 @@
         private System.Windows.Forms.ToolStripMenuItem reportiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem korisniciPoDatumuRegistrovanjaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem top10MaterijalaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem top10NajboljeOcjenjenihUslugaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem najboljiKorisniciToolStripMenuItem;
     }
 }

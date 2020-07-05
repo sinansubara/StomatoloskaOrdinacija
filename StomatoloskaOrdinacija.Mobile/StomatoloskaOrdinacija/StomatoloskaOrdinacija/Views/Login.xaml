@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.Login">
+    <ContentPage.BindingContext>
+        <viewModels:LoginViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+            <Label Text="Korisničko ime:" />
+            <Entry Text="{Binding Username}"></Entry>
+            <Label Text="Lozinka:" />
+            <Entry Text="{Binding Password}"></Entry>
+            <Button Command="{Binding LoginCommand}" HorizontalOptions="FillAndExpand"  Text="Login"></Button>
+            <Label IsVisible="{Binding IsBusy}" Text="Working..."></Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

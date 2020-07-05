@@ -31,9 +31,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         public Model.Termin Odbij(int id, [FromBody]TerminSearchRequest request)
         {
             var entity = _context.Termins.Find(id);
-
-            entity.IsNaCekanju = false;
-            entity.IsOdobren = false;
+            if (entity.IsNaCekanju)
+            {
+                entity.IsNaCekanju = false;
+                entity.IsOdobren = false;
+            }
             _context.SaveChanges();
             var noviModel = new Model.Termin
             {
@@ -52,9 +54,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         public Model.Termin Prihvati(int id, [FromBody]TerminSearchRequest request)
         {
             var entity = _context.Termins.Find(id);
-
-            entity.IsNaCekanju = false;
-            entity.IsOdobren = true;
+            if (entity.IsNaCekanju)
+            {
+                entity.IsNaCekanju = false;
+                entity.IsOdobren = true;
+            }
             _context.SaveChanges();
             var noviModel = new Model.Termin
             {

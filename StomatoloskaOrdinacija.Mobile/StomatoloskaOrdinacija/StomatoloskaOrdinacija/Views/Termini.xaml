@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.Termini">
+    <ContentPage.BindingContext>
+        <viewModels:TerminiViewModel></viewModels:TerminiViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Termini!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding TerminiList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10">
+                                <Label Text="{Binding Razlog}" 
+                                       d:Text="{Binding .}"
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="16" />
+                                <Label Text="{Binding DatumVrijeme}" 
+                                       d:Text="Item descripton"
+                                       LineBreakMode="NoWrap"
+                                       Style="{DynamicResource ListItemDetailTextStyle}"
+                                       FontSize="13" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
