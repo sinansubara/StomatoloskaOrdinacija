@@ -59,9 +59,9 @@
             this.label6.Font = new System.Drawing.Font("Intro ", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(518, 265);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(241, 25);
+            this.label6.Size = new System.Drawing.Size(273, 25);
             this.label6.TabIndex = 26;
-            this.label6.Text = "NOVCA POTROŠENO";
+            this.label6.Text = "OBAVLJENO PREGLEDA";
             // 
             // txtObavljenihEvidencija
             // 

@@ -38,6 +38,10 @@
             this.btnPrikazi = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvKorisnici = new System.Windows.Forms.DataGridView();
+            this.cmbTermin = new System.Windows.Forms.ComboBox();
+            this.cmbMaterijal = new System.Windows.Forms.ComboBox();
+            this.cmbKorisnik = new System.Windows.Forms.ComboBox();
+            this.btnSviPregleda = new System.Windows.Forms.Button();
             this.PregledId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DoktorIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TerminImePacijenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,10 +50,6 @@
             this.LijekTekst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Materijal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KolicinaOdabranogMaterijala = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmbTermin = new System.Windows.Forms.ComboBox();
-            this.cmbMaterijal = new System.Windows.Forms.ComboBox();
-            this.cmbKorisnik = new System.Windows.Forms.ComboBox();
-            this.btnSviPregleda = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).BeginInit();
             this.SuspendLayout();
@@ -135,7 +135,7 @@
             this.groupBox1.Controls.Add(this.dgvKorisnici);
             this.groupBox1.Location = new System.Drawing.Point(22, 162);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(850, 403);
+            this.groupBox1.Size = new System.Drawing.Size(970, 403);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Korisnici";
@@ -159,68 +159,9 @@
             this.dgvKorisnici.Name = "dgvKorisnici";
             this.dgvKorisnici.ReadOnly = true;
             this.dgvKorisnici.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKorisnici.Size = new System.Drawing.Size(844, 384);
+            this.dgvKorisnici.Size = new System.Drawing.Size(964, 384);
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.DoubleClick += new System.EventHandler(this.dgvKorisnici_DoubleClick);
-            // 
-            // PregledId
-            // 
-            this.PregledId.DataPropertyName = "PregledId";
-            this.PregledId.HeaderText = "PregledId";
-            this.PregledId.Name = "PregledId";
-            this.PregledId.ReadOnly = true;
-            this.PregledId.Visible = false;
-            // 
-            // DoktorIme
-            // 
-            this.DoktorIme.DataPropertyName = "DoktorIme";
-            this.DoktorIme.HeaderText = "DoktorIme";
-            this.DoktorIme.Name = "DoktorIme";
-            this.DoktorIme.ReadOnly = true;
-            // 
-            // TerminImePacijenta
-            // 
-            this.TerminImePacijenta.DataPropertyName = "TerminImePacijenta";
-            this.TerminImePacijenta.HeaderText = "TerminImePacijenta";
-            this.TerminImePacijenta.Name = "TerminImePacijenta";
-            this.TerminImePacijenta.ReadOnly = true;
-            this.TerminImePacijenta.Width = 150;
-            // 
-            // TerminRazlog
-            // 
-            this.TerminRazlog.DataPropertyName = "TerminRazlog";
-            this.TerminRazlog.HeaderText = "TerminRazlog";
-            this.TerminRazlog.Name = "TerminRazlog";
-            this.TerminRazlog.ReadOnly = true;
-            // 
-            // DijagnozaTekst
-            // 
-            this.DijagnozaTekst.DataPropertyName = "DijagnozaTekst";
-            this.DijagnozaTekst.HeaderText = "DijagnozaTekst";
-            this.DijagnozaTekst.Name = "DijagnozaTekst";
-            this.DijagnozaTekst.ReadOnly = true;
-            this.DijagnozaTekst.Width = 150;
-            // 
-            // LijekTekst
-            // 
-            this.LijekTekst.DataPropertyName = "LijekTekst";
-            this.LijekTekst.HeaderText = "LijekTekst";
-            this.LijekTekst.Name = "LijekTekst";
-            this.LijekTekst.ReadOnly = true;
-            // 
-            // Materijal
-            // 
-            this.Materijal.DataPropertyName = "Materijal";
-            this.Materijal.HeaderText = "Materijal";
-            this.Materijal.Name = "Materijal";
-            this.Materijal.ReadOnly = true;
-            // 
-            // KolicinaOdabranogMaterijala
-            // 
-            this.KolicinaOdabranogMaterijala.DataPropertyName = "KolicinaOdabranogMaterijala";
-            this.KolicinaOdabranogMaterijala.HeaderText = "KolicinaOdabranogMaterijala";
-            this.KolicinaOdabranogMaterijala.Name = "KolicinaOdabranogMaterijala";
-            this.KolicinaOdabranogMaterijala.ReadOnly = true;
             // 
             // cmbTermin
             // 
@@ -257,11 +198,72 @@
             this.btnSviPregleda.UseVisualStyleBackColor = true;
             this.btnSviPregleda.Click += new System.EventHandler(this.btnSviPregleda_Click);
             // 
+            // PregledId
+            // 
+            this.PregledId.DataPropertyName = "PregledId";
+            this.PregledId.HeaderText = "PregledId";
+            this.PregledId.Name = "PregledId";
+            this.PregledId.ReadOnly = true;
+            this.PregledId.Visible = false;
+            // 
+            // DoktorIme
+            // 
+            this.DoktorIme.DataPropertyName = "DoktorIme";
+            this.DoktorIme.HeaderText = "Doktor";
+            this.DoktorIme.Name = "DoktorIme";
+            this.DoktorIme.ReadOnly = true;
+            // 
+            // TerminImePacijenta
+            // 
+            this.TerminImePacijenta.DataPropertyName = "TerminImePacijenta";
+            this.TerminImePacijenta.HeaderText = "Pacijent";
+            this.TerminImePacijenta.Name = "TerminImePacijenta";
+            this.TerminImePacijenta.ReadOnly = true;
+            this.TerminImePacijenta.Width = 150;
+            // 
+            // TerminRazlog
+            // 
+            this.TerminRazlog.DataPropertyName = "TerminRazlog";
+            this.TerminRazlog.HeaderText = "Razlog termina";
+            this.TerminRazlog.Name = "TerminRazlog";
+            this.TerminRazlog.ReadOnly = true;
+            this.TerminRazlog.Width = 200;
+            // 
+            // DijagnozaTekst
+            // 
+            this.DijagnozaTekst.DataPropertyName = "DijagnozaTekst";
+            this.DijagnozaTekst.HeaderText = "Dijagnoza";
+            this.DijagnozaTekst.Name = "DijagnozaTekst";
+            this.DijagnozaTekst.ReadOnly = true;
+            this.DijagnozaTekst.Width = 150;
+            // 
+            // LijekTekst
+            // 
+            this.LijekTekst.DataPropertyName = "LijekTekst";
+            this.LijekTekst.HeaderText = "Lijek";
+            this.LijekTekst.Name = "LijekTekst";
+            this.LijekTekst.ReadOnly = true;
+            // 
+            // Materijal
+            // 
+            this.Materijal.DataPropertyName = "Materijal";
+            this.Materijal.HeaderText = "Materijal";
+            this.Materijal.Name = "Materijal";
+            this.Materijal.ReadOnly = true;
+            // 
+            // KolicinaOdabranogMaterijala
+            // 
+            this.KolicinaOdabranogMaterijala.DataPropertyName = "KolicinaOdabranogMaterijala";
+            this.KolicinaOdabranogMaterijala.HeaderText = "Kolicina materijala";
+            this.KolicinaOdabranogMaterijala.Name = "KolicinaOdabranogMaterijala";
+            this.KolicinaOdabranogMaterijala.ReadOnly = true;
+            this.KolicinaOdabranogMaterijala.Width = 120;
+            // 
             // frmPretragaPregleda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 593);
+            this.ClientSize = new System.Drawing.Size(1135, 593);
             this.Controls.Add(this.btnSviPregleda);
             this.Controls.Add(this.cmbKorisnik);
             this.Controls.Add(this.cmbMaterijal);

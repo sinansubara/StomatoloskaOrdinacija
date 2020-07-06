@@ -35,6 +35,8 @@
             this.btnOdobri = new System.Windows.Forms.Button();
             this.btnOdbij = new System.Windows.Forms.Button();
             this.TerminId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PacijentIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UslugaNaziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Razlog = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DatumVrijeme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Hitan = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -47,7 +49,7 @@
             // cbNacekanju
             // 
             this.cbNacekanju.AutoSize = true;
-            this.cbNacekanju.Location = new System.Drawing.Point(567, 33);
+            this.cbNacekanju.Location = new System.Drawing.Point(450, 33);
             this.cbNacekanju.Name = "cbNacekanju";
             this.cbNacekanju.Size = new System.Drawing.Size(87, 17);
             this.cbNacekanju.TabIndex = 0;
@@ -59,7 +61,7 @@
             this.groupBox1.Controls.Add(this.dgvTermini);
             this.groupBox1.Location = new System.Drawing.Point(10, 76);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(949, 475);
+            this.groupBox1.Size = new System.Drawing.Size(829, 475);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Korisnici";
@@ -71,6 +73,8 @@
             this.dgvTermini.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTermini.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TerminId,
+            this.PacijentIme,
+            this.UslugaNaziv,
             this.Razlog,
             this.DatumVrijeme,
             this.Hitan,
@@ -81,14 +85,14 @@
             this.dgvTermini.Name = "dgvTermini";
             this.dgvTermini.ReadOnly = true;
             this.dgvTermini.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTermini.Size = new System.Drawing.Size(943, 456);
+            this.dgvTermini.Size = new System.Drawing.Size(823, 456);
             this.dgvTermini.TabIndex = 0;
             this.dgvTermini.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellContentClick);
             // 
             // button1
             // 
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Location = new System.Drawing.Point(671, 23);
+            this.button1.Location = new System.Drawing.Point(554, 23);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(133, 34);
             this.button1.TabIndex = 19;
@@ -100,7 +104,7 @@
             // 
             this.btnOdobri.BackColor = System.Drawing.Color.DarkSeaGreen;
             this.btnOdobri.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOdobri.Location = new System.Drawing.Point(822, 12);
+            this.btnOdobri.Location = new System.Drawing.Point(705, 12);
             this.btnOdobri.Name = "btnOdobri";
             this.btnOdobri.Size = new System.Drawing.Size(134, 23);
             this.btnOdobri.TabIndex = 20;
@@ -112,7 +116,7 @@
             // 
             this.btnOdbij.BackColor = System.Drawing.Color.Crimson;
             this.btnOdbij.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOdbij.Location = new System.Drawing.Point(822, 47);
+            this.btnOdbij.Location = new System.Drawing.Point(705, 47);
             this.btnOdbij.Name = "btnOdbij";
             this.btnOdbij.Size = new System.Drawing.Size(134, 23);
             this.btnOdbij.TabIndex = 21;
@@ -128,6 +132,22 @@
             this.TerminId.ReadOnly = true;
             this.TerminId.Visible = false;
             // 
+            // PacijentIme
+            // 
+            this.PacijentIme.DataPropertyName = "PacijentIme";
+            this.PacijentIme.HeaderText = "Pacijent";
+            this.PacijentIme.Name = "PacijentIme";
+            this.PacijentIme.ReadOnly = true;
+            this.PacijentIme.Width = 150;
+            // 
+            // UslugaNaziv
+            // 
+            this.UslugaNaziv.DataPropertyName = "UslugaNaziv";
+            this.UslugaNaziv.HeaderText = "Usluga";
+            this.UslugaNaziv.Name = "UslugaNaziv";
+            this.UslugaNaziv.ReadOnly = true;
+            this.UslugaNaziv.Width = 150;
+            // 
             // Razlog
             // 
             this.Razlog.DataPropertyName = "Razlog";
@@ -142,7 +162,7 @@
             this.DatumVrijeme.HeaderText = "DatumVrijeme";
             this.DatumVrijeme.Name = "DatumVrijeme";
             this.DatumVrijeme.ReadOnly = true;
-            this.DatumVrijeme.Width = 200;
+            this.DatumVrijeme.Width = 120;
             // 
             // Hitan
             // 
@@ -150,7 +170,7 @@
             this.Hitan.HeaderText = "Hitan";
             this.Hitan.Name = "Hitan";
             this.Hitan.ReadOnly = true;
-            this.Hitan.Width = 150;
+            this.Hitan.Width = 70;
             // 
             // IsOdobren
             // 
@@ -158,7 +178,7 @@
             this.IsOdobren.HeaderText = "Odobren";
             this.IsOdobren.Name = "IsOdobren";
             this.IsOdobren.ReadOnly = true;
-            this.IsOdobren.Width = 150;
+            this.IsOdobren.Width = 70;
             // 
             // IsNaCekanju
             // 
@@ -166,13 +186,13 @@
             this.IsNaCekanju.HeaderText = "Na čekanju";
             this.IsNaCekanju.Name = "IsNaCekanju";
             this.IsNaCekanju.ReadOnly = true;
-            this.IsNaCekanju.Width = 150;
+            this.IsNaCekanju.Width = 70;
             // 
             // frmPregledTermina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(971, 576);
+            this.ClientSize = new System.Drawing.Size(871, 576);
             this.Controls.Add(this.btnOdbij);
             this.Controls.Add(this.btnOdobri);
             this.Controls.Add(this.button1);
@@ -197,6 +217,8 @@
         private System.Windows.Forms.Button btnOdobri;
         private System.Windows.Forms.Button btnOdbij;
         private System.Windows.Forms.DataGridViewTextBoxColumn TerminId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PacijentIme;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UslugaNaziv;
         private System.Windows.Forms.DataGridViewTextBoxColumn Razlog;
         private System.Windows.Forms.DataGridViewTextBoxColumn DatumVrijeme;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Hitan;

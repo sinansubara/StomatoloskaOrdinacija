@@ -10,8 +10,10 @@ namespace StomatoloskaOrdinacija.Model
         public int TerminId { get; set; }
         public int PacijentId { get; set; }
         public Pacijent Pacijent { get; set; }
+        public string PacijentIme { get; set; }
         public int UslugaId { get; set; }
         public Usluga Usluga { get; set; }
+        public string UslugaNaziv { get; set; }
         public DateTime DatumVrijeme { get; set; }
         public string Razlog { get; set; }
         public bool Hitan { get; set; }
