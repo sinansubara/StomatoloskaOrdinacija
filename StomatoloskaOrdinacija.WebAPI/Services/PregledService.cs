@@ -52,6 +52,33 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             }
             var entities = query.ToList();
             var result = _mapper.Map<List<Model.Pregled>>(entities);
+
+            foreach (var finalPregledlist in result)
+            {
+                var temp = _context.Pregleds
+                    .Include(i => i.Lijek)
+                    .Include(i => i.Termin)
+                    .Include(i => i.Termin.Pacijent)
+                    .Include(i => i.Termin.Pacijent.Korisnici)
+                    .Include(i => i.Dijagnoza)
+                    .Include(i => i.Skladiste)
+                    .Include(i=>i.Korisnici)
+                    .FirstOrDefault(i => i.PregledId == finalPregledlist.PregledId);//mozda ne treba ako ima u finalpregledlist vec svi objekti
+
+                if (temp != null)
+                {
+                    finalPregledlist.DijagnozaTekst = temp.Dijagnoza.Naziv;
+                    finalPregledlist.DoktorIme = temp.Korisnici.Ime + " " + temp.Korisnici.Prezime;
+                    finalPregledlist.Materijal = temp.Skladiste.Naziv;
+                    finalPregledlist.LijekTekst = temp.Lijek.Naziv;
+                    finalPregledlist.TerminRazlog = temp.Termin.Razlog;
+                    finalPregledlist.TerminImePacijenta =
+                        temp.Termin.Pacijent.Korisnici.Ime + " " + temp.Termin.Pacijent.Korisnici.Prezime;
+                    
+                }
+                
+            }
+
             return result;
         }
 
@@ -113,6 +140,22 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             };
             _context.MedicinskiKartons.Add(medicinskiKarton);
             _context.SaveChanges();
+
+
+            return _mapper.Map<Model.Pregled>(entity);
+        }
+
+        public override Model.Pregled GetById(int id)
+        {
+            var entity = _context.Pregleds
+                .Include(i=>i.Korisnici)
+                .Include(i => i.Termin)
+                .Include(i => i.Termin.Usluga)
+                .Include(i => i.Termin.Pacijent)
+                .Include(i => i.Termin.Pacijent.Korisnici)
+                .Include(i => i.Skladiste)
+                .Include(i => i.Lijek)
+                .Include(i => i.Dijagnoza).FirstOrDefault(i => i.PregledId == id);
 
 
             return _mapper.Map<Model.Pregled>(entity);

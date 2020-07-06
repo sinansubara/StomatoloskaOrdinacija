@@ -37,15 +37,7 @@ namespace StomatoloskaOrdinacija.WinUI.Popusti
 
         private async void cmbUsluga_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //var idObj = cmbUsluga.SelectedValue;
-
-            //var result = await _serviceUsluge.GetAll<List<Model.Usluga>>(new PopustSearchRequest
-            //{
-            //    UslugaId = int.Parse(idObj.ToString())
-            //});
-            //cmbUsluga.DataSource = result;
-            //cmbUsluga.DisplayMember = "Naziv";
-            //cmbUsluga.ValueMember = "UslugaId";
+            
         }
         private async Task LoadUsluge()
         {
@@ -57,26 +49,36 @@ namespace StomatoloskaOrdinacija.WinUI.Popusti
 
         private async void btnDodaj_Click(object sender, EventArgs e)
         {
-            var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
-
-            foreach (var korisnik in korisnici)
+            if (this.ValidateChildren())
             {
-                if (korisnik.KorisnickoIme == APIService.Username)
+                var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
+
+                foreach (var korisnik in korisnici)
                 {
-                    APIService.KorisnikId = korisnik.KorisnikId;
+                    if (korisnik.KorisnickoIme == APIService.Username)
+                    {
+                        APIService.KorisnikId = korisnik.KorisnikId;
+                    }
                 }
-            }
 
-            PopustInsertRequest request = new PopustInsertRequest
-            {
-                KorisnikId = APIService.KorisnikId,
-                PopustDoDatuma = dtpDO.Value,
-                PopustOdDatuma = dtpOD.Value,
-                UslugaId = int.Parse(cmbUsluga.SelectedValue.ToString()),
-                VrijednostPopusta = int.Parse(txtVrijednostPopusta.Text)
-            };
-            await _servicePopust.Insert<Model.Popust>(request);
-            MessageBox.Show("Uspješno ste dodali popust!");
+                int.TryParse(cmbUsluga.SelectedValue.ToString(), out int convertUsluga);
+                int.TryParse(txtVrijednostPopusta.Text, out int convertVrijednost);
+                PopustInsertRequest request = new PopustInsertRequest
+                {
+                    KorisnikId = APIService.KorisnikId,
+                    PopustDoDatuma = dtpDO.Value,
+                    PopustOdDatuma = dtpOD.Value,
+                    UslugaId = convertUsluga,
+                    VrijednostPopusta = convertVrijednost
+                };
+                await _servicePopust.Insert<Model.Popust>(request);
+                MessageBox.Show("Uspješno ste dodali popust!");
+
+                var osvjezi = await _servicePopust.GetAll<List<Model.Popust>>(null);
+                dgvPopust.AutoGenerateColumns = false;
+                dgvPopust.DataSource = request;
+                dgvPopust.Columns[2].DefaultCellStyle.Format = "F";
+            }
         }
 
         private void txtVrijednostPopusta_Validating(object sender, CancelEventArgs e)

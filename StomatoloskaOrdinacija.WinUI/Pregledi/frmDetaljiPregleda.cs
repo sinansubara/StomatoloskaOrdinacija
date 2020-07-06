@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +11,7 @@ using StomatoloskaOrdinacija.Model.Requests;
 
 namespace StomatoloskaOrdinacija.WinUI.Pregledi
 {
-    public partial class frmUnosPregleda : Form
+    public partial class frmDetaljiPregleda : Form
     {
         private readonly APIService _serviceLijek = new APIService("Lijek");
         private readonly APIService _serviceDijagnoza = new APIService("Dijagnoza");
@@ -20,17 +19,18 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         private readonly APIService _serviceSkladiste = new APIService("Skladiste");
         private readonly APIService _serviceKorisnici = new APIService("Korisnici");
         private readonly APIService _servicePregled = new APIService("Pregled");
-        
+
+
         private int? _id = null;
-        public frmUnosPregleda(int? pregledId = null)
+        public frmDetaljiPregleda(int? pregledId = null)
         {
             InitializeComponent();
             _id = pregledId;
         }
-        private async void frmUnosPregleda_Load(object sender, EventArgs e)
+
+        private async void frmDetaljiPregleda_Load(object sender, EventArgs e)
         {
-            
-            await LoadTermine();
+           
             await LoadDijagnoze();
             await LoadLijekovi();
             await LoadMaterijali();
@@ -42,16 +42,12 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                 txtTrajanje.Text = pregled.TrajanjePregleda.ToString();
                 txtNapomenaPregleda.Text = pregled.Napomena;
                 cmbDijagnoza.SelectedValue = pregled.DijagnozaId;
-                cmbTermin.SelectedValue = pregled.TerminId;
                 cmbLijek.SelectedValue = pregled.LijekId;
                 cmbMaterijal.SelectedValue = pregled.SkladisteId;
-
+                
+                await LoadPacijenta(_id);
             }
-           
         }
-
-
-
         private async Task LoadLijekovi()
         {
             var result = await _serviceLijek.GetAll<List<Model.Lijek>>(null);
@@ -69,16 +65,22 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             cmbDijagnoza.ValueMember = "DijagnozaId";
             cmbDijagnoza.DataSource = result;
         }
-        private async Task LoadTermine()
+
+        private async Task LoadPacijenta(int? id)
         {
-            var result = await _serviceTermin.GetAll<List<Model.Termin>>( new TerminSearchRequest {IsIskoristenRequest = "Ne"});
-            
-            cmbTermin.DisplayMember = "UslugaIme";
-            cmbTermin.ValueMember = "TerminId";
-            cmbTermin.DataSource = result;
-            txtImeIPrezime.Text = result[0].Pacijent.Korisnici.Ime+ " "+result[0].Pacijent.Korisnici.Prezime;
-            txtTerminNapomena.Text = result[0].DatumVrijeme.ToString("F");
-            txtRazlogTermina.Text = result[0].Razlog;
+            if (id.HasValue)
+            {
+                //var result = await _serviceTermin.GetById<Model.Termin>(id);
+                var result = await _servicePregled.GetById<Model.Pregled>(id);
+                txtTermin.Text = result.Termin.Usluga.Naziv;
+                txtImeIPrezime.Text = result.Termin.Pacijent.Korisnici.Ime + " " + result.Termin.Pacijent.Korisnici.Prezime;
+                txtTerminNapomena.Text = result.Termin.DatumVrijeme.ToString("F");
+                txtRazlogTermina.Text = result.Termin.Razlog;
+                //txtTermin.Text = result.Usluga.Naziv;
+                //txtImeIPrezime.Text = result.Pacijent.Korisnici.Ime + " " + result.Pacijent.Korisnici.Prezime;
+                //txtTerminNapomena.Text = result.DatumVrijeme.ToString("F");
+                //txtRazlogTermina.Text = result.Razlog;
+            }
         }
         private async Task LoadMaterijali()
         {
@@ -89,39 +91,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             cmbMaterijal.DataSource = result;
             txtStanjeNaSkladistu.Text = result[0].Kolicina.ToString();
         }
-
-
-        
-
-        private async void cmbTermin_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_id.HasValue)
-            {
-                
-            }
-            else
-            {
-                var idObj = cmbTermin.SelectedValue;
-
-                if (int.TryParse(idObj.ToString(), out int id))
-                {
-                    await LoadPacijenta(id);
-                }
-            }
-            
-        }
-        private async Task LoadPacijenta(int id)
-        {
-            var result = await _serviceTermin.GetById<Model.Termin>(id);
-            cmbTermin.DisplayMember = "UslugaIme";
-            cmbTermin.ValueMember = "TerminId";
-            cmbTermin.DataSource = result;
-            txtImeIPrezime.Text = result.Pacijent.Korisnici.Ime + " " + result.Pacijent.Korisnici.Prezime;
-            txtTerminNapomena.Text = result.DatumVrijeme.ToString("F");
-            txtRazlogTermina.Text = result.Razlog;
-        }
-
-        private async void cmbMaterijal_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cmbMaterijal_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             var idObj = cmbMaterijal.SelectedValue;
 
@@ -130,6 +100,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                 await LoadStanjaMaterijala(id);
             }
         }
+
         private async Task LoadStanjaMaterijala(int id)
         {
             var result = await _serviceSkladiste.GetById<Model.Skladiste>(id);
@@ -180,14 +151,13 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             }
         }
 
-        private PregledInsertRequest insertRequest = new PregledInsertRequest();
         private PregledInsertRequest UpdateRequest = new PregledInsertRequest();
+
         private async void txtSnimiPregled_Click(object sender, EventArgs e)
         {
             if (this.ValidateChildren())
             {
                 var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
-                int.TryParse(cmbTermin.SelectedValue.ToString(), out int convertTermin);
                 int.TryParse(cmbDijagnoza.SelectedValue.ToString(), out int convertDijagnoza);
                 int.TryParse(cmbLijek.SelectedValue.ToString(), out int convertLijek);
                 int.TryParse(cmbMaterijal.SelectedValue.ToString(), out int convertMaterijal);
@@ -203,7 +173,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                 if (_id.HasValue)
                 {
                     UpdateRequest.KorisnikId = APIService.KorisnikId;
-                    UpdateRequest.TerminId = convertTermin;
+                    UpdateRequest.TerminId = int.Parse(_id.ToString());
                     UpdateRequest.DijagnozaId = convertDijagnoza;
                     UpdateRequest.LijekId = convertLijek;
                     UpdateRequest.SkladisteId = convertMaterijal;
@@ -224,38 +194,6 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                     }
 
                 }
-                else
-                {
-                    insertRequest.KorisnikId = APIService.KorisnikId;
-                    insertRequest.TerminId = convertTermin;
-                    insertRequest.DijagnozaId = convertDijagnoza;
-                    insertRequest.LijekId = convertLijek;
-                    insertRequest.SkladisteId = convertMaterijal;
-                    insertRequest.KolicinaOdabranogMaterijala = convertKolicina;
-                    insertRequest.TrajanjePregleda = convertTrajanje;
-                    insertRequest.Napomena = txtNapomenaPregleda.Text;
-                    
-                    try
-                    {
-                        var temp = await _servicePregled.Insert<Model.Pregled>(insertRequest);
-                        if (temp != null)
-                        {
-                            MessageBox.Show("Uspješno ste dodali pregled!");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Dodavanje pregleda nije uspjelo!");
-                        }
-                        
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show("Operacija neuspjela! " + exception.Message);
-                    }
-                    
-                }
-
-                
             }
         }
     }

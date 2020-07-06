@@ -17,5 +17,7 @@ namespace StomatoloskaOrdinacija.Model
         public string MjernaJedinica { get; set; }
         public decimal Cijena { get; set; }
         public byte[] Slika { get; set; }
+
+        public string NazivVrsta => Naziv + "           " + Vrsta;
     }
 }

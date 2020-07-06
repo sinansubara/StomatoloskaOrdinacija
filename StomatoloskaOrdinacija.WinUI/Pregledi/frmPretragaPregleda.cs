@@ -33,9 +33,13 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
 
         private async void frmPretragaPregleda_Load(object sender, EventArgs e)
         {
-            await LoadOsoblje();
             await LoadTermine();
+            await LoadOsoblje();
             await LoadMaterijale();
+
+            var list = await _servicePregled.GetAll<IList<Model.Pregled>>(new PregledSearchRequest() {KorisnikId = APIService.KorisnikId});
+            dgvKorisnici.AutoGenerateColumns = false;
+            dgvKorisnici.DataSource = list;
         }
 
         private async Task LoadOsoblje()
@@ -49,36 +53,51 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                     newResult.Add(res);
                 }
             }
-            cmbKorisnik.DataSource = newResult;
-            cmbKorisnik.DisplayMember = "Prezime";
+
+            newResult.Insert(0, new Model.Korisnici());
+            
+            cmbKorisnik.DisplayMember = "ImeIPrezime";
             cmbKorisnik.ValueMember = "KorisnikId";
+            cmbKorisnik.DataSource = newResult;
         }
         private async Task LoadTermine()
         {
-            var result = await _serviceTermin.GetAll<List<Model.Termin>>(null);
-            cmbTermin.DataSource = result;
-            cmbTermin.DisplayMember = "DatumVrijeme";
+            var result =
+                await _serviceTermin.GetAll<List<Model.Termin>>(new TerminSearchRequest {IsIskoristenRequest = "Da"});
+            
+            result.Insert(0, new Model.Termin());
+            
+            cmbTermin.DisplayMember = "UslugaIme";
             cmbTermin.ValueMember = "TerminId";
-            cmbTermin.FormatString = "F";
+            cmbTermin.DataSource = result;
         }
         private async Task LoadMaterijale()
         {
             var result = await _serviceSkladiste.GetAll<List<Model.Skladiste>>(null);
-            cmbMaterijal.DataSource = result;
-            cmbMaterijal.DisplayMember = "Naziv";
+            result.Insert(0, new Model.Skladiste());
+            
+            cmbMaterijal.DisplayMember = "NazivVrsta";
             cmbMaterijal.ValueMember = "SkladisteId";
+            cmbMaterijal.DataSource = result;
         }
 
         private async void btnPrikazi_Click(object sender, EventArgs e)
         {
+            
             try
             {
+
+                int.TryParse(cmbKorisnik.SelectedValue.ToString(), out int convertKorisnik);
+                int.TryParse(cmbMaterijal.SelectedValue.ToString(), out int convertMaterijal);
+                int.TryParse(cmbTermin.SelectedValue.ToString(), out int convertTermin);
+
+
                 PregledSearchRequest searchRequest = new PregledSearchRequest
                 {
-                    KorisnikId = int.Parse(cmbKorisnik.SelectedValue.ToString()),
+                    KorisnikId = convertKorisnik,
                     Napomena = txtNapomena.Text,
-                    SkladisteId = int.Parse(cmbMaterijal.SelectedValue.ToString()),
-                    TerminId = int.Parse(cmbTermin.SelectedValue.ToString())
+                    SkladisteId = convertMaterijal,
+                    TerminId = convertTermin
                 };
                 var list = await _servicePregled.GetAll<IList<Model.Pregled>>(searchRequest);
                 dgvKorisnici.AutoGenerateColumns = false;
@@ -86,14 +105,8 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             }
             catch (Exception exception)
             {
-                PregledSearchRequest sear = new PregledSearchRequest
-                {
-                    KorisnikId = 0,
-                    Napomena = "",
-                    SkladisteId = 0,
-                    TerminId = 0
-                };
-                var list2 = await _servicePregled.GetAll<IList<Model.Pregled>>(sear);
+               
+                var list2 = await _servicePregled.GetAll<IList<Model.Pregled>>(null);
                 dgvKorisnici.AutoGenerateColumns = false;
                 dgvKorisnici.DataSource = list2;
             }
@@ -104,27 +117,23 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         private void dgvKorisnici_DoubleClick(object sender, EventArgs e)
         {
             var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            frmUnosPregleda frm = new frmUnosPregleda(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convertDetalji);
+            frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
             frm.Show();
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
             var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            frmUnosPregleda frm = new frmUnosPregleda(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convertDetalji);
+            frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
             frm.Show();
         }
 
         private async void btnSviPregleda_Click(object sender, EventArgs e)
         {
-            PregledSearchRequest sear = new PregledSearchRequest
-            {
-                KorisnikId = 0,
-                Napomena = "",
-                SkladisteId = 0,
-                TerminId = 0
-            };
-            var list2 = await _servicePregled.GetAll<IList<Model.Pregled>>(sear);
+            
+            var list2 = await _servicePregled.GetAll<IList<Model.Pregled>>(null);
             dgvKorisnici.AutoGenerateColumns = false;
             dgvKorisnici.DataSource = list2;
         }

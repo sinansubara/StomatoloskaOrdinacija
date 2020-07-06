@@ -42,6 +42,8 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
         {
             if (this.ValidateChildren())
             {
+                int.TryParse(cbUloga.SelectedValue.ToString(), out int convertUloga);
+                int.TryParse(cbGrad.SelectedValue.ToString(), out int convertGrad);
                 if (_id.HasValue)
                 {
                     UpdateRequest.Ime = txtIme.Text;
@@ -54,8 +56,8 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                     UpdateRequest.Password = txtLozinka.Text;
                     UpdateRequest.PasswordConfirm = txtPotvrdaLozinke.Text;
                     UpdateRequest.Status = cbStatus.Checked;
-                    UpdateRequest.UlogaId = int.Parse(cbUloga.SelectedValue.ToString());
-                    UpdateRequest.GradId = int.Parse(cbGrad.SelectedValue.ToString());
+                    UpdateRequest.UlogaId = convertUloga;
+                    UpdateRequest.GradId = convertGrad;
                     
                     try
                     {
@@ -89,8 +91,8 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                     insertRequest.PasswordPotvrda = txtPotvrdaLozinke.Text;
                     insertRequest.Spol = cbSpol.Text;
                     insertRequest.Status = cbStatus.Checked;
-                    insertRequest.UlogaId = int.Parse(cbUloga.SelectedValue.ToString());
-                    insertRequest.GradId = int.Parse(cbGrad.SelectedValue.ToString());
+                    insertRequest.UlogaId = convertUloga;
+                    insertRequest.GradId = convertGrad;
                     
                     try
                     {

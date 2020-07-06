@@ -31,6 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvPopust = new System.Windows.Forms.DataGridView();
+            this.PopustId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UslugaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PopustOdDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PopustDoDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VrijednostPopusta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDodaj = new System.Windows.Forms.Button();
             this.cmbUsluga = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,11 +45,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtVrijednostPopusta = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.PopustId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UslugaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PopustOdDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PopustDoDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.VrijednostPopusta = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPopust)).BeginInit();
@@ -80,6 +80,44 @@
             this.dgvPopust.Size = new System.Drawing.Size(590, 305);
             this.dgvPopust.TabIndex = 0;
             this.dgvPopust.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTermini_CellContentClick);
+            // 
+            // PopustId
+            // 
+            this.PopustId.DataPropertyName = "PopustId";
+            this.PopustId.HeaderText = "PopustId";
+            this.PopustId.Name = "PopustId";
+            this.PopustId.ReadOnly = true;
+            this.PopustId.Visible = false;
+            // 
+            // UslugaId
+            // 
+            this.UslugaId.DataPropertyName = "UslugaId";
+            this.UslugaId.HeaderText = "UslugaId";
+            this.UslugaId.Name = "UslugaId";
+            this.UslugaId.ReadOnly = true;
+            // 
+            // PopustOdDatuma
+            // 
+            this.PopustOdDatuma.DataPropertyName = "PopustOdDatuma";
+            this.PopustOdDatuma.HeaderText = "PopustOdDatuma";
+            this.PopustOdDatuma.Name = "PopustOdDatuma";
+            this.PopustOdDatuma.ReadOnly = true;
+            this.PopustOdDatuma.Width = 150;
+            // 
+            // PopustDoDatuma
+            // 
+            this.PopustDoDatuma.DataPropertyName = "PopustDoDatuma";
+            this.PopustDoDatuma.HeaderText = "PopustDoDatuma";
+            this.PopustDoDatuma.Name = "PopustDoDatuma";
+            this.PopustDoDatuma.ReadOnly = true;
+            this.PopustDoDatuma.Width = 150;
+            // 
+            // VrijednostPopusta
+            // 
+            this.VrijednostPopusta.DataPropertyName = "VrijednostPopusta";
+            this.VrijednostPopusta.HeaderText = "VrijednostPopusta";
+            this.VrijednostPopusta.Name = "VrijednostPopusta";
+            this.VrijednostPopusta.ReadOnly = true;
             // 
             // btnDodaj
             // 
@@ -157,44 +195,6 @@
             this.label4.Size = new System.Drawing.Size(94, 13);
             this.label4.TabIndex = 29;
             this.label4.Text = "Vrijednost popusta";
-            // 
-            // PopustId
-            // 
-            this.PopustId.DataPropertyName = "PopustId";
-            this.PopustId.HeaderText = "PopustId";
-            this.PopustId.Name = "PopustId";
-            this.PopustId.ReadOnly = true;
-            this.PopustId.Visible = false;
-            // 
-            // UslugaId
-            // 
-            this.UslugaId.DataPropertyName = "UslugaId";
-            this.UslugaId.HeaderText = "UslugaId";
-            this.UslugaId.Name = "UslugaId";
-            this.UslugaId.ReadOnly = true;
-            // 
-            // PopustOdDatuma
-            // 
-            this.PopustOdDatuma.DataPropertyName = "PopustOdDatuma";
-            this.PopustOdDatuma.HeaderText = "PopustOdDatuma";
-            this.PopustOdDatuma.Name = "PopustOdDatuma";
-            this.PopustOdDatuma.ReadOnly = true;
-            this.PopustOdDatuma.Width = 150;
-            // 
-            // PopustDoDatuma
-            // 
-            this.PopustDoDatuma.DataPropertyName = "PopustDoDatuma";
-            this.PopustDoDatuma.HeaderText = "PopustDoDatuma";
-            this.PopustDoDatuma.Name = "PopustDoDatuma";
-            this.PopustDoDatuma.ReadOnly = true;
-            this.PopustDoDatuma.Width = 150;
-            // 
-            // VrijednostPopusta
-            // 
-            this.VrijednostPopusta.DataPropertyName = "VrijednostPopusta";
-            this.VrijednostPopusta.HeaderText = "VrijednostPopusta";
-            this.VrijednostPopusta.Name = "VrijednostPopusta";
-            this.VrijednostPopusta.ReadOnly = true;
             // 
             // errorProvider1
             // 

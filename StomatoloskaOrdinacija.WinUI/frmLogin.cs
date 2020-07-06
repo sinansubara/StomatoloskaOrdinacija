@@ -30,6 +30,7 @@ namespace StomatoloskaOrdinacija.WinUI
 
                 var temp = await _service.Login<Model.Korisnici>(newLogin);
                 APIService.Permisije = temp.UlogaId;
+                APIService.KorisnikId = temp.KorisnikId;
                 if (APIService.Permisije == 4)
                 {
                     MessageBox.Show("Pacijentima nije dozvoljeno se logovat na desktop aplikaciju!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);

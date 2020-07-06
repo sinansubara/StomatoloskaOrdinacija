@@ -17,5 +17,7 @@ namespace StomatoloskaOrdinacija.Model
         public bool Hitan { get; set; }
         public bool IsOdobren { get; set; }
         public bool IsNaCekanju { get; set; }
+
+        public string UslugaIme { get; set; }
     }
 }

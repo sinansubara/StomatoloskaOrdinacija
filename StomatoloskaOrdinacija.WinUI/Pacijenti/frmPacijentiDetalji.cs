@@ -93,6 +93,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
         {
             if (this.ValidateChildren())
             {
+                int.TryParse(cbGrad.SelectedValue.ToString(), out int convertGrad);
                 if (_id.HasValue)
                 {
 
@@ -106,7 +107,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
                     UpdateRequest.Password = txtLozinka.Text;
                     UpdateRequest.PasswordConfirm = txtPotvrdaLozinke.Text;
                     UpdateRequest.Status = cbStatus.Checked;
-                    UpdateRequest.GradId = int.Parse(cbGrad.SelectedValue.ToString());
+                    UpdateRequest.GradId = convertGrad;
                     UpdateRequest.Aparatic = cbAparatic.Checked;
                     UpdateRequest.AlergijaNaLijek = cbAlergijeNaLijekove.Checked;
                     UpdateRequest.Proteza = cbProteza.Checked;
@@ -140,7 +141,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
                     insertRequest.PasswordPotvrda = txtPotvrdaLozinke.Text;
                     insertRequest.Spol = cbSpol.Text;
                     insertRequest.Status = cbStatus.Checked;
-                    insertRequest.GradId = int.Parse(cbGrad.SelectedValue.ToString());
+                    insertRequest.GradId = convertGrad;
                     insertRequest.Aparatic = cbAparatic.Checked;
                     insertRequest.AlergijaNaLijek = cbAlergijeNaLijekove.Checked;
                     insertRequest.Proteza = cbProteza.Checked;

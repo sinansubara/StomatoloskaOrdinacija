@@ -48,7 +48,8 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             if (APIService.Permisije == 1)
             {
                 var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-                frmKorisniciDetalji frm = new frmKorisniciDetalji(int.Parse(id.ToString()));
+                int.TryParse(id.ToString(), out int convertKorisnici);
+                frmKorisniciDetalji frm = new frmKorisniciDetalji(convertKorisnici);
                 frm.Show();
             }
             else
@@ -67,7 +68,8 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             if (APIService.Permisije == 1)
             {
                 var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-                frmKorisniciDetalji frm = new frmKorisniciDetalji(int.Parse(id.ToString()));
+                int.TryParse(id.ToString(), out int convertDetalji);
+                frmKorisniciDetalji frm = new frmKorisniciDetalji(convertDetalji);
                 frm.Show();
             }
             else
@@ -94,6 +96,13 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             }
 
             
+        }
+
+        private async void frmKorisnicics_Load(object sender, EventArgs e)
+        {
+            var list = await _korisniciService.GetAll<IList<Model.Korisnici>>(null);
+            dgvKorisnici.AutoGenerateColumns = false;
+            dgvKorisnici.DataSource = list;
         }
     }
 }

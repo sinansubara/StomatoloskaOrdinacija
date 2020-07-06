@@ -36,14 +36,16 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
         private void dgvSkladiste_DoubleClick(object sender, EventArgs e)
         {
             var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
-            frmSkladisteDetalji frm = new frmSkladisteDetalji(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convert);
+            frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
             frm.Show();
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
             var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
-            frmSkladisteDetalji frm = new frmSkladisteDetalji(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convert);
+            frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
             frm.Show();
         }
 
@@ -51,6 +53,13 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
         {
             frmUlazUSkladiste frm = new frmUlazUSkladiste();
             frm.Show();
+        }
+
+        private async void frmSkladiste_Load(object sender, EventArgs e)
+        {
+            var list = await _serviceSkladiste.GetAll<IList<Model.Skladiste>>(null);
+            dgvSkladiste.AutoGenerateColumns = false;
+            dgvSkladiste.DataSource = list;
         }
     }
 }

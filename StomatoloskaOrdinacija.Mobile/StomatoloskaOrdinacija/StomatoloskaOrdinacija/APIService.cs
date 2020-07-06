@@ -19,10 +19,10 @@ namespace StomatoloskaOrdinacija
         public static int UlazUSkladisteId { get; set; }
 
 #if DEBUG
-        private string _apiUrl = "https://localhost:44377/api";
+        private string _apiUrl = "http://localhost:55745/api";
 #endif
 #if RELEASE
-        private string _apiUrl = "https://localhost:44377/api";
+        private string _apiUrl = "http://localhost:55745/api";
 #endif
 
 

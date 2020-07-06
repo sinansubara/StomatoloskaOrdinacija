@@ -317,6 +317,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "frmPacijenti";
             this.Text = "frmPacijenti";
+            this.Load += new System.EventHandler(this.frmPacijenti_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).EndInit();
             this.ResumeLayout(false);

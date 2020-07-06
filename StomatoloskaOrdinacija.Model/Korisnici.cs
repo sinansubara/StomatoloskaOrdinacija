@@ -38,5 +38,7 @@ namespace StomatoloskaOrdinacija.Model
         public Uloge Uloga { get; set; }
         public int UlogaId { get; set; }
         public int obavljenoPregleda { get; set; }
+
+        public string ImeIPrezime => Ime + " " + Prezime;
     }
 }

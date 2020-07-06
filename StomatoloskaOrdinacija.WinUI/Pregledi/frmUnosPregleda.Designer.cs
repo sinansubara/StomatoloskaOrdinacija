@@ -51,15 +51,17 @@
             this.txtStanjeNaSkladistu = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtRazlogTermina = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbTermin
             // 
             this.cmbTermin.FormattingEnabled = true;
-            this.cmbTermin.Location = new System.Drawing.Point(63, 114);
+            this.cmbTermin.Location = new System.Drawing.Point(63, 73);
             this.cmbTermin.Name = "cmbTermin";
-            this.cmbTermin.Size = new System.Drawing.Size(233, 21);
+            this.cmbTermin.Size = new System.Drawing.Size(490, 21);
             this.cmbTermin.TabIndex = 0;
             this.cmbTermin.SelectedIndexChanged += new System.EventHandler(this.cmbTermin_SelectedIndexChanged);
             // 
@@ -91,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(63, 95);
+            this.label1.Location = new System.Drawing.Point(60, 57);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 13);
             this.label1.TabIndex = 4;
@@ -143,7 +145,7 @@
             // 
             // txtTerminNapomena
             // 
-            this.txtTerminNapomena.Location = new System.Drawing.Point(327, 114);
+            this.txtTerminNapomena.Location = new System.Drawing.Point(327, 125);
             this.txtTerminNapomena.Name = "txtTerminNapomena";
             this.txtTerminNapomena.ReadOnly = true;
             this.txtTerminNapomena.Size = new System.Drawing.Size(226, 20);
@@ -152,15 +154,15 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(324, 98);
+            this.label6.Location = new System.Drawing.Point(324, 109);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 13);
+            this.label6.Size = new System.Drawing.Size(79, 13);
             this.label6.TabIndex = 10;
-            this.label6.Text = "Razlog";
+            this.label6.Text = "Datum i vrijeme";
             // 
             // txtImeIPrezime
             // 
-            this.txtImeIPrezime.Location = new System.Drawing.Point(196, 64);
+            this.txtImeIPrezime.Location = new System.Drawing.Point(196, 29);
             this.txtImeIPrezime.Name = "txtImeIPrezime";
             this.txtImeIPrezime.ReadOnly = true;
             this.txtImeIPrezime.Size = new System.Drawing.Size(257, 20);
@@ -169,7 +171,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(260, 48);
+            this.label7.Location = new System.Drawing.Point(260, 13);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(114, 13);
             this.label7.TabIndex = 12;
@@ -188,9 +190,9 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(60, 287);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(89, 13);
+            this.label8.Size = new System.Drawing.Size(126, 13);
             this.label8.TabIndex = 14;
-            this.label8.Text = "Trajanje pregleda";
+            this.label8.Text = "Trajanje pregleda(minute)";
             // 
             // txtNapomenaPregleda
             // 
@@ -240,11 +242,30 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // txtRazlogTermina
+            // 
+            this.txtRazlogTermina.Location = new System.Drawing.Point(63, 125);
+            this.txtRazlogTermina.Name = "txtRazlogTermina";
+            this.txtRazlogTermina.ReadOnly = true;
+            this.txtRazlogTermina.Size = new System.Drawing.Size(226, 20);
+            this.txtRazlogTermina.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(60, 109);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 13);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "Razlog";
+            // 
             // frmUnosPregleda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(710, 441);
+            this.Controls.Add(this.txtRazlogTermina);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.txtStanjeNaSkladistu);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.txtSnimiPregled);
@@ -299,5 +320,7 @@
         private System.Windows.Forms.TextBox txtStanjeNaSkladistu;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.TextBox txtRazlogTermina;
+        private System.Windows.Forms.Label label11;
     }
 }

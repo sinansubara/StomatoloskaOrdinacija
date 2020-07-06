@@ -41,14 +41,16 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
         private void dgvKorisnici_DoubleClick(object sender, EventArgs e)
         {
             var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            frmPacijentiDetalji frm = new frmPacijentiDetalji(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convertKorisnici);
+            frmPacijentiDetalji frm = new frmPacijentiDetalji(convertKorisnici);
             frm.Show();
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
             var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            frmPacijentiDetalji frm = new frmPacijentiDetalji(int.Parse(id.ToString()));
+            int.TryParse(id.ToString(), out int convertKorisnici);
+            frmPacijentiDetalji frm = new frmPacijentiDetalji(convertKorisnici);
             frm.Show();
         }
 
@@ -56,6 +58,13 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
         {
             frmPacijentiDetalji frm = new frmPacijentiDetalji();
             frm.Show();
+        }
+
+        private async void frmPacijenti_Load(object sender, EventArgs e)
+        {
+            var list = await _korisniciPacijentiService.GetAll<IList<Model.KorisnikPacijent>>(null);
+            dgvKorisnici.AutoGenerateColumns = false;
+            dgvKorisnici.DataSource = list;
         }
     }
 }

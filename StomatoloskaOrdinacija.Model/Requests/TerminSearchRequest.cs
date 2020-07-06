@@ -11,5 +11,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public int Mjesec { get; set; }
         public int Godina { get; set; }
         public bool IsNaCekanju { get; set; }
+        public string IsIskoristenRequest { get; set; }
     }
 }

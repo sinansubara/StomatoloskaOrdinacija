@@ -36,9 +36,6 @@
             this.btnPrikazi = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvSkladiste = new System.Windows.Forms.DataGridView();
-            this.txtPretragaVrsta = new System.Windows.Forms.TextBox();
-            this.txtPretragaProizvodjac = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.SkladisteId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Opis = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +45,9 @@
             this.MjernaJedinica = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cijena = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Slika = new System.Windows.Forms.DataGridViewImageColumn();
+            this.txtPretragaVrsta = new System.Windows.Forms.TextBox();
+            this.txtPretragaProizvodjac = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSkladiste)).BeginInit();
             this.SuspendLayout();
@@ -145,29 +145,6 @@
             this.dgvSkladiste.TabIndex = 0;
             this.dgvSkladiste.DoubleClick += new System.EventHandler(this.dgvSkladiste_DoubleClick);
             // 
-            // txtPretragaVrsta
-            // 
-            this.txtPretragaVrsta.Location = new System.Drawing.Point(287, 34);
-            this.txtPretragaVrsta.Name = "txtPretragaVrsta";
-            this.txtPretragaVrsta.Size = new System.Drawing.Size(215, 20);
-            this.txtPretragaVrsta.TabIndex = 49;
-            // 
-            // txtPretragaProizvodjac
-            // 
-            this.txtPretragaProizvodjac.Location = new System.Drawing.Point(547, 34);
-            this.txtPretragaProizvodjac.Name = "txtPretragaProizvodjac";
-            this.txtPretragaProizvodjac.Size = new System.Drawing.Size(215, 20);
-            this.txtPretragaProizvodjac.TabIndex = 50;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(544, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 13);
-            this.label2.TabIndex = 51;
-            this.label2.Text = "Proizvođač";
-            // 
             // SkladisteId
             // 
             this.SkladisteId.DataPropertyName = "SkladisteId";
@@ -235,6 +212,29 @@
             this.Slika.ReadOnly = true;
             this.Slika.Width = 150;
             // 
+            // txtPretragaVrsta
+            // 
+            this.txtPretragaVrsta.Location = new System.Drawing.Point(287, 34);
+            this.txtPretragaVrsta.Name = "txtPretragaVrsta";
+            this.txtPretragaVrsta.Size = new System.Drawing.Size(215, 20);
+            this.txtPretragaVrsta.TabIndex = 49;
+            // 
+            // txtPretragaProizvodjac
+            // 
+            this.txtPretragaProizvodjac.Location = new System.Drawing.Point(547, 34);
+            this.txtPretragaProizvodjac.Name = "txtPretragaProizvodjac";
+            this.txtPretragaProizvodjac.Size = new System.Drawing.Size(215, 20);
+            this.txtPretragaProizvodjac.TabIndex = 50;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(544, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(61, 13);
+            this.label2.TabIndex = 51;
+            this.label2.Text = "Proizvođač";
+            // 
             // frmSkladiste
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +252,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "frmSkladiste";
             this.Text = "Skladiste";
+            this.Load += new System.EventHandler(this.frmSkladiste_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSkladiste)).EndInit();
             this.ResumeLayout(false);

@@ -30,6 +30,16 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvKorisnici = new System.Windows.Forms.DataGridView();
+            this.KorisnikId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Ime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Prezime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mobitel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.JMBG = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DatumRodjenja = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Spol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Status = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btnPrikazi = new System.Windows.Forms.Button();
             this.txtPretragaIme = new System.Windows.Forms.TextBox();
             this.txtPretragaPrezime = new System.Windows.Forms.TextBox();
@@ -43,16 +53,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.KorisnikId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Ime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Prezime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Mobitel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.JMBG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DatumRodjenja = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Adresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Spol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Status = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.btnDetalji = new System.Windows.Forms.Button();
             this.btnDodajNovog = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -94,6 +94,77 @@
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellContentClick);
             this.dgvKorisnici.DoubleClick += new System.EventHandler(this.dgvKorisnici_DoubleClick);
+            // 
+            // KorisnikId
+            // 
+            this.KorisnikId.DataPropertyName = "KorisnikId";
+            this.KorisnikId.HeaderText = "KorisnikId";
+            this.KorisnikId.Name = "KorisnikId";
+            this.KorisnikId.ReadOnly = true;
+            this.KorisnikId.Visible = false;
+            // 
+            // Ime
+            // 
+            this.Ime.DataPropertyName = "Ime";
+            this.Ime.HeaderText = "Ime";
+            this.Ime.Name = "Ime";
+            this.Ime.ReadOnly = true;
+            // 
+            // Prezime
+            // 
+            this.Prezime.DataPropertyName = "Prezime";
+            this.Prezime.HeaderText = "Prezime";
+            this.Prezime.Name = "Prezime";
+            this.Prezime.ReadOnly = true;
+            // 
+            // Email
+            // 
+            this.Email.DataPropertyName = "Email";
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            this.Email.ReadOnly = true;
+            // 
+            // Mobitel
+            // 
+            this.Mobitel.DataPropertyName = "Mobitel";
+            this.Mobitel.HeaderText = "Mobitel";
+            this.Mobitel.Name = "Mobitel";
+            this.Mobitel.ReadOnly = true;
+            // 
+            // JMBG
+            // 
+            this.JMBG.DataPropertyName = "JMBG";
+            this.JMBG.HeaderText = "JMBG";
+            this.JMBG.Name = "JMBG";
+            this.JMBG.ReadOnly = true;
+            // 
+            // DatumRodjenja
+            // 
+            this.DatumRodjenja.DataPropertyName = "DatumRodjenja";
+            this.DatumRodjenja.HeaderText = "DatumRodjenja";
+            this.DatumRodjenja.Name = "DatumRodjenja";
+            this.DatumRodjenja.ReadOnly = true;
+            // 
+            // Adresa
+            // 
+            this.Adresa.DataPropertyName = "Adresa";
+            this.Adresa.HeaderText = "Adresa";
+            this.Adresa.Name = "Adresa";
+            this.Adresa.ReadOnly = true;
+            // 
+            // Spol
+            // 
+            this.Spol.DataPropertyName = "Spol";
+            this.Spol.HeaderText = "Spol";
+            this.Spol.Name = "Spol";
+            this.Spol.ReadOnly = true;
+            // 
+            // Status
+            // 
+            this.Status.DataPropertyName = "Status";
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
             // 
             // btnPrikazi
             // 
@@ -202,77 +273,6 @@
             this.label6.TabIndex = 13;
             this.label6.Text = "Država";
             // 
-            // KorisnikId
-            // 
-            this.KorisnikId.DataPropertyName = "KorisnikId";
-            this.KorisnikId.HeaderText = "KorisnikId";
-            this.KorisnikId.Name = "KorisnikId";
-            this.KorisnikId.ReadOnly = true;
-            this.KorisnikId.Visible = false;
-            // 
-            // Ime
-            // 
-            this.Ime.DataPropertyName = "Ime";
-            this.Ime.HeaderText = "Ime";
-            this.Ime.Name = "Ime";
-            this.Ime.ReadOnly = true;
-            // 
-            // Prezime
-            // 
-            this.Prezime.DataPropertyName = "Prezime";
-            this.Prezime.HeaderText = "Prezime";
-            this.Prezime.Name = "Prezime";
-            this.Prezime.ReadOnly = true;
-            // 
-            // Email
-            // 
-            this.Email.DataPropertyName = "Email";
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            this.Email.ReadOnly = true;
-            // 
-            // Mobitel
-            // 
-            this.Mobitel.DataPropertyName = "Mobitel";
-            this.Mobitel.HeaderText = "Mobitel";
-            this.Mobitel.Name = "Mobitel";
-            this.Mobitel.ReadOnly = true;
-            // 
-            // JMBG
-            // 
-            this.JMBG.DataPropertyName = "JMBG";
-            this.JMBG.HeaderText = "JMBG";
-            this.JMBG.Name = "JMBG";
-            this.JMBG.ReadOnly = true;
-            // 
-            // DatumRodjenja
-            // 
-            this.DatumRodjenja.DataPropertyName = "DatumRodjenja";
-            this.DatumRodjenja.HeaderText = "DatumRodjenja";
-            this.DatumRodjenja.Name = "DatumRodjenja";
-            this.DatumRodjenja.ReadOnly = true;
-            // 
-            // Adresa
-            // 
-            this.Adresa.DataPropertyName = "Adresa";
-            this.Adresa.HeaderText = "Adresa";
-            this.Adresa.Name = "Adresa";
-            this.Adresa.ReadOnly = true;
-            // 
-            // Spol
-            // 
-            this.Spol.DataPropertyName = "Spol";
-            this.Spol.HeaderText = "Spol";
-            this.Spol.Name = "Spol";
-            this.Spol.ReadOnly = true;
-            // 
-            // Status
-            // 
-            this.Status.DataPropertyName = "Status";
-            this.Status.HeaderText = "Status";
-            this.Status.Name = "Status";
-            this.Status.ReadOnly = true;
-            // 
             // btnDetalji
             // 
             this.btnDetalji.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -318,6 +318,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "frmKorisnicics";
             this.Text = "frmKorisnicics";
+            this.Load += new System.EventHandler(this.frmKorisnicics_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).EndInit();
             this.ResumeLayout(false);

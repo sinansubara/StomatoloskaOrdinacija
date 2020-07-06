@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using StomatoloskaOrdinacija.WebAPI.Services;
 using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
+using Termin = StomatoloskaOrdinacija.Model.Termin;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
 {
@@ -52,7 +53,37 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 query = query.Where(x => x.IsNaCekanju == search.IsNaCekanju);
             }
             var entities = query.ToList();
-            var result = _mapper.Map<List<Model.Termin>>(entities);
+            var NovaLista = new List<Database.Termin>();
+            if (search.IsIskoristenRequest == "Da")
+            {
+                foreach (var entity in entities)
+                {
+                    var flag = _context.Pregleds.FirstOrDefault(i => i.TerminId == entity.TerminId);
+                    if (flag != null)
+                    {
+                        NovaLista.Add(entity);
+                    }
+                }
+            }
+            if (search.IsIskoristenRequest == "Ne")
+            {
+                foreach (var entity in entities)
+                {
+                    var flag = _context.Pregleds.FirstOrDefault(i => i.TerminId == entity.TerminId);
+                    if (flag == null)
+                    {
+                        NovaLista.Add(entity);
+                    }
+                }
+            }
+            
+            var result = _mapper.Map<List<Model.Termin>>(NovaLista);
+
+            foreach (var convert in result)
+            {
+                convert.UslugaIme = "Usluga: " + convert.Usluga.Naziv + "    |    Pacijent: " + convert.Pacijent.Korisnici.Ime + " " +
+                                    convert.Pacijent.Korisnici.Prezime;
+            }
             return result;
         }
         public override Model.Termin GetById(int id)
