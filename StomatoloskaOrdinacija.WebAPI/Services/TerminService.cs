@@ -64,6 +64,14 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                         NovaLista.Add(entity);
                     }
                 }
+                var result = _mapper.Map<List<Model.Termin>>(NovaLista);
+                foreach (var convert in result)
+                {
+                    convert.UslugaIme = "Usluga: " + convert.Usluga.Naziv + "    |    Pacijent: " + convert.Pacijent.Korisnici.Ime + " " +
+                                        convert.Pacijent.Korisnici.Prezime;
+                }
+                return result;
+
             }
             if (search.IsIskoristenRequest == "Ne")
             {
@@ -75,16 +83,24 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                         NovaLista.Add(entity);
                     }
                 }
+                var result = _mapper.Map<List<Model.Termin>>(NovaLista);
+                foreach (var convert in result)
+                {
+                    convert.UslugaIme = "Usluga: " + convert.Usluga.Naziv + "    |    Pacijent: " + convert.Pacijent.Korisnici.Ime + " " +
+                                        convert.Pacijent.Korisnici.Prezime;
+                }
+                return result;
+
             }
             
-            var result = _mapper.Map<List<Model.Termin>>(NovaLista);
+            var result2 = _mapper.Map<List<Model.Termin>>(entities);
 
-            foreach (var convert in result)
+            foreach (var convert in result2)
             {
                 convert.UslugaIme = "Usluga: " + convert.Usluga.Naziv + "    |    Pacijent: " + convert.Pacijent.Korisnici.Ime + " " +
                                     convert.Pacijent.Korisnici.Prezime;
             }
-            return result;
+            return result2;
         }
         public override Model.Termin GetById(int id)
         {
