@@ -9,3 +9,4 @@
 #
 
 # Odraditi restore baze ili preko .bak ili preko.mdf i .ldf fajlova
+# Dodatni Admin acc Username: subarasinan | Password: test
