@@ -230,5 +230,10 @@ namespace StomatoloskaOrdinacija.WinUI
             };
             frm.Show();
         }
+
+        private void noviReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Report1 rep = new Report1();
+        }
     }
 }

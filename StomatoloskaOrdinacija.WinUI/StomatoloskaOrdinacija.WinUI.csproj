@@ -87,6 +87,11 @@
     <Compile Include="frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="IB140049DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IB140049DataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Korisnici\frmKorisnicics.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +159,12 @@
     </Compile>
     <Compile Include="Reporti\frmTop10Materijala.Designer.cs">
       <DependentUpon>frmTop10Materijala.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporti\reportforma.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporti\reportforma.Designer.cs">
+      <DependentUpon>reportforma.cs</DependentUpon>
     </Compile>
     <Compile Include="Skladiste\frmSkladiste.cs">
       <SubType>Form</SubType>
@@ -228,6 +239,7 @@
     <EmbeddedResource Include="Reporti\frmTop10Materijala.resx">
       <DependentUpon>frmTop10Materijala.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reporti\Report1.rdlc" />
     <EmbeddedResource Include="Skladiste\frmSkladiste.resx">
       <DependentUpon>frmSkladiste.cs</DependentUpon>
     </EmbeddedResource>
@@ -240,6 +252,17 @@
     <EmbeddedResource Include="Termini\frmPregledTermina.resx">
       <DependentUpon>frmPregledTermina.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="IB140049DataSet.xsc">
+      <DependentUpon>IB140049DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="IB140049DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>IB140049DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="IB140049DataSet.xss">
+      <DependentUpon>IB140049DataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>

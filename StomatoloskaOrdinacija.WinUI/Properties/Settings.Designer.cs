@@ -31,5 +31,15 @@ namespace StomatoloskaOrdinacija.WinUI.Properties {
                 return ((string)(this["APIUrl"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=localhost;Initial Catalog=IB140049;Integrated Security=True")]
+        public string IB140049ConnectionString {
+            get {
+                return ((string)(this["IB140049ConnectionString"]));
+            }
+        }
     }
 }
