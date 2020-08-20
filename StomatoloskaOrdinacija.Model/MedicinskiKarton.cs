@@ -16,5 +16,6 @@ namespace StomatoloskaOrdinacija.Model
 
         public DateTime Datum { get; set; }
         public string Napomena { get; set; }
+        
     }
 }

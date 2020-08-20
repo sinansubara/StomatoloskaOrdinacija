@@ -52,10 +52,16 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         {
             return _service.Login(request);
         }
+        [AllowAnonymous]
         [HttpPost("registracija")]
         public Model.Korisnici Registracija(KorisniciRegistracijaRequest request)
         {
             return _service.Registracija(request);
+        }
+        [HttpPost("loginmobile")]
+        public Model.Korisnici LoginMobile(KorisniciLoginRequest request)
+        {
+            return _service.LoginMobile(request);
         }
 
         [HttpGet("pacijenti")]
@@ -104,5 +110,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         {
             return _service.GetAllDatumOdDo(search);
         }
+        [HttpGet("toppacijenti")]
+        public IList<Model.Korisnici> TopPacijenti([FromQuery] KorisniciSearchRequest search = default)
+        {
+            return _service.TopPacijenti(search);
+        }
+        
     }
 }

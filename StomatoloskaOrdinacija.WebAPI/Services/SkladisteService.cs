@@ -48,10 +48,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public override Model.Skladiste Insert(SkladisteInsertRequest request)
         {
             var entity = _mapper.Map<Database.Skladiste>(request);
-            var proizvodPostoji = _context.Skladistes.FirstOrDefault(i => i.Naziv == entity.Naziv);
+            var proizvodPostoji = _context.Skladistes.FirstOrDefault(i => i.Naziv == entity.Naziv && i.Proizvodjac == entity.Proizvodjac);
             if (proizvodPostoji != null)
             {
                 proizvodPostoji.Kolicina = proizvodPostoji.Kolicina + entity.Kolicina;
+                proizvodPostoji.Cijena = entity.Cijena;
                 _context.SaveChanges();
 
                 return _mapper.Map<Model.Skladiste>(proizvodPostoji);

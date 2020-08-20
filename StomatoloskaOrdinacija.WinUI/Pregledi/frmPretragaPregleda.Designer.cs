@@ -38,10 +38,6 @@
             this.btnPrikazi = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvKorisnici = new System.Windows.Forms.DataGridView();
-            this.cmbTermin = new System.Windows.Forms.ComboBox();
-            this.cmbMaterijal = new System.Windows.Forms.ComboBox();
-            this.cmbKorisnik = new System.Windows.Forms.ComboBox();
-            this.btnSviPregleda = new System.Windows.Forms.Button();
             this.PregledId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DoktorIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TerminImePacijenta = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +46,10 @@
             this.LijekTekst = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Materijal = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.KolicinaOdabranogMaterijala = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbTermin = new System.Windows.Forms.ComboBox();
+            this.cmbMaterijal = new System.Windows.Forms.ComboBox();
+            this.cmbKorisnik = new System.Windows.Forms.ComboBox();
+            this.btnSviPregleda = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).BeginInit();
             this.SuspendLayout();
@@ -57,7 +57,7 @@
             // btnDodajNovog
             // 
             this.btnDodajNovog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDodajNovog.Location = new System.Drawing.Point(788, 128);
+            this.btnDodajNovog.Location = new System.Drawing.Point(841, 128);
             this.btnDodajNovog.Name = "btnDodajNovog";
             this.btnDodajNovog.Size = new System.Drawing.Size(148, 23);
             this.btnDodajNovog.TabIndex = 32;
@@ -68,7 +68,7 @@
             // btnDetalji
             // 
             this.btnDetalji.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDetalji.Location = new System.Drawing.Point(788, 94);
+            this.btnDetalji.Location = new System.Drawing.Point(841, 94);
             this.btnDetalji.Name = "btnDetalji";
             this.btnDetalji.Size = new System.Drawing.Size(148, 23);
             this.btnDetalji.TabIndex = 31;
@@ -122,7 +122,7 @@
             // btnPrikazi
             // 
             this.btnPrikazi.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPrikazi.Location = new System.Drawing.Point(788, 59);
+            this.btnPrikazi.Location = new System.Drawing.Point(841, 59);
             this.btnPrikazi.Name = "btnPrikazi";
             this.btnPrikazi.Size = new System.Drawing.Size(148, 23);
             this.btnPrikazi.TabIndex = 18;
@@ -135,10 +135,10 @@
             this.groupBox1.Controls.Add(this.dgvKorisnici);
             this.groupBox1.Location = new System.Drawing.Point(22, 162);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(970, 403);
+            this.groupBox1.Size = new System.Drawing.Size(977, 419);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Korisnici";
+            this.groupBox1.Text = "Pregledi";
             // 
             // dgvKorisnici
             // 
@@ -159,44 +159,9 @@
             this.dgvKorisnici.Name = "dgvKorisnici";
             this.dgvKorisnici.ReadOnly = true;
             this.dgvKorisnici.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKorisnici.Size = new System.Drawing.Size(964, 384);
+            this.dgvKorisnici.Size = new System.Drawing.Size(971, 400);
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.DoubleClick += new System.EventHandler(this.dgvKorisnici_DoubleClick);
-            // 
-            // cmbTermin
-            // 
-            this.cmbTermin.FormattingEnabled = true;
-            this.cmbTermin.Location = new System.Drawing.Point(25, 32);
-            this.cmbTermin.Name = "cmbTermin";
-            this.cmbTermin.Size = new System.Drawing.Size(703, 21);
-            this.cmbTermin.TabIndex = 35;
-            // 
-            // cmbMaterijal
-            // 
-            this.cmbMaterijal.FormattingEnabled = true;
-            this.cmbMaterijal.Location = new System.Drawing.Point(372, 79);
-            this.cmbMaterijal.Name = "cmbMaterijal";
-            this.cmbMaterijal.Size = new System.Drawing.Size(356, 21);
-            this.cmbMaterijal.TabIndex = 36;
-            // 
-            // cmbKorisnik
-            // 
-            this.cmbKorisnik.FormattingEnabled = true;
-            this.cmbKorisnik.Location = new System.Drawing.Point(25, 79);
-            this.cmbKorisnik.Name = "cmbKorisnik";
-            this.cmbKorisnik.Size = new System.Drawing.Size(323, 21);
-            this.cmbKorisnik.TabIndex = 37;
-            // 
-            // btnSviPregleda
-            // 
-            this.btnSviPregleda.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSviPregleda.Location = new System.Drawing.Point(788, 19);
-            this.btnSviPregleda.Name = "btnSviPregleda";
-            this.btnSviPregleda.Size = new System.Drawing.Size(148, 34);
-            this.btnSviPregleda.TabIndex = 38;
-            this.btnSviPregleda.Text = "Svi pregledi";
-            this.btnSviPregleda.UseVisualStyleBackColor = true;
-            this.btnSviPregleda.Click += new System.EventHandler(this.btnSviPregleda_Click);
             // 
             // PregledId
             // 
@@ -258,6 +223,44 @@
             this.KolicinaOdabranogMaterijala.Name = "KolicinaOdabranogMaterijala";
             this.KolicinaOdabranogMaterijala.ReadOnly = true;
             this.KolicinaOdabranogMaterijala.Width = 120;
+            // 
+            // cmbTermin
+            // 
+            this.cmbTermin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTermin.FormattingEnabled = true;
+            this.cmbTermin.Location = new System.Drawing.Point(25, 32);
+            this.cmbTermin.Name = "cmbTermin";
+            this.cmbTermin.Size = new System.Drawing.Size(703, 21);
+            this.cmbTermin.TabIndex = 35;
+            // 
+            // cmbMaterijal
+            // 
+            this.cmbMaterijal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMaterijal.FormattingEnabled = true;
+            this.cmbMaterijal.Location = new System.Drawing.Point(372, 79);
+            this.cmbMaterijal.Name = "cmbMaterijal";
+            this.cmbMaterijal.Size = new System.Drawing.Size(356, 21);
+            this.cmbMaterijal.TabIndex = 36;
+            // 
+            // cmbKorisnik
+            // 
+            this.cmbKorisnik.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKorisnik.FormattingEnabled = true;
+            this.cmbKorisnik.Location = new System.Drawing.Point(25, 79);
+            this.cmbKorisnik.Name = "cmbKorisnik";
+            this.cmbKorisnik.Size = new System.Drawing.Size(323, 21);
+            this.cmbKorisnik.TabIndex = 37;
+            // 
+            // btnSviPregleda
+            // 
+            this.btnSviPregleda.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSviPregleda.Location = new System.Drawing.Point(841, 19);
+            this.btnSviPregleda.Name = "btnSviPregleda";
+            this.btnSviPregleda.Size = new System.Drawing.Size(148, 34);
+            this.btnSviPregleda.TabIndex = 38;
+            this.btnSviPregleda.Text = "Svi pregledi";
+            this.btnSviPregleda.UseVisualStyleBackColor = true;
+            this.btnSviPregleda.Click += new System.EventHandler(this.btnSviPregleda_Click);
             // 
             // frmPretragaPregleda
             // 

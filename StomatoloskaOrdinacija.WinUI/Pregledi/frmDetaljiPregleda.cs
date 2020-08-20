@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using StomatoloskaOrdinacija.Model.Requests;
+using System.Text.RegularExpressions;
 
 namespace StomatoloskaOrdinacija.WinUI.Pregledi
 {
@@ -70,16 +71,11 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         {
             if (id.HasValue)
             {
-                //var result = await _serviceTermin.GetById<Model.Termin>(id);
                 var result = await _servicePregled.GetById<Model.Pregled>(id);
                 txtTermin.Text = result.Termin.Usluga.Naziv;
                 txtImeIPrezime.Text = result.Termin.Pacijent.Korisnici.Ime + " " + result.Termin.Pacijent.Korisnici.Prezime;
                 txtTerminNapomena.Text = result.Termin.DatumVrijeme.ToString("F");
                 txtRazlogTermina.Text = result.Termin.Razlog;
-                //txtTermin.Text = result.Usluga.Naziv;
-                //txtImeIPrezime.Text = result.Pacijent.Korisnici.Ime + " " + result.Pacijent.Korisnici.Prezime;
-                //txtTerminNapomena.Text = result.DatumVrijeme.ToString("F");
-                //txtRazlogTermina.Text = result.Razlog;
             }
         }
         private async Task LoadMaterijali()
@@ -107,29 +103,46 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             txtStanjeNaSkladistu.Text = result.Kolicina.ToString();
         }
 
-        private void txtKolicina_Validating(object sender, CancelEventArgs e)
+        private void txtKolicina_Validating(object sender, CancelEventArgs e)//testiraj
         {
+            string pattern = "^[0-9]+([.][0-9]+)?$";
             if (string.IsNullOrWhiteSpace(txtKolicina.Text))
             {
                 errorProvider1.SetError(txtKolicina, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
-            else if(decimal.Parse(txtKolicina.Text) > decimal.Parse(txtStanjeNaSkladistu.Text))
+            else if (!Regex.IsMatch(txtKolicina.Text, pattern))
             {
-                errorProvider1.SetError(txtKolicina, "Unijeli ste više materijala nego što imate na stanju!");
+                errorProvider1.SetError(txtKolicina, "Niste unijeli ispravan decimalni broj za kolicinu!");
                 e.Cancel = true;
             }
             else
             {
-                errorProvider1.SetError(txtKolicina, null);
+                var novaKolicina = decimal.Parse(txtKolicina.Text);
+                var postojeceStanjeNaSkladistu = decimal.Parse(txtStanjeNaSkladistu.Text);
+                if (novaKolicina > postojeceStanjeNaSkladistu)
+                {
+                    errorProvider1.SetError(txtKolicina, "Unijeli ste više materijala nego što imate na stanju!");
+                    e.Cancel = true;
+                }
+                else
+                {
+                    errorProvider1.SetError(txtKolicina, null);
+                }
             }
         }
 
         private void txtTrajanje_Validating(object sender, CancelEventArgs e)
         {
+            string pattern = "^[0-9]+$";
             if (string.IsNullOrWhiteSpace(txtTrajanje.Text))
             {
                 errorProvider1.SetError(txtTrajanje, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if (!Regex.IsMatch(txtTrajanje.Text, pattern))
+            {
+                errorProvider1.SetError(txtTrajanje, "Samo cijeli brojevi su dozvoljeni!");
                 e.Cancel = true;
             }
             else
@@ -145,6 +158,11 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                 errorProvider1.SetError(txtNapomenaPregleda, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtNapomenaPregleda.Text.Length >= 200)
+            {
+                errorProvider1.SetError(txtNapomenaPregleda, "Napomena za pregled ne moze biti duza od 200 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtNapomenaPregleda, null);
@@ -157,19 +175,13 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         {
             if (this.ValidateChildren())
             {
-                var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
+                
                 int.TryParse(cmbDijagnoza.SelectedValue.ToString(), out int convertDijagnoza);
                 int.TryParse(cmbLijek.SelectedValue.ToString(), out int convertLijek);
                 int.TryParse(cmbMaterijal.SelectedValue.ToString(), out int convertMaterijal);
                 int.TryParse(txtTrajanje.Text, out int convertTrajanje);
                 decimal.TryParse(txtKolicina.Text, out decimal convertKolicina);
-                foreach (var korisnik in korisnici)
-                {
-                    if (korisnik.KorisnickoIme == APIService.Username)
-                    {
-                        APIService.KorisnikId = korisnik.KorisnikId;
-                    }
-                }
+                
                 if (_id.HasValue)
                 {
                     UpdateRequest.KorisnikId = APIService.KorisnikId;

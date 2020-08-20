@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using StomatoloskaOrdinacija.Model.Requests;
@@ -20,7 +21,8 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         private readonly APIService _serviceSkladiste = new APIService("Skladiste");
         private readonly APIService _serviceKorisnici = new APIService("Korisnici");
         private readonly APIService _servicePregled = new APIService("Pregled");
-        
+        private readonly APIService _serviceRacun = new APIService("Racun");
+
         private int? _id = null;
         public frmUnosPregleda(int? pregledId = null)
         {
@@ -113,9 +115,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         private async Task LoadPacijenta(int id)
         {
             var result = await _serviceTermin.GetById<Model.Termin>(id);
-            cmbTermin.DisplayMember = "UslugaIme";
-            cmbTermin.ValueMember = "TerminId";
-            cmbTermin.DataSource = result;
+
             txtImeIPrezime.Text = result.Pacijent.Korisnici.Ime + " " + result.Pacijent.Korisnici.Prezime;
             txtTerminNapomena.Text = result.DatumVrijeme.ToString("F");
             txtRazlogTermina.Text = result.Razlog;
@@ -138,27 +138,44 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
 
         private void txtKolicina_Validating(object sender, CancelEventArgs e)
         {
+            string pattern = "^[0-9]+([.][0-9]+)?$";
             if (string.IsNullOrWhiteSpace(txtKolicina.Text))
             {
                 errorProvider1.SetError(txtKolicina, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
-            else if(decimal.Parse(txtKolicina.Text) > decimal.Parse(txtStanjeNaSkladistu.Text))
+            else if (!Regex.IsMatch(txtKolicina.Text, pattern))
             {
-                errorProvider1.SetError(txtKolicina, "Unijeli ste više materijala nego što imate na stanju!");
+                errorProvider1.SetError(txtKolicina, "Niste unijeli ispravan decimalni broj za kolicinu!");
                 e.Cancel = true;
             }
             else
             {
-                errorProvider1.SetError(txtKolicina, null);
+                var novaKolicina = decimal.Parse(txtKolicina.Text);
+                var postojeceStanjeNaSkladistu = decimal.Parse(txtStanjeNaSkladistu.Text);
+                if (novaKolicina > postojeceStanjeNaSkladistu)
+                {
+                    errorProvider1.SetError(txtKolicina, "Unijeli ste više materijala nego što imate na stanju!");
+                    e.Cancel = true;
+                }
+                else
+                {
+                    errorProvider1.SetError(txtKolicina, null);
+                }
             }
         }
 
         private void txtTrajanje_Validating(object sender, CancelEventArgs e)
         {
+            string pattern = "^[0-9]+$";
             if (string.IsNullOrWhiteSpace(txtTrajanje.Text))
             {
                 errorProvider1.SetError(txtTrajanje, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if (!Regex.IsMatch(txtTrajanje.Text, pattern))
+            {
+                errorProvider1.SetError(txtTrajanje, "Samo cijeli brojevi su dozvoljeni!");
                 e.Cancel = true;
             }
             else
@@ -174,6 +191,11 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
                 errorProvider1.SetError(txtNapomenaPregleda, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtNapomenaPregleda.Text.Length >= 200)
+            {
+                errorProvider1.SetError(txtNapomenaPregleda, "Napomena za pregled ne moze biti duza od 200 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtNapomenaPregleda, null);
@@ -184,79 +206,77 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         private PregledInsertRequest UpdateRequest = new PregledInsertRequest();
         private async void txtSnimiPregled_Click(object sender, EventArgs e)
         {
-            if (this.ValidateChildren())
+            if (APIService.Permisije == 1 || APIService.Permisije == 2)
             {
-                var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
-                int.TryParse(cmbTermin.SelectedValue.ToString(), out int convertTermin);
-                int.TryParse(cmbDijagnoza.SelectedValue.ToString(), out int convertDijagnoza);
-                int.TryParse(cmbLijek.SelectedValue.ToString(), out int convertLijek);
-                int.TryParse(cmbMaterijal.SelectedValue.ToString(), out int convertMaterijal);
-                int.TryParse(txtTrajanje.Text, out int convertTrajanje);
-                decimal.TryParse(txtKolicina.Text, out decimal convertKolicina);
-                foreach (var korisnik in korisnici)
-                {
-                    if (korisnik.KorisnickoIme == APIService.Username)
-                    {
-                        APIService.KorisnikId = korisnik.KorisnikId;
-                    }
-                }
-                if (_id.HasValue)
-                {
-                    UpdateRequest.KorisnikId = APIService.KorisnikId;
-                    UpdateRequest.TerminId = convertTermin;
-                    UpdateRequest.DijagnozaId = convertDijagnoza;
-                    UpdateRequest.LijekId = convertLijek;
-                    UpdateRequest.SkladisteId = convertMaterijal;
-                    UpdateRequest.KolicinaOdabranogMaterijala = convertKolicina;
-                    UpdateRequest.TrajanjePregleda = convertTrajanje;
-                    UpdateRequest.Napomena = txtNapomenaPregleda.Text;
-
-                    try
-                    {
-                        var temp = await _servicePregled.Update<Model.Korisnici>(_id, UpdateRequest);
-
-                        MessageBox.Show("Uspješno ste uredili pregled!");
-
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show("Operacija neuspjela! " + exception.Message);
-                    }
-
-                }
-                else
-                {
-                    insertRequest.KorisnikId = APIService.KorisnikId;
-                    insertRequest.TerminId = convertTermin;
-                    insertRequest.DijagnozaId = convertDijagnoza;
-                    insertRequest.LijekId = convertLijek;
-                    insertRequest.SkladisteId = convertMaterijal;
-                    insertRequest.KolicinaOdabranogMaterijala = convertKolicina;
-                    insertRequest.TrajanjePregleda = convertTrajanje;
-                    insertRequest.Napomena = txtNapomenaPregleda.Text;
-                    
-                    try
-                    {
-                        var temp = await _servicePregled.Insert<Model.Pregled>(insertRequest);
-                        if (temp != null)
-                        {
-                            MessageBox.Show("Uspješno ste dodali pregled!");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Dodavanje pregleda nije uspjelo!");
-                        }
-                        
-                    }
-                    catch (Exception exception)
-                    {
-                        MessageBox.Show("Operacija neuspjela! " + exception.Message);
-                    }
-                    
-                }
-
-                
+               if (this.ValidateChildren())
+               {
+                   
+                   int.TryParse(cmbTermin.SelectedValue.ToString(), out int convertTermin);
+                   int.TryParse(cmbDijagnoza.SelectedValue.ToString(), out int convertDijagnoza);
+                   int.TryParse(cmbLijek.SelectedValue.ToString(), out int convertLijek);
+                   int.TryParse(cmbMaterijal.SelectedValue.ToString(), out int convertMaterijal);
+                   int.TryParse(txtTrajanje.Text, out int convertTrajanje);
+                   decimal.TryParse(txtKolicina.Text, out decimal convertKolicina);
+                  
+                   if (_id.HasValue)
+                   {
+                       UpdateRequest.KorisnikId = APIService.KorisnikId;
+                       UpdateRequest.TerminId = convertTermin;
+                       UpdateRequest.DijagnozaId = convertDijagnoza;
+                       UpdateRequest.LijekId = convertLijek;
+                       UpdateRequest.SkladisteId = convertMaterijal;
+                       UpdateRequest.KolicinaOdabranogMaterijala = convertKolicina;
+                       UpdateRequest.TrajanjePregleda = convertTrajanje;
+                       UpdateRequest.Napomena = txtNapomenaPregleda.Text;
+                       try
+                       {
+                           var temp = await _servicePregled.Update<Model.Korisnici>(_id, UpdateRequest);
+                           MessageBox.Show("Uspješno ste uredili pregled!");
+                       }
+                       catch (Exception exception)
+                       {
+                           MessageBox.Show("Operacija neuspjela! " + exception.Message);
+                       }
+                   }
+                   else
+                   {
+                       insertRequest.KorisnikId = APIService.KorisnikId;
+                       insertRequest.TerminId = convertTermin;
+                       insertRequest.DijagnozaId = convertDijagnoza;
+                       insertRequest.LijekId = convertLijek;
+                       insertRequest.SkladisteId = convertMaterijal;
+                       insertRequest.KolicinaOdabranogMaterijala = convertKolicina;
+                       insertRequest.TrajanjePregleda = convertTrajanje;
+                       insertRequest.Napomena = txtNapomenaPregleda.Text;
+                       try
+                       {
+                           var temp = await _servicePregled.Insert<Model.Pregled>(insertRequest);
+                           if (temp != null)
+                           {
+                               MessageBox.Show("Uspješno ste dodali pregled!");
+                               await _serviceRacun.Insert<Model.Racun>(new RacunInsertRequest
+                               {
+                                   KorisnikId = temp.KorisnikId,
+                                   PregledId = temp.PregledId
+                               });
+                           }
+                           else
+                           {
+                               MessageBox.Show("Dodavanje pregleda nije uspjelo!");
+                           }
+                       }
+                       catch (Exception exception)
+                       {
+                           MessageBox.Show("Operacija neuspjela! " + exception.Message);
+                       }
+                   }
+               }
             }
+            else
+            {
+                MessageBox.Show("Samo stomatolog moze mjenjati informacije o pregledima pacijenata!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
     }
 }

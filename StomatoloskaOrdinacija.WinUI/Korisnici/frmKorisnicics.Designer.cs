@@ -64,7 +64,7 @@
             this.groupBox1.Controls.Add(this.dgvKorisnici);
             this.groupBox1.Location = new System.Drawing.Point(12, 158);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(949, 403);
+            this.groupBox1.Size = new System.Drawing.Size(960, 403);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Korisnici";
@@ -90,7 +90,7 @@
             this.dgvKorisnici.Name = "dgvKorisnici";
             this.dgvKorisnici.ReadOnly = true;
             this.dgvKorisnici.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKorisnici.Size = new System.Drawing.Size(943, 384);
+            this.dgvKorisnici.Size = new System.Drawing.Size(954, 384);
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellContentClick);
             this.dgvKorisnici.DoubleClick += new System.EventHandler(this.dgvKorisnici_DoubleClick);
@@ -169,7 +169,7 @@
             // btnPrikazi
             // 
             this.btnPrikazi.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPrikazi.Location = new System.Drawing.Point(778, 29);
+            this.btnPrikazi.Location = new System.Drawing.Point(821, 31);
             this.btnPrikazi.Name = "btnPrikazi";
             this.btnPrikazi.Size = new System.Drawing.Size(148, 23);
             this.btnPrikazi.TabIndex = 1;
@@ -276,7 +276,7 @@
             // btnDetalji
             // 
             this.btnDetalji.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDetalji.Location = new System.Drawing.Point(778, 73);
+            this.btnDetalji.Location = new System.Drawing.Point(821, 75);
             this.btnDetalji.Name = "btnDetalji";
             this.btnDetalji.Size = new System.Drawing.Size(148, 23);
             this.btnDetalji.TabIndex = 15;
@@ -287,7 +287,7 @@
             // btnDodajNovog
             // 
             this.btnDodajNovog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDodajNovog.Location = new System.Drawing.Point(778, 113);
+            this.btnDodajNovog.Location = new System.Drawing.Point(821, 115);
             this.btnDodajNovog.Name = "btnDodajNovog";
             this.btnDodajNovog.Size = new System.Drawing.Size(148, 23);
             this.btnDodajNovog.TabIndex = 16;
@@ -299,7 +299,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 573);
+            this.ClientSize = new System.Drawing.Size(1002, 573);
             this.Controls.Add(this.btnDodajNovog);
             this.Controls.Add(this.btnDetalji);
             this.Controls.Add(this.label6);

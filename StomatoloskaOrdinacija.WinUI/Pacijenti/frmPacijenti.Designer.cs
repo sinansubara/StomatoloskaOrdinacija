@@ -62,7 +62,7 @@
             // btnDodajNovog
             // 
             this.btnDodajNovog.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDodajNovog.Location = new System.Drawing.Point(775, 109);
+            this.btnDodajNovog.Location = new System.Drawing.Point(822, 108);
             this.btnDodajNovog.Name = "btnDodajNovog";
             this.btnDodajNovog.Size = new System.Drawing.Size(148, 23);
             this.btnDodajNovog.TabIndex = 32;
@@ -73,7 +73,7 @@
             // btnDetalji
             // 
             this.btnDetalji.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnDetalji.Location = new System.Drawing.Point(775, 69);
+            this.btnDetalji.Location = new System.Drawing.Point(822, 68);
             this.btnDetalji.Name = "btnDetalji";
             this.btnDetalji.Size = new System.Drawing.Size(148, 23);
             this.btnDetalji.TabIndex = 31;
@@ -180,7 +180,7 @@
             // btnPrikazi
             // 
             this.btnPrikazi.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPrikazi.Location = new System.Drawing.Point(775, 25);
+            this.btnPrikazi.Location = new System.Drawing.Point(822, 24);
             this.btnPrikazi.Name = "btnPrikazi";
             this.btnPrikazi.Size = new System.Drawing.Size(148, 23);
             this.btnPrikazi.TabIndex = 18;
@@ -193,7 +193,7 @@
             this.groupBox1.Controls.Add(this.dgvKorisnici);
             this.groupBox1.Location = new System.Drawing.Point(9, 154);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(949, 403);
+            this.groupBox1.Size = new System.Drawing.Size(961, 414);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pacijenti";
@@ -219,7 +219,7 @@
             this.dgvKorisnici.Name = "dgvKorisnici";
             this.dgvKorisnici.ReadOnly = true;
             this.dgvKorisnici.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvKorisnici.Size = new System.Drawing.Size(943, 384);
+            this.dgvKorisnici.Size = new System.Drawing.Size(955, 395);
             this.dgvKorisnici.TabIndex = 0;
             this.dgvKorisnici.DoubleClick += new System.EventHandler(this.dgvKorisnici_DoubleClick);
             // 
@@ -293,6 +293,7 @@
             this.Status.HeaderText = "Status";
             this.Status.Name = "Status";
             this.Status.ReadOnly = true;
+            this.Status.Width = 80;
             // 
             // frmPacijenti
             // 

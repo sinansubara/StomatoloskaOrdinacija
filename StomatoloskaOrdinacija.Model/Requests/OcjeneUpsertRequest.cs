@@ -13,7 +13,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public int UslugaId { get; set; }
 
         [Required]
-        [Range(1,10,ErrorMessage = "Ocjena mora biti od 1 do 10!")]
         public decimal Ocjena { get; set; }
 
         [Required]

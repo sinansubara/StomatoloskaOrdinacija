@@ -35,18 +35,32 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
 
         private void dgvSkladiste_DoubleClick(object sender, EventArgs e)
         {
-            var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
-            int.TryParse(id.ToString(), out int convert);
-            frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
-            frm.Show();
+            if (dgvSkladiste.RowCount > 0)
+            {
+                var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
+                int.TryParse(id.ToString(), out int convert);
+                frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
-            var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
-            int.TryParse(id.ToString(), out int convert);
-            frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
-            frm.Show();
+            if (dgvSkladiste.RowCount > 0)
+            {
+                var id = dgvSkladiste.SelectedRows[0].Cells[0].Value;
+                int.TryParse(id.ToString(), out int convert);
+                frmSkladisteDetalji frm = new frmSkladisteDetalji(convert);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnDodajNovog_Click(object sender, EventArgs e)

@@ -14,8 +14,10 @@ namespace StomatoloskaOrdinacija
 
         public static string Username { get; set; }
         public static string Password { get; set; }
+        public static string Context { get; set; }
         public static int Permisije { get; set; }
         public static int KorisnikId { get; set; }
+        public static int PacijentId { get; set; }
         public static int UlazUSkladisteId { get; set; }
 
 #if DEBUG
@@ -38,10 +40,29 @@ namespace StomatoloskaOrdinacija
                 query = await searchRequest?.ToQueryString();
             }
 
-            var list = await $"{_apiUrl}/{_resource}?{query}"
-               .WithBasicAuth(Username, Password).GetJsonAsync<T>();
+            
+            try
+            {
+                var list = await $"{_apiUrl}/{_resource}?{query}"
+                    .WithBasicAuth(Username, Password).GetJsonAsync<T>();
+                
+                return list;
+            }
+            catch (FlurlHttpException ex)
+            {
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
-            return list;
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
+                return default(T);
+            }
+
+            
         }
 
         public async Task<T> GetById<T>(object id)
@@ -60,6 +81,25 @@ namespace StomatoloskaOrdinacija
 
         }
 
+        public async Task<T> Registracija<T>(object request)
+        {
+            var url = $"{_apiUrl}/{_resource}";
+
+            try
+            {
+                return await url.WithBasicAuth(Username, Password).WithHeader("Context", Context).PostJsonAsync(request).ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                
+                await Application.Current.MainPage.DisplayAlert("Greška", "Nisi autorizovan!", "OK");
+                return default(T);
+            }
+
+        }
+
         public async Task<T> Insert<T>(object request)
         {
             var url = $"{_apiUrl}/{_resource}";
@@ -72,13 +112,8 @@ namespace StomatoloskaOrdinacija
             {
                 var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
-                var stringBuilder = new StringBuilder();
-                foreach (var error in errors)
-                {
-                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
-                }
-
-                await Application.Current.MainPage.DisplayAlert("Greška", "Niste authentificirani", "OK");
+                
+                await Application.Current.MainPage.DisplayAlert("Greška", "Nisi autorizovan!", "OK");
                 return default(T);
             }
 
@@ -91,6 +126,29 @@ namespace StomatoloskaOrdinacija
                 var url = $"{_apiUrl}/{_resource}/{id}";
 
                 return await url.WithBasicAuth(Username, Password).PutJsonAsync(request).ReceiveJson<T>();
+            }
+            catch (FlurlHttpException ex)
+            {
+                var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
+
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
+                return default(T);
+            }
+
+        }
+        public async Task<T> Delete<T>(object id)
+        {
+            try
+            {
+                var url = $"{_apiUrl}/{_resource}/{id}";
+
+                return await url.WithBasicAuth(Username, Password).DeleteAsync().ReceiveJson<T>();
             }
             catch (FlurlHttpException ex)
             {

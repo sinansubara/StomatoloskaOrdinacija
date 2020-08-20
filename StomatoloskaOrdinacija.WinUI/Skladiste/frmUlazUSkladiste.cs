@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using StomatoloskaOrdinacija.Model.Requests;
+using System.Text.RegularExpressions;
 
 namespace StomatoloskaOrdinacija.WinUI.Skladiste
 {
@@ -24,15 +25,6 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
         {
             if (this.ValidateChildren())
             {
-                var korisnici = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(null);
-
-                foreach (var korisnik in korisnici)
-                {
-                    if (korisnik.KorisnickoIme == APIService.Username)
-                    {
-                        APIService.KorisnikId = korisnik.KorisnikId;
-                    }
-                }
                 var ulaz = new UlazUSkladisteInsertRequest
                 {
                     KorisnikId = APIService.KorisnikId,
@@ -56,6 +48,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
                 errorProvider1.SetError(txtBrojFakture, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtBrojFakture.Text.Length >= 50)
+            {
+                errorProvider1.SetError(txtBrojFakture, "Broj fakture ne moze biti veci od 50 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtBrojFakture, null);
@@ -64,9 +61,15 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
 
         private void txtIznosRacuna_Validating(object sender, CancelEventArgs e)
         {
+            string pattern = "^[0-9]+([.][0-9]+)?$";//regex za decimalne brojeve gdje prihvata sa zarezom i tackom
             if (string.IsNullOrWhiteSpace(txtIznosRacuna.Text))
             {
                 errorProvider1.SetError(txtIznosRacuna, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if (!Regex.IsMatch(txtIznosRacuna.Text, pattern))
+            {
+                errorProvider1.SetError(txtIznosRacuna, "Niste unijeli ispravan decimalni broj za iznos racuna!");
                 e.Cancel = true;
             }
             else

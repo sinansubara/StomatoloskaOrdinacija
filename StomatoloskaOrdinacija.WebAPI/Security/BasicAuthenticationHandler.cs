@@ -18,7 +18,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
     {
         private readonly IKorisniciService _userService;
         public static Model.Korisnici PrijavljeniKorisnik;
-
+        public static Model.Korisnici RegistrovaniKorisnik;
         public BasicAuthenticationHandler(
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
@@ -32,44 +32,65 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            
             if (!Request.Headers.ContainsKey("Authorization"))
                 return AuthenticateResult.Fail("Missing Authorization Header");
-
+                
+            
             //Model.Korisnici user = null;
+            var context = "";
             try
             {
+                
+                context = Request.Headers["Context"];
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
                 var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(':');
                 var username = credentials[0];
                 var password = credentials[1];
-                PrijavljeniKorisnik = _userService.Login(
-                    new Model.Requests.KorisniciLoginRequest()
+                
+                
+                if ("Registracija".Equals(context))
+                {
+                    RegistrovaniKorisnik = _userService.LoginMobile(new Model.Requests.KorisniciLoginRequest()
                     {
                         Username = username,
                         Password = password
-                    }); ;//Authenticiraj(username, password);
+                    });
+                }
+                else
+                {
+                    PrijavljeniKorisnik = _userService.Login(
+                        new Model.Requests.KorisniciLoginRequest()
+                        {
+                            Username = username,
+                            Password = password
+                        }); //Authenticiraj(username, password);
+                }
             }
             catch
             {
                 return AuthenticateResult.Fail("Invalid Authorization Header");
             }
+            var claims = new List<Claim>();
+            if ("Registracija".Equals(context))
+            {
+                if (RegistrovaniKorisnik == null)
+                    return AuthenticateResult.Fail("Invalid Username or Password");
+            }
+            else
+            {
+                if (PrijavljeniKorisnik == null)
+                    return AuthenticateResult.Fail("Invalid Username or Password");
 
-            if (PrijavljeniKorisnik == null)
-                return AuthenticateResult.Fail("Invalid Username or Password");
-
-            var claims = new List<Claim> {
+            }
+            
+            claims = new List<Claim> {
                 new Claim(ClaimTypes.NameIdentifier, PrijavljeniKorisnik.KorisnickoIme),
                 new Claim(ClaimTypes.Name, PrijavljeniKorisnik.Ime),
             };
 
-            //foreach (var role in user.KorisniciUloge)
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Role, role.Uloga.Naziv));
-            //}
             claims.Add(new Claim(ClaimTypes.Role, PrijavljeniKorisnik.Uloga.Naziv));
-
-
 
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);

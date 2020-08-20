@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using StomatoloskaOrdinacija.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,9 +12,18 @@ namespace StomatoloskaOrdinacija.Views
     [DesignTimeVisible(false)]
     public partial class AboutPage : ContentPage
     {
+        private AboutViewModel model = null;
         public AboutPage()
         {
             InitializeComponent();
+            
+            BindingContext = model = new AboutViewModel();
+        }
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await model.Init();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
+using StomatoloskaOrdinacija.Model;
 using Xamarin.Forms;
 
 using StomatoloskaOrdinacija.Models;
@@ -12,46 +14,24 @@ namespace StomatoloskaOrdinacija.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
-        public Command LoadItemsCommand { get; set; }
+        private readonly APIService _gradService = new APIService("Usluga");
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
-            LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
-
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
-            {
-                var newItem = item as Item;
-                Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
-            });
+            InitCommand = new Command(async () => await Init());
         }
+        public ObservableCollection<Usluga> UslugeList { get; set; } = new ObservableCollection<Usluga>();
 
-        async Task ExecuteLoadItemsCommand()
+        public ICommand InitCommand { get; set; }
+
+        public async Task Init()
         {
-            if (IsBusy)
-                return;
+            var list = await _gradService.GetAll<List<Model.Usluga>>(null);
 
-            IsBusy = true;
-
-            try
+            UslugeList.Clear();
+            foreach (var usluga in list)
             {
-                Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
+                UslugeList.Add(usluga);
             }
         }
     }

@@ -16,5 +16,9 @@ namespace StomatoloskaOrdinacija.Model
         public DateTime PopustOdDatuma { get; set; }
         public DateTime PopustDoDatuma { get; set; }
         public int VrijednostPopusta { get; set; }
+        public string ImeKreatoraPopusta { get; set; }
+        public string OdabranaUsluga { get; set; }
+        public decimal CijenaUsluge { get; set; }
+        public decimal CijenaSPopustom { get; set; }
     }
 }

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.TerminiOdobreni">
+    <ContentPage.BindingContext>
+        <viewModels:TerminiOdobreniViewModels />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <!--Odobreni termini-->
+                <Label TextColor="White" Text="ODOBRENI TERMINI" FontSize="25" FontAttributes="Bold" 
+                       HorizontalOptions="CenterAndExpand"/>
+                <ListView ItemsSource="{Binding TerminiList}" ItemTapped="Termin_OnItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Margin="1,1,1,5" Padding="10" BackgroundColor="LawnGreen">
+                                    <Label Text="{Binding UslugaNaziv}" 
+                                           d:Text="{Binding  .}"
+                                           LineBreakMode="NoWrap" 
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="16" />
+                                    <Label Text="{Binding Razlog}" 
+                                           d:Text="{Binding .}"
+                                           LineBreakMode="NoWrap" 
+                                           Style="{DynamicResource ListItemTextStyle}" 
+                                           FontSize="14" />
+                                    <Label Text="{Binding DatumVrijeme}" 
+                                           d:Text="Item descripton"
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemDetailTextStyle}"
+                                           FontSize="12" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>

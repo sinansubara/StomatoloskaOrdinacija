@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using StomatoloskaOrdinacija.Model.Requests;
+using System.Text.RegularExpressions;
 
 namespace StomatoloskaOrdinacija.WinUI.Skladiste
 {
@@ -132,6 +133,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
                 errorProvider1.SetError(txtNaziv, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtNaziv.Text.Length >= 100)
+            {
+                errorProvider1.SetError(txtNaziv, "Naziv proizvoda ne moze biti veci od 100 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtNaziv, null);
@@ -168,6 +174,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
                 errorProvider1.SetError(txtOpis, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtOpis.Text.Length >= 300)
+            {
+                errorProvider1.SetError(txtOpis, "Opis proizvoda ne moze biti veci od 300 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtOpis, null);
@@ -179,6 +190,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
             if (string.IsNullOrWhiteSpace(txtVrsta.Text))
             {
                 errorProvider1.SetError(txtVrsta, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if(txtVrsta.Text.Length >= 100)
+            {
+                errorProvider1.SetError(txtVrsta, "Vrsta proizvoda ne moze biti veca od 100 karaktera!");
                 e.Cancel = true;
             }
             else
@@ -194,6 +210,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
                 errorProvider1.SetError(txtProizvodjac, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtProizvodjac.Text.Length >= 100)
+            {
+                errorProvider1.SetError(txtProizvodjac, "Proizvodjac proizvoda ne moze biti veci od 100 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtProizvodjac, null);
@@ -207,19 +228,28 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
 
         private void txtKolicina1_Validating(object sender, CancelEventArgs e)
         {
+            string pattern = "^[0-9]+([.][0-9]+)?$";
             if (string.IsNullOrWhiteSpace(txtKolicina1.Text))
             {
                 errorProvider1.SetError(txtKolicina1, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
-            else if (decimal.Parse(txtKolicina1.Text) <= decimal.Parse("0"))
+            else if (!Regex.IsMatch(txtKolicina1.Text, pattern))
             {
-                errorProvider1.SetError(txtKolicina1, "Ne možete unijeti vrijednost manju ili jednaku 0!");
+                errorProvider1.SetError(txtKolicina1, "Niste unijeli ispravan decimalni broj za kolicinu!");
                 e.Cancel = true;
             }
             else
             {
-                errorProvider1.SetError(txtKolicina1, null);
+                var temp = decimal.Parse(txtKolicina1.Text);
+                if (temp <= 0)
+                {
+                    errorProvider1.SetError(txtKolicina1, "Kolicina ne moze biti 0 ili negativna!");
+                }
+                else
+                {
+                    errorProvider1.SetError(txtKolicina1, null);
+                }
             }
         }
 
@@ -230,6 +260,11 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
                 errorProvider1.SetError(txtMjernaJedinica, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtMjernaJedinica.Text.Length >= 20)
+            {
+                errorProvider1.SetError(txtMjernaJedinica, "Mjerna jedinica ne moze imati vise od 20 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider1.SetError(txtMjernaJedinica, null);
@@ -238,19 +273,28 @@ namespace StomatoloskaOrdinacija.WinUI.Skladiste
 
         private void txtCijena1_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtKolicina1.Text))
+            string pattern = "^[0-9]+([.][0-9]+)?$";
+            if (string.IsNullOrWhiteSpace(txtCijena1.Text))
             {
-                errorProvider1.SetError(txtKolicina1, Properties.Resources.Validation_ObaveznoPolje);
+                errorProvider1.SetError(txtCijena1, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
-            else if (decimal.Parse(txtKolicina1.Text) <= decimal.Parse("0"))
+            else if (!Regex.IsMatch(txtCijena1.Text, pattern))
             {
-                errorProvider1.SetError(txtKolicina1, "Ne možete unijeti vrijednost manju ili jednaku 0!");
+                errorProvider1.SetError(txtCijena1, "Niste unijeli ispravan decimalni broj za cijenu!");
                 e.Cancel = true;
             }
             else
             {
-                errorProvider1.SetError(txtKolicina1, null);
+                var temp = decimal.Parse(txtCijena1.Text);
+                if (temp <= 0)
+                {
+                    errorProvider1.SetError(txtCijena1, "Kolicina ne moze biti 0 ili negativna!");
+                }
+                else
+                {
+                    errorProvider1.SetError(txtCijena1, null);
+                }
             }
         }
     }

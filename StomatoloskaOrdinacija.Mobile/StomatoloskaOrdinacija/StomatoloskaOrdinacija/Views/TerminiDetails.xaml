@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.TerminiDetails">
+    <ContentPage.BindingContext>
+        <viewModels:TerminiDetailsViewModels />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label TextColor="White" Text="DETALJI TERMINA" FontSize="25" FontAttributes="Bold" 
+                           HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+                    <Image Source="dental.jpg" 
+                           Opacity="0.5" 
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="9"/>
+
+                    <Label FontSize="22" TextColor="White" Text="Usluga:" Grid.Row="1" Grid.Column="0"/>
+                    <Label FontSize="22" 
+                           TextColor="White"  
+                           Text="{Binding Termin.UslugaNaziv}"
+                           Grid.Row="1" Grid.Column="1"></Label>
+
+                    <Label FontSize="22" TextColor="White" Text="Datum:" Grid.Row="2" Grid.Column="0"/>
+                    <Label FontSize="22" 
+                           TextColor="White" 
+                           Text="{Binding Termin.DatumVrijeme, StringFormat='{0:dd.MM.yyyy}'}"
+                           Grid.Row="2" Grid.Column="1"></Label>
+
+
+                    <Label FontSize="22" TextColor="White" Text="Vrijeme:" Grid.Row="3" Grid.Column="0"/>
+                    <Label FontSize="22" 
+                           TextColor="White" 
+                           Text="{Binding Termin.DatumVrijeme, StringFormat='{}{0:HH\\:mm}'}"
+                           Grid.Row="3" Grid.Column="1"></Label>
+
+
+                    <Label FontSize="22" TextColor="White" Text="Razlog:" Grid.Row="4" Grid.Column="0"/>
+                    <Label FontSize="22" 
+                           TextColor="White" 
+                           Text="{Binding Termin.Razlog}"
+                           Grid.Row="4" Grid.Column="1"></Label>
+
+                    <Label FontSize="22" TextColor="White" Text="Hitan:" Grid.Row="5" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding Termin.Hitan}" Grid.Row="5" Grid.Column="1" HorizontalOptions="Start"></Switch>
+
+
+                    <Button FontSize="22" 
+                            Grid.Row="6" Grid.ColumnSpan="2" 
+                            BackgroundColor="IndianRed" 
+                            HorizontalOptions="FillAndExpand" 
+                            IsVisible="{Binding Termin.IsOdobren}"
+                            Clicked="DodajOcjenuButtonClicked" 
+                            Text="OCJENI USLUGU"
+                            FontAttributes="Bold"></Button>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

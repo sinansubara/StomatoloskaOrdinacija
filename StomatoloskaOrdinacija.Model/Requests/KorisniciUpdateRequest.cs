@@ -38,9 +38,12 @@ namespace StomatoloskaOrdinacija.Model.Requests
 
         public bool? Status { get; set; }
         public byte[] Slika { get; set; }
+
         [Required]
         public int GradId { get; set; }
+
         public string Password { get; set; }
+
         public string PasswordConfirm { get; set; }
 
         public int UlogaId { get; set; }

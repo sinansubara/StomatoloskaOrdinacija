@@ -40,5 +40,6 @@ namespace StomatoloskaOrdinacija.Model
         public int obavljenoPregleda { get; set; }
 
         public string ImeIPrezime => Ime + " " + Prezime;
+        public decimal UkupnoNovca { get; set; }
     }
 }

@@ -7,33 +7,52 @@
              mc:Ignorable="d"
              x:Class="StomatoloskaOrdinacija.Views.Termini">
     <ContentPage.BindingContext>
-        <viewModels:TerminiViewModel></viewModels:TerminiViewModel>
+        <viewModels:TerminiViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Termini!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <ListView ItemsSource="{Binding TerminiList}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="10">
-                                <Label Text="{Binding Razlog}" 
-                                       d:Text="{Binding .}"
-                                       LineBreakMode="NoWrap" 
-                                       Style="{DynamicResource ListItemTextStyle}" 
-                                       FontSize="16" />
-                                <Label Text="{Binding DatumVrijeme}" 
-                                       d:Text="Item descripton"
-                                       LineBreakMode="NoWrap"
-                                       Style="{DynamicResource ListItemDetailTextStyle}"
-                                       FontSize="13" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="120*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                <Label TextColor="White" Text="TERMINI MENI" FontSize="25" FontAttributes="Bold" 
+                       HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.ColumnSpan="2"/>
+                <Image Source="dental.jpg" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="7"/>
+
+                <Button FontSize="22" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="DodgerBlue" HorizontalOptions="FillAndExpand" Clicked="DodajButtonClicked" Text="DODAJ NOVI TERMIN" FontAttributes="Bold"></Button>
+
+                <Button FontSize="22" Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="Khaki" HorizontalOptions="FillAndExpand" Clicked="ZahtjevaniButtonClicked" Text="ZAHTJEVANI TERMINI" FontAttributes="Bold"></Button>
+
+                <Button FontSize="22" Grid.Row="3" Grid.ColumnSpan="2" BackgroundColor="LawnGreen" HorizontalOptions="FillAndExpand" Clicked="OdobreniButtonClicked" Text="ODOBRENI TERMINI" FontAttributes="Bold"></Button>
+
+                <Button FontSize="22" Grid.Row="4" Grid.ColumnSpan="2" BackgroundColor="IndianRed" HorizontalOptions="FillAndExpand" Clicked="OdbijeniButtonClicked" Text="ODBIJENI TERMINI" FontAttributes="Bold"></Button>
+                
+   
+                
+   
+                
+                </Grid>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

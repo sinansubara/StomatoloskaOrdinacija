@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using StomatoloskaOrdinacija.Model;
 using StomatoloskaOrdinacija.Model.Requests;
+using System.Text.RegularExpressions;
 
 namespace StomatoloskaOrdinacija.WinUI.Korisnici
 {
@@ -141,7 +142,23 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 cbGrad.SelectedValue = korisnik.GradId;
                 cbSpol.SelectedValue = korisnik.Spol;
                 cbUloga.SelectedValue = korisnik.UlogaId;
-                pcbSlika.Image = GetImage(korisnik.Slika);
+                try
+                {
+                    pcbSlika.Image = GetImage(korisnik.Slika);
+                }
+                catch (Exception)
+                {
+                    var noimgpath = new DirectoryInfo(Environment.CurrentDirectory).Parent.Parent.FullName;
+                    noimgpath = noimgpath + "\\no_image.jpeg";
+
+                    
+                    Image image = Image.FromFile(noimgpath);
+                    pcbSlika.Image = image;
+
+                    var file = File.ReadAllBytes(noimgpath);
+                    UpdateRequest.Slika = file;
+                    
+                }
             }
             else
             {
@@ -186,6 +203,11 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 errorProvider.SetError(txtIme, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtIme.Text.Length >= 100)
+            {
+                errorProvider.SetError(txtIme, "Ime ne moze sadrzavat vise od 100 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider.SetError(txtIme, null);
@@ -199,6 +221,11 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 errorProvider.SetError(txtPrezime, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtIme.Text.Length >= 100)
+            {
+                errorProvider.SetError(txtPrezime, "Prezime ne moze sadrzavat vise od 100 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider.SetError(txtPrezime, null);
@@ -207,9 +234,21 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
 
         private void txtEmail_Validating(object sender, CancelEventArgs e)
         {
+            string pattern =
+                @"^(?("")("".+?(?<!\\)""@)|(([0-9a-z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-z])@))(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-z][-0-9a-z]*[0-9a-z]*\.)+[a-z0-9][\-a-z0-9]{0,22}[a-z0-9]))$";
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
                 errorProvider.SetError(txtEmail, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if (!Regex.IsMatch(txtEmail.Text, pattern))
+            {
+                errorProvider.SetError(txtEmail, "Niste unijeli ispravan email!");
+                e.Cancel = true;
+            }
+            else if(txtEmail.Text.Length >= 320)
+            {
+                errorProvider.SetError(txtEmail, "Email ne moze sadrzavat vise od 320 karaktera!");
                 e.Cancel = true;
             }
             else
@@ -225,6 +264,11 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 errorProvider.SetError(txtJMBG, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtJMBG.Text.Length != 13)
+            {
+                errorProvider.SetError(txtJMBG, "JMBG mora da sadrzi 13 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider.SetError(txtJMBG, null);
@@ -236,6 +280,11 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             if (string.IsNullOrWhiteSpace(txtMobitel.Text))
             {
                 errorProvider.SetError(txtMobitel, Properties.Resources.Validation_ObaveznoPolje);
+                e.Cancel = true;
+            }
+            else if(txtMobitel.Text.Length >= 30)
+            {
+                errorProvider.SetError(txtMobitel, "Mobitel ne moze sadrzavat vise od 30 karaktera!");
                 e.Cancel = true;
             }
             else
@@ -251,6 +300,16 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 errorProvider.SetError(txtAdresa, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtAdresa.Text.Length < 3)
+            {
+                errorProvider.SetError(txtAdresa, "Adresa mora sadrzavat bar 3 karaktera!");
+                e.Cancel = true;
+            }
+            else if(txtAdresa.Text.Length >= 200)
+            {
+                errorProvider.SetError(txtAdresa, "Adresa ne moze sadrzavat vise od 200 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider.SetError(txtAdresa, null);
@@ -264,6 +323,16 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                 errorProvider.SetError(txtKorisnickoIme, Properties.Resources.Validation_ObaveznoPolje);
                 e.Cancel = true;
             }
+            else if(txtKorisnickoIme.Text.Length < 4)
+            {
+                errorProvider.SetError(txtKorisnickoIme, "Korisnicko ime mora sadrzavat bar 4 karaktera!");
+                e.Cancel = true;
+            }
+            else if(txtKorisnickoIme.Text.Length >= 100)
+            {
+                errorProvider.SetError(txtKorisnickoIme, "Korisnicko ime ne moze sadrzavat vise od 100 karaktera!");
+                e.Cancel = true;
+            }
             else
             {
                 errorProvider.SetError(txtKorisnickoIme, null);
@@ -272,25 +341,29 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
 
         private void txtLozinka_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtLozinka.Text))
+            if (!_id.HasValue)
             {
-                errorProvider.SetError(txtLozinka, Properties.Resources.Validation_ObaveznoPolje);
-                e.Cancel = true;
-            }
-            else
-            {
-                errorProvider.SetError(txtLozinka, null);
+                if (string.IsNullOrWhiteSpace(txtLozinka.Text))
+                {
+                    errorProvider.SetError(txtLozinka, Properties.Resources.Validation_ObaveznoPolje);
+                    e.Cancel = true;
+                }
+                else if(txtLozinka.Text.Length < 4)
+                {
+                    errorProvider.SetError(txtLozinka, "Lozinka mora sadrzavat bar 4 karaktera!");
+                    e.Cancel = true;
+                }
+                else
+                {
+                    errorProvider.SetError(txtLozinka, null);
+                }
             }
         }
 
         private void txtPotvrdaLozinke_Validating(object sender, CancelEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtPotvrdaLozinke.Text))
-            {
-                errorProvider.SetError(txtPotvrdaLozinke, Properties.Resources.Validation_ObaveznoPolje);
-                e.Cancel = true;
-            }
-            else if(txtLozinka.Text != txtPotvrdaLozinke.Text)
+            
+            if(txtLozinka.Text != txtPotvrdaLozinke.Text)
             {
                 errorProvider.SetError(txtPotvrdaLozinke, "Niste unijeli tačno potvrdu lozinke!");
                 e.Cancel = true;
@@ -299,6 +372,7 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             {
                 errorProvider.SetError(txtPotvrdaLozinke, null);
             }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -13,17 +13,25 @@ namespace StomatoloskaOrdinacija.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Termini : ContentPage
     {
-        private TerminiViewModel model = null;
         public Termini()
         {
             InitializeComponent();
-            BindingContext = model = new TerminiViewModel();
         }
-
-        protected async override void OnAppearing()
+        async void DodajButtonClicked(object sender, EventArgs e)
         {
-            base.OnAppearing();
-            await model.Init();
+            await Navigation.PushAsync(new TerminDodaj());
+        }
+        async void ZahtjevaniButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TerminiZahtjevani());
+        }
+        async void OdobreniButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TerminiOdobreni());
+        }
+        async void OdbijeniButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TerminiOdbijeni());
         }
     }
 }

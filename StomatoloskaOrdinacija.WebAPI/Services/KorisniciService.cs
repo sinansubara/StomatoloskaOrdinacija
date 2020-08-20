@@ -6,10 +6,14 @@ using StomatoloskaOrdinacija.Model.Requests;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using StomatoloskaOrdinacija.WebAPI.Helper;
 using StomatoloskaOrdinacija.WebAPI.Services;
 using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 using Korisnici = StomatoloskaOrdinacija.Model.Korisnici;
@@ -18,9 +22,10 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 {
     public class KorisniciService : BaseCRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest, Database.Korisnici>, IKorisniciService
     {
-
-        public KorisniciService(MyContext context, IMapper mapper) : base(context, mapper)
+        protected IConfiguration _configuration;
+        public KorisniciService(MyContext context, IMapper mapper, IConfiguration configuration) : base(context, mapper)
         {
+            _configuration = configuration;
         }
 
 
@@ -46,6 +51,25 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             return _mapper.Map<Model.Korisnici>(entity);
         }
+        
+        #region MobileApp
+        public Model.Korisnici LoginMobile(KorisniciLoginRequest request)
+        {
+            var user = _context.Korisnici.FirstOrDefault(x => x.KorisnickoIme == request.Username);
+
+            if (user != null)
+            {
+                var newHash = GenerateHash(user.LozinkaSalt, request.Password);
+
+                if (newHash == user.LozinkaHash)
+                {
+                    return _mapper.Map<Model.Korisnici>(user);
+                }
+            }
+
+            return null;
+        }
+        #endregion
 
         public Model.Korisnici Registracija(KorisniciRegistracijaRequest request)
         {
@@ -70,6 +94,15 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             entity.LozinkaSalt = GenerateSalt();
             entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
             entity.Kreirano = DateTime.Now;
+            
+            if(request.Slika == null)//registracija preko mobitela
+            {
+                var noimgpath = new DirectoryInfo(Environment.CurrentDirectory).FullName;
+                noimgpath = noimgpath + "\\no_image.jpeg";
+                var file = File.ReadAllBytes(noimgpath);
+                entity.Slika = file;
+            }
+
             //pacijent uloga ID = 4
             entity.UlogaId = 4;
             _context.SaveChanges();
@@ -89,7 +122,6 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             
             return _mapper.Map<Model.Korisnici>(entity);
         }
-
 
         public override IList<Model.Korisnici> GetAll(KorisniciSearchRequest search)
         {
@@ -138,7 +170,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         }
         public IList<Model.Korisnici> GetAllDatumOdDo(KorisniciSearchRequest search = default)
         {
-            var korisnici = _context.Korisnici.ToList();
+            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 4).ToList();
 
             var novalista = new List<Database.Korisnici>();
             foreach (var korisnik in korisnici)
@@ -212,13 +244,16 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             _mapper.Map(request, entity);
             entity.Slika = exSlika;
-            if (request.Password != request.PasswordConfirm)
+            if (!string.IsNullOrWhiteSpace(request.Password))
             {
-                throw new UserException("Password i potvrda se ne slažu!");
+                if (request.Password != request.PasswordConfirm)
+                {
+                    throw new UserException("Password i potvrda se ne slažu!");
+                }
+                entity.LozinkaSalt = GenerateSalt();
+                entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
             }
-            entity.LozinkaSalt = GenerateSalt();
-            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Password);
-
+            
             _context.SaveChanges();
 
             return _mapper.Map<Model.Korisnici>(entity);
@@ -363,17 +398,29 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         {
             var korisnik = _context.Korisnici.Find(id);
             var pacijent = _context.Pacijents.FirstOrDefault(i => i.KorisnikId == korisnik.KorisnikId);
+
+            var exSlika=request.Slika;
+            if (request.Slika == null)
+            {
+                exSlika = korisnik.Slika;
+
+            }
+
             //update tabelu korisnik
             _mapper.Map(request, korisnik);
             //update tabelu pacijent
             _mapper.Map(request, pacijent);
-
+            korisnik.Slika = exSlika;
             if (request.Password != request.PasswordConfirm)
             {
                 throw new UserException("Password i potvrda se ne slažu!");
             }
-            korisnik.LozinkaSalt = GenerateSalt();
-            korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Password);
+
+            if (request.Password != null)
+            {
+                korisnik.LozinkaSalt = GenerateSalt();
+                korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Password);
+            }
 
             _context.SaveChanges();
 
@@ -402,7 +449,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
         public Model.Korisnici GetNajboljiStomatolog()
         {
-            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 2).ToList();
+            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 2 || i.UlogaId == 1).ToList();
             var brojac = 0;
             var noviKorisnik = new Database.Korisnici();
             foreach (var korisnik in korisnici)
@@ -420,7 +467,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         }
         public Model.Korisnici GetNajboljeOsoblje()
         {
-            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 3).ToList();
+            var korisnici = _context.Korisnici.Where(i=>i.UlogaId == 3 || i.UlogaId == 1).ToList();
             var brojac = 0;
             var noviKorisnik = new Database.Korisnici();
             foreach (var korisnik in korisnici)
@@ -440,22 +487,44 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public Model.Korisnici GetNajBoljiPacijent()
         {
             var pacijenti = _context.Pacijents.ToList();
-            int brojac = 0;
+            decimal suma = 0;
             var noviKorisnik = 0;
             foreach (var pacijent in pacijenti)
             {
-                var racun = _context.MedicinskiKartons.Count(i => i.PacijentId == pacijent.PacijentId);
-                if (racun > brojac)
+                var racun = _context.Racuns.Where(i => i.Pregled.Termin.Pacijent.PacijentId == pacijent.PacijentId);
+                decimal temp = racun.Sum(i=>i.UkupnaCijena);
+                if (temp > suma)
                 {
-                    brojac = racun;
+                    suma = temp;
                     noviKorisnik = pacijent.KorisnikId;
                 }
             }
 
             var finalkorisnik = _context.Korisnici.Find(noviKorisnik);
             var tempMap = _mapper.Map<Model.Korisnici>(finalkorisnik);
-            tempMap.obavljenoPregleda = brojac;
+            tempMap.UkupnoNovca = suma;
             return tempMap;
+        }
+        public IList<Model.Korisnici> TopPacijenti(KorisniciSearchRequest search = default)
+        {
+            var korisnici = _context.Korisnici.Where(i => i.UlogaId == 4).ToList();
+            var novalista = new List<Model.Korisnici>();
+
+            foreach (var korisnik in korisnici)
+            {
+                var test = _context.MedicinskiKartons.Where(i =>
+                    i.Pacijent.Korisnici.KorisnikId == korisnik.KorisnikId);
+                if (test.FirstOrDefault() != null)
+                {
+                    var noviKorisnik = _mapper.Map<Model.Korisnici>(korisnik);
+                    noviKorisnik.obavljenoPregleda = test.Count();
+                    novalista.Add(noviKorisnik);
+                }
+            }
+
+            var temp = novalista.OrderByDescending(i => i.obavljenoPregleda).Take(10).ToList();
+            return temp;
+
         }
 
     }

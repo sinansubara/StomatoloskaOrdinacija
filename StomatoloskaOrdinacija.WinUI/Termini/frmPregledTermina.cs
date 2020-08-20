@@ -27,21 +27,15 @@ namespace StomatoloskaOrdinacija.WinUI.Termini
 
             dgvTermini.AutoGenerateColumns = false;
             dgvTermini.DataSource = sviTermini;
-            dgvTermini.Columns[2].DefaultCellStyle.Format = "F";
+            if (dgvTermini.RowCount > 0)
+            {
+                dgvTermini.Columns[4].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
+            }
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            var requestSearch = cbNacekanju.Checked;
-            TerminSearchRequest termin = new TerminSearchRequest
-            {
-                IsNaCekanju = requestSearch
-            };
-            var sviTermini = await _serviceTermin.GetAll<List<Model.Termin>>(termin);
-
-            dgvTermini.AutoGenerateColumns = false;
-            dgvTermini.DataSource = sviTermini;
-            dgvTermini.Columns[2].DefaultCellStyle.Format = "F";
+            
         }
 
         private void dgvKorisnici_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -51,26 +45,75 @@ namespace StomatoloskaOrdinacija.WinUI.Termini
 
         private async void btnOdobri_Click(object sender, EventArgs e)
         {
-            var id = dgvTermini.SelectedRows[0].Cells[0].Value;
-            await prihvatiTermin.Update<object>(id, new TerminSearchRequest());
-
-            var requestSearch = cbNacekanju.Checked;
-            TerminSearchRequest termin = new TerminSearchRequest
+            if (dgvTermini.RowCount > 0)
             {
-                IsNaCekanju = requestSearch
-            };
-            var sviTermini = await _serviceTermin.GetAll<List<Model.Termin>>(termin);
+                try
+                {
+                    var id = dgvTermini.SelectedRows[0].Cells[0].Value;
+                    await prihvatiTermin.Update<object>(id, new TerminSearchRequest());
+                    MessageBox.Show("Uspjesno ste odobrili termin.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Niste oznacili termin za izmjenu.","Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                var requestSearch = cbNacekanju.Checked;
+                TerminSearchRequest termin = new TerminSearchRequest
+                {
+                    IsNaCekanju = requestSearch
+                };
+                var sviTermini = await _serviceTermin.GetAll<List<Model.Termin>>(termin);
 
-            dgvTermini.AutoGenerateColumns = false;
-            dgvTermini.DataSource = sviTermini;
-            dgvTermini.Columns[2].DefaultCellStyle.Format = "F";
+                dgvTermini.AutoGenerateColumns = false;
+                dgvTermini.DataSource = sviTermini;
+                if (dgvTermini.RowCount > 0)
+                {
+                    dgvTermini.Columns[4].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lista jos nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private async void btnOdbij_Click(object sender, EventArgs e)
         {
-            var id = dgvTermini.SelectedRows[0].Cells[0].Value;
-            await odbijTermin.Update<object>(id, new TerminSearchRequest());
+            if (dgvTermini.RowCount > 0)
+            {
+                try
+                {
+                    var id = dgvTermini.SelectedRows[0].Cells[0].Value;
+                    await odbijTermin.Update<object>(id, new TerminSearchRequest());
+                    MessageBox.Show("Uspjesno ste odbili termin.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Niste oznacili termin za izmjenu.","Greska", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                
+                var requestSearch = cbNacekanju.Checked;
+                TerminSearchRequest termin = new TerminSearchRequest
+                {
+                    IsNaCekanju = requestSearch
+                };
+                var sviTermini = await _serviceTermin.GetAll<List<Model.Termin>>(termin);
 
+                dgvTermini.AutoGenerateColumns = false;
+                dgvTermini.DataSource = sviTermini;
+                if (dgvTermini.RowCount > 0)
+                {
+                    dgvTermini.Columns[4].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private async void cbNacekanju_CheckedChanged(object sender, EventArgs e)
+        {
             var requestSearch = cbNacekanju.Checked;
             TerminSearchRequest termin = new TerminSearchRequest
             {
@@ -80,7 +123,10 @@ namespace StomatoloskaOrdinacija.WinUI.Termini
 
             dgvTermini.AutoGenerateColumns = false;
             dgvTermini.DataSource = sviTermini;
-            dgvTermini.Columns[2].DefaultCellStyle.Format = "F";
+            if (dgvTermini.RowCount > 0)
+            {
+                dgvTermini.Columns[4].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
+            }
         }
     }
 }

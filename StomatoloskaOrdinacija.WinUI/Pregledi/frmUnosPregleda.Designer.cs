@@ -58,6 +58,7 @@
             // 
             // cmbTermin
             // 
+            this.cmbTermin.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTermin.FormattingEnabled = true;
             this.cmbTermin.Location = new System.Drawing.Point(63, 73);
             this.cmbTermin.Name = "cmbTermin";
@@ -67,6 +68,7 @@
             // 
             // cmbDijagnoza
             // 
+            this.cmbDijagnoza.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDijagnoza.FormattingEnabled = true;
             this.cmbDijagnoza.Location = new System.Drawing.Point(63, 177);
             this.cmbDijagnoza.Name = "cmbDijagnoza";
@@ -75,6 +77,7 @@
             // 
             // cmbLijek
             // 
+            this.cmbLijek.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbLijek.FormattingEnabled = true;
             this.cmbLijek.Location = new System.Drawing.Point(327, 177);
             this.cmbLijek.Name = "cmbLijek";
@@ -83,6 +86,7 @@
             // 
             // cmbMaterijal
             // 
+            this.cmbMaterijal.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbMaterijal.FormattingEnabled = true;
             this.cmbMaterijal.Location = new System.Drawing.Point(63, 243);
             this.cmbMaterijal.Name = "cmbMaterijal";

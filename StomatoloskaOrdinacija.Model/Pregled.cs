@@ -33,5 +33,6 @@ namespace StomatoloskaOrdinacija.Model
         public int TrajanjePregleda { get; set; }
         public string Napomena { get; set; }
         public decimal KolicinaOdabranogMaterijala { get; set; }
+        public string PregledIme { get; set; }
     }
 }

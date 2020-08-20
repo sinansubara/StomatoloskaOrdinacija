@@ -54,6 +54,24 @@
     <Reference Include="Flurl.Http, Version=2.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Flurl.Http.2.4.2\lib\net46\Flurl.Http.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -142,11 +160,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reporti\frmKorisniciPoDatumuRegistracije.cs">
+    <Compile Include="Racun\frmPregledRacuna.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporti\frmKorisniciPoDatumuRegistracije.Designer.cs">
-      <DependentUpon>frmKorisniciPoDatumuRegistracije.cs</DependentUpon>
+    <Compile Include="Racun\frmPregledRacuna.Designer.cs">
+      <DependentUpon>frmPregledRacuna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Racun\frmRacunReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Racun\frmRacunReport.Designer.cs">
+      <DependentUpon>frmRacunReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Reporti\frmNajboljiKorisnici.cs">
       <SubType>Form</SubType>
@@ -154,17 +178,29 @@
     <Compile Include="Reporti\frmNajboljiKorisnici.Designer.cs">
       <DependentUpon>frmNajboljiKorisnici.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reporti\frmTop10Materijala.cs">
+    <Compile Include="Reporti\reportViewerPacijentiPoDatumu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporti\frmTop10Materijala.Designer.cs">
-      <DependentUpon>frmTop10Materijala.cs</DependentUpon>
+    <Compile Include="Reporti\reportViewerPacijentiPoDatumu.Designer.cs">
+      <DependentUpon>reportViewerPacijentiPoDatumu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reporti\reportforma.cs">
+    <Compile Include="Reporti\reportviewertest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Reporti\reportforma.Designer.cs">
-      <DependentUpon>reportforma.cs</DependentUpon>
+    <Compile Include="Reporti\reportviewertest.Designer.cs">
+      <DependentUpon>reportviewertest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporti\reportViewerTopPacijenti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporti\reportViewerTopPacijenti.Designer.cs">
+      <DependentUpon>reportViewerTopPacijenti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reporti\reportViewerUslugePoZaradi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporti\reportViewerUslugePoZaradi.Designer.cs">
+      <DependentUpon>reportViewerUslugePoZaradi.cs</DependentUpon>
     </Compile>
     <Compile Include="Skladiste\frmSkladiste.cs">
       <SubType>Form</SubType>
@@ -184,6 +220,7 @@
     <Compile Include="Skladiste\frmUlazUSkladiste.Designer.cs">
       <DependentUpon>frmUlazUSkladiste.cs</DependentUpon>
     </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Termini\frmPregledTermina.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,16 +267,32 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Reporti\frmKorisniciPoDatumuRegistracije.resx">
-      <DependentUpon>frmKorisniciPoDatumuRegistracije.cs</DependentUpon>
+    <EmbeddedResource Include="Racun\frmPregledRacuna.resx">
+      <DependentUpon>frmPregledRacuna.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Racun\frmRacunReport.resx">
+      <DependentUpon>frmRacunReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Racun\rptRacunIzdavanje.rdlc" />
     <EmbeddedResource Include="Reporti\frmNajboljiKorisnici.resx">
       <DependentUpon>frmNajboljiKorisnici.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporti\frmTop10Materijala.resx">
-      <DependentUpon>frmTop10Materijala.cs</DependentUpon>
+    <EmbeddedResource Include="Reporti\reportViewerPacijentiPoDatumu.resx">
+      <DependentUpon>reportViewerPacijentiPoDatumu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reporti\Report1.rdlc" />
+    <EmbeddedResource Include="Reporti\reportviewertest.resx">
+      <DependentUpon>reportviewertest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporti\reportViewerTopPacijenti.resx">
+      <DependentUpon>reportViewerTopPacijenti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporti\reportViewerUslugePoZaradi.resx">
+      <DependentUpon>reportViewerUslugePoZaradi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporti\rptPacijentiPoDatumuRegistracije.rdlc" />
+    <EmbeddedResource Include="Reporti\rptTop10Pacijenata.rdlc" />
+    <EmbeddedResource Include="Reporti\rptTop10Proizvoda.rdlc" />
+    <EmbeddedResource Include="Reporti\rptUslugePoZaradi.rdlc" />
     <EmbeddedResource Include="Skladiste\frmSkladiste.resx">
       <DependentUpon>frmSkladiste.cs</DependentUpon>
     </EmbeddedResource>
@@ -273,6 +326,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="StomatoloskaOrdinacija.Model.Korisnici.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Materijali.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Pacijent.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Pregled.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Racun.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Skladiste.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Termin.datasource" />
+    <None Include="StomatoloskaOrdinacija.Model.Usluga.datasource" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -285,6 +346,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="dental_min %28Small%29.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="no_image.jpeg" />
   </ItemGroup>
   <ItemGroup>
@@ -299,5 +373,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

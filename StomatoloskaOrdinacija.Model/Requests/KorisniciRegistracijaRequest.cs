@@ -14,7 +14,7 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public string Prezime { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [EmailAddress()]
+        [EmailAddress(ErrorMessage = "Pogrešan unos email adrese!")]
         public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false)]
@@ -22,7 +22,7 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public string KorisnickoIme { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        [StringLength(13, MinimumLength = 13)]
+        [StringLength(13,MinimumLength = 13,ErrorMessage = "JMBG mora da ima 13 brojeva!")]
         public string JMBG { get; set; }
 
         [Required]

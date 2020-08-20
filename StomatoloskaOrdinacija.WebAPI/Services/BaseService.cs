@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
@@ -12,6 +13,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
     {
         protected MyContext _context;
         protected IMapper _mapper;
+        
         public BaseService(MyContext context, IMapper mapper)
         {
             _context = context;

@@ -7,23 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Reporting.WinForms;
 
 namespace StomatoloskaOrdinacija.WinUI.Reporti
 {
-    public partial class frmTop10Materijala : Form
+    public partial class reportviewertest : Form
     {
         private readonly APIService _service = new APIService("Materijali");
-        public frmTop10Materijala()
+        public reportviewertest()
         {
             InitializeComponent();
         }
 
-        private async void frmTop10Materijala_Load(object sender, EventArgs e)
+        private async void reportviewertest_Load(object sender, EventArgs e)
         {
             var temp = await _service.GetAll<List<Model.Materijali>>();
+            
 
-            dgvKorisnici.AutoGenerateColumns = false;
-            dgvKorisnici.DataSource = temp;
+            bsProizvodi.DataSource = temp;
+            ReportDataSource rds = new ReportDataSource("dsTop10Proizvoda", bsProizvodi);
+            this.rpvProizvodi.LocalReport.DataSources.Add(rds);
+            this.rpvProizvodi.RefreshReport();
         }
     }
 }

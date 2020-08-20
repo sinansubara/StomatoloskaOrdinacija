@@ -42,18 +42,22 @@
             this.pregledToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.unosNovogPregledaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pretragaPregledaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.racunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pregledRacunaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.terminiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pregledSvihTerminaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.popustToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dodajNoviPopustToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.najznacajnijiPacijentiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.top10ProizvodaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.najboljiKorisniciToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.top10MaterijalaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.noviReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.najboljeUslugeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -65,6 +69,7 @@
             this.pacijentiToolStripMenuItem,
             this.skladisteToolStripMenuItem,
             this.pregledToolStripMenuItem1,
+            this.racunToolStripMenuItem,
             this.terminiToolStripMenuItem,
             this.popustToolStripMenuItem,
             this.reportiToolStripMenuItem});
@@ -166,6 +171,21 @@
             this.pretragaPregledaToolStripMenuItem.Text = "Pretraga pregleda";
             this.pretragaPregledaToolStripMenuItem.Click += new System.EventHandler(this.pretragaPregledaToolStripMenuItem_Click);
             // 
+            // racunToolStripMenuItem
+            // 
+            this.racunToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pregledRacunaToolStripMenuItem});
+            this.racunToolStripMenuItem.Name = "racunToolStripMenuItem";
+            this.racunToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.racunToolStripMenuItem.Text = "Racun";
+            // 
+            // pregledRacunaToolStripMenuItem
+            // 
+            this.pregledRacunaToolStripMenuItem.Name = "pregledRacunaToolStripMenuItem";
+            this.pregledRacunaToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.pregledRacunaToolStripMenuItem.Text = "Pregled racuna";
+            this.pregledRacunaToolStripMenuItem.Click += new System.EventHandler(this.pregledRacunaToolStripMenuItem_Click);
+            // 
             // terminiToolStripMenuItem
             // 
             this.terminiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -199,34 +219,42 @@
             // reportiToolStripMenuItem
             // 
             this.reportiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.najboljiKorisniciToolStripMenuItem,
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem,
-            this.top10MaterijalaToolStripMenuItem,
-            this.noviReportToolStripMenuItem});
+            this.najznacajnijiPacijentiToolStripMenuItem,
+            this.top10ProizvodaToolStripMenuItem,
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem,
+            this.najboljeUslugeToolStripMenuItem,
+            this.najboljiKorisniciToolStripMenuItem});
             this.reportiToolStripMenuItem.Name = "reportiToolStripMenuItem";
             this.reportiToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.reportiToolStripMenuItem.Text = "Reporti";
             // 
+            // najznacajnijiPacijentiToolStripMenuItem
+            // 
+            this.najznacajnijiPacijentiToolStripMenuItem.Name = "najznacajnijiPacijentiToolStripMenuItem";
+            this.najznacajnijiPacijentiToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.najznacajnijiPacijentiToolStripMenuItem.Text = "Najznacajniji pacijenti";
+            this.najznacajnijiPacijentiToolStripMenuItem.Click += new System.EventHandler(this.najznacajnijiPacijentiToolStripMenuItem_Click);
+            // 
+            // top10ProizvodaToolStripMenuItem
+            // 
+            this.top10ProizvodaToolStripMenuItem.Name = "top10ProizvodaToolStripMenuItem";
+            this.top10ProizvodaToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.top10ProizvodaToolStripMenuItem.Text = "Top 10 proizvoda";
+            this.top10ProizvodaToolStripMenuItem.Click += new System.EventHandler(this.top10ProizvodaToolStripMenuItem_Click);
+            // 
+            // pacijentiPoDatumuRegistracijeToolStripMenuItem
+            // 
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem.Name = "pacijentiPoDatumuRegistracijeToolStripMenuItem";
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem.Text = "Pacijenti po datumu registracije";
+            this.pacijentiPoDatumuRegistracijeToolStripMenuItem.Click += new System.EventHandler(this.pacijentiPoDatumuRegistracijeToolStripMenuItem_Click);
+            // 
             // najboljiKorisniciToolStripMenuItem
             // 
             this.najboljiKorisniciToolStripMenuItem.Name = "najboljiKorisniciToolStripMenuItem";
-            this.najboljiKorisniciToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.najboljiKorisniciToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.najboljiKorisniciToolStripMenuItem.Text = "Najbolji korisnici";
             this.najboljiKorisniciToolStripMenuItem.Click += new System.EventHandler(this.najboljiKorisniciToolStripMenuItem_Click);
-            // 
-            // korisniciPoDatumuRegistrovanjaToolStripMenuItem
-            // 
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem.Name = "korisniciPoDatumuRegistrovanjaToolStripMenuItem";
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem.Text = "Korisnici po datumu registrovanja";
-            this.korisniciPoDatumuRegistrovanjaToolStripMenuItem.Click += new System.EventHandler(this.korisniciPoDatumuRegistrovanjaToolStripMenuItem_Click);
-            // 
-            // top10MaterijalaToolStripMenuItem
-            // 
-            this.top10MaterijalaToolStripMenuItem.Name = "top10MaterijalaToolStripMenuItem";
-            this.top10MaterijalaToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.top10MaterijalaToolStripMenuItem.Text = "Top 10 materijala";
-            this.top10MaterijalaToolStripMenuItem.Click += new System.EventHandler(this.top10MaterijalaToolStripMenuItem_Click);
             // 
             // statusStrip
             // 
@@ -244,12 +272,18 @@
             this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
-            // noviReportToolStripMenuItem
+            // notifyIcon1
             // 
-            this.noviReportToolStripMenuItem.Name = "noviReportToolStripMenuItem";
-            this.noviReportToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.noviReportToolStripMenuItem.Text = "Novi report";
-            this.noviReportToolStripMenuItem.Click += new System.EventHandler(this.noviReportToolStripMenuItem_Click);
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.BalloonTipClicked += new System.EventHandler(this.notifyIcon1_BalloonTipClicked);
+            // 
+            // najboljeUslugeToolStripMenuItem
+            // 
+            this.najboljeUslugeToolStripMenuItem.Name = "najboljeUslugeToolStripMenuItem";
+            this.najboljeUslugeToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.najboljeUslugeToolStripMenuItem.Text = "Najbolje usluge";
+            this.najboljeUslugeToolStripMenuItem.Click += new System.EventHandler(this.najboljeUslugeToolStripMenuItem_Click);
             // 
             // frmIndex
             // 
@@ -297,10 +331,14 @@
         private System.Windows.Forms.ToolStripMenuItem popustToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dodajNoviPopustToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportiToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem korisniciPoDatumuRegistrovanjaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem top10MaterijalaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem najboljiKorisniciToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem noviReportToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem top10ProizvodaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem racunToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pregledRacunaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pacijentiPoDatumuRegistracijeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem najznacajnijiPacijentiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem najboljeUslugeToolStripMenuItem;
     }
 }
 

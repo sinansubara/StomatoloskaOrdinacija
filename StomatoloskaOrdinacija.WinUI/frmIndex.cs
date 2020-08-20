@@ -12,6 +12,7 @@ using StomatoloskaOrdinacija.WinUI.Korisnici;
 using StomatoloskaOrdinacija.WinUI.Pacijenti;
 using StomatoloskaOrdinacija.WinUI.Popusti;
 using StomatoloskaOrdinacija.WinUI.Pregledi;
+using StomatoloskaOrdinacija.WinUI.Racun;
 using StomatoloskaOrdinacija.WinUI.Reporti;
 using StomatoloskaOrdinacija.WinUI.Skladiste;
 using StomatoloskaOrdinacija.WinUI.Termini;
@@ -20,12 +21,13 @@ namespace StomatoloskaOrdinacija.WinUI
 {
     public partial class frmIndex : Form
     {
-        
+        APIService _service = new APIService("Termin");
         private int childFormNumber = 0;
 
         public frmIndex()
         {
             InitializeComponent();
+            notifyIcon1.Icon = this.Icon;
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -167,8 +169,16 @@ namespace StomatoloskaOrdinacija.WinUI
 
         private void unosNovogPregledaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmUnosPregleda frm = new frmUnosPregleda();
-            frm.Show();
+            if (APIService.Permisije == 1 || APIService.Permisije == 2)
+            {
+                frmUnosPregleda frm = new frmUnosPregleda();
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Samo stomatolog moze dodavati informacije o pregledima pacijenata!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
         }
 
         private void pretragaPregledaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -200,7 +210,19 @@ namespace StomatoloskaOrdinacija.WinUI
 
         private async void frmIndex_Load(object sender, EventArgs e)
         {
-            
+            try
+            {
+                var lista = await _service.GetAll<IList<Model.Termin>>(new TerminSearchRequest {IsNaCekanju = true});
+                var brojNovihTermina = lista.Count;
+                if (brojNovihTermina > 0)
+                {
+                    notifyIcon1.ShowBalloonTip(4000, "Novi termini", "Broj novih termina: "+brojNovihTermina, ToolTipIcon.Info);
+                }
+            }
+            catch (Exception)
+            {
+                
+            }
         }
         
 
@@ -215,25 +237,69 @@ namespace StomatoloskaOrdinacija.WinUI
 
         private void korisniciPoDatumuRegistrovanjaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmKorisniciPoDatumuRegistracije frm = new frmKorisniciPoDatumuRegistracije
-            {
-                MdiParent = this, WindowState = FormWindowState.Maximized
-            };
-            frm.Show();
+            
         }
 
         private void top10MaterijalaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmTop10Materijala frm = new frmTop10Materijala
+            
+        }
+
+        private void noviReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void notifyIcon1_BalloonTipClicked(object sender, EventArgs e)
+        {
+            frmPregledTermina frm = new frmPregledTermina
             {
                 MdiParent = this, WindowState = FormWindowState.Maximized
             };
             frm.Show();
         }
 
-        private void noviReportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void top10ProizvodaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Report1 rep = new Report1();
+            reportviewertest frm = new reportviewertest();
+            frm.Show();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void najboljiPacijentiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void pregledRacunaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmPregledRacuna frm = new frmPregledRacuna
+            {
+                MdiParent = this, WindowState = FormWindowState.Maximized
+            };
+            frm.Show();
+        }
+
+        private void pacijentiPoDatumuRegistracijeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reportViewerPacijentiPoDatumu frm = new reportViewerPacijentiPoDatumu();
+            frm.Show();
+        }
+
+        private void najznacajnijiPacijentiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reportViewerTopPacijenti frm = new reportViewerTopPacijenti();
+            frm.Show();
+        }
+
+        private void najboljeUslugeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reportViewerUslugePoZaradi frm = new reportViewerUslugePoZaradi();
+            frm.Show();
         }
     }
 }

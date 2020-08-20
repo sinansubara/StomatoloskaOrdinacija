@@ -53,7 +53,7 @@ namespace StomatoloskaOrdinacija.WinUI.Reporti
             if (result != null)
             {
                 txtNajboljiPacijent.Text = result.Ime + " "+ result.Prezime;
-                txtNovcaUtrošeno.Text = result.obavljenoPregleda.ToString();
+                txtNovcaUtrošeno.Text = result.UkupnoNovca.ToString("F") + " KM";
             }
             
         }

@@ -32,10 +32,13 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvPopust = new System.Windows.Forms.DataGridView();
             this.PopustId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UslugaId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImeKreatoraPopusta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OdabranaUsluga = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PopustOdDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PopustDoDatuma = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CijenaUsluge = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.VrijednostPopusta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CijenaSPopustom = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnDodaj = new System.Windows.Forms.Button();
             this.cmbUsluga = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -46,6 +49,7 @@
             this.txtVrijednostPopusta = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnDeletePopust = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPopust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -56,7 +60,7 @@
             this.groupBox1.Controls.Add(this.dgvPopust);
             this.groupBox1.Location = new System.Drawing.Point(12, 235);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(596, 324);
+            this.groupBox1.Size = new System.Drawing.Size(972, 324);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Popusti";
@@ -68,16 +72,19 @@
             this.dgvPopust.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPopust.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PopustId,
-            this.UslugaId,
+            this.ImeKreatoraPopusta,
+            this.OdabranaUsluga,
             this.PopustOdDatuma,
             this.PopustDoDatuma,
-            this.VrijednostPopusta});
+            this.CijenaUsluge,
+            this.VrijednostPopusta,
+            this.CijenaSPopustom});
             this.dgvPopust.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvPopust.Location = new System.Drawing.Point(3, 16);
             this.dgvPopust.Name = "dgvPopust";
             this.dgvPopust.ReadOnly = true;
             this.dgvPopust.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPopust.Size = new System.Drawing.Size(590, 305);
+            this.dgvPopust.Size = new System.Drawing.Size(966, 305);
             this.dgvPopust.TabIndex = 0;
             this.dgvPopust.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTermini_CellContentClick);
             // 
@@ -89,17 +96,25 @@
             this.PopustId.ReadOnly = true;
             this.PopustId.Visible = false;
             // 
-            // UslugaId
+            // ImeKreatoraPopusta
             // 
-            this.UslugaId.DataPropertyName = "UslugaId";
-            this.UslugaId.HeaderText = "UslugaId";
-            this.UslugaId.Name = "UslugaId";
-            this.UslugaId.ReadOnly = true;
+            this.ImeKreatoraPopusta.DataPropertyName = "ImeKreatoraPopusta";
+            this.ImeKreatoraPopusta.HeaderText = "Korisnik";
+            this.ImeKreatoraPopusta.Name = "ImeKreatoraPopusta";
+            this.ImeKreatoraPopusta.ReadOnly = true;
+            // 
+            // OdabranaUsluga
+            // 
+            this.OdabranaUsluga.DataPropertyName = "OdabranaUsluga";
+            this.OdabranaUsluga.HeaderText = "Usluga";
+            this.OdabranaUsluga.Name = "OdabranaUsluga";
+            this.OdabranaUsluga.ReadOnly = true;
+            this.OdabranaUsluga.Width = 150;
             // 
             // PopustOdDatuma
             // 
             this.PopustOdDatuma.DataPropertyName = "PopustOdDatuma";
-            this.PopustOdDatuma.HeaderText = "PopustOdDatuma";
+            this.PopustOdDatuma.HeaderText = "Popust traje od";
             this.PopustOdDatuma.Name = "PopustOdDatuma";
             this.PopustOdDatuma.ReadOnly = true;
             this.PopustOdDatuma.Width = 150;
@@ -107,21 +122,37 @@
             // PopustDoDatuma
             // 
             this.PopustDoDatuma.DataPropertyName = "PopustDoDatuma";
-            this.PopustDoDatuma.HeaderText = "PopustDoDatuma";
+            this.PopustDoDatuma.HeaderText = "Popust traje do";
             this.PopustDoDatuma.Name = "PopustDoDatuma";
             this.PopustDoDatuma.ReadOnly = true;
             this.PopustDoDatuma.Width = 150;
             // 
+            // CijenaUsluge
+            // 
+            this.CijenaUsluge.DataPropertyName = "CijenaUsluge";
+            this.CijenaUsluge.HeaderText = "Cijena usluge";
+            this.CijenaUsluge.Name = "CijenaUsluge";
+            this.CijenaUsluge.ReadOnly = true;
+            // 
             // VrijednostPopusta
             // 
             this.VrijednostPopusta.DataPropertyName = "VrijednostPopusta";
-            this.VrijednostPopusta.HeaderText = "VrijednostPopusta";
+            this.VrijednostPopusta.HeaderText = "Vrijednost popusta";
             this.VrijednostPopusta.Name = "VrijednostPopusta";
             this.VrijednostPopusta.ReadOnly = true;
+            this.VrijednostPopusta.Width = 120;
+            // 
+            // CijenaSPopustom
+            // 
+            this.CijenaSPopustom.DataPropertyName = "CijenaSPopustom";
+            this.CijenaSPopustom.HeaderText = "Cijena sa popustom";
+            this.CijenaSPopustom.Name = "CijenaSPopustom";
+            this.CijenaSPopustom.ReadOnly = true;
+            this.CijenaSPopustom.Width = 150;
             // 
             // btnDodaj
             // 
-            this.btnDodaj.Location = new System.Drawing.Point(464, 169);
+            this.btnDodaj.Location = new System.Drawing.Point(620, 121);
             this.btnDodaj.Name = "btnDodaj";
             this.btnDodaj.Size = new System.Drawing.Size(141, 47);
             this.btnDodaj.TabIndex = 20;
@@ -131,10 +162,11 @@
             // 
             // cmbUsluga
             // 
+            this.cmbUsluga.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUsluga.FormattingEnabled = true;
             this.cmbUsluga.Location = new System.Drawing.Point(15, 39);
             this.cmbUsluga.Name = "cmbUsluga";
-            this.cmbUsluga.Size = new System.Drawing.Size(313, 21);
+            this.cmbUsluga.Size = new System.Drawing.Size(467, 21);
             this.cmbUsluga.TabIndex = 21;
             this.cmbUsluga.SelectedIndexChanged += new System.EventHandler(this.cmbUsluga_SelectedIndexChanged);
             // 
@@ -151,14 +183,14 @@
             // 
             this.dtpOD.Location = new System.Drawing.Point(15, 96);
             this.dtpOD.Name = "dtpOD";
-            this.dtpOD.Size = new System.Drawing.Size(313, 20);
+            this.dtpOD.Size = new System.Drawing.Size(467, 20);
             this.dtpOD.TabIndex = 24;
             // 
             // dtpDO
             // 
             this.dtpDO.Location = new System.Drawing.Point(15, 148);
             this.dtpDO.Name = "dtpDO";
-            this.dtpDO.Size = new System.Drawing.Size(313, 20);
+            this.dtpDO.Size = new System.Drawing.Size(467, 20);
             this.dtpDO.TabIndex = 25;
             // 
             // label2
@@ -183,7 +215,7 @@
             // 
             this.txtVrijednostPopusta.Location = new System.Drawing.Point(15, 196);
             this.txtVrijednostPopusta.Name = "txtVrijednostPopusta";
-            this.txtVrijednostPopusta.Size = new System.Drawing.Size(313, 20);
+            this.txtVrijednostPopusta.Size = new System.Drawing.Size(467, 20);
             this.txtVrijednostPopusta.TabIndex = 28;
             this.txtVrijednostPopusta.Validating += new System.ComponentModel.CancelEventHandler(this.txtVrijednostPopusta_Validating);
             // 
@@ -200,11 +232,23 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnDeletePopust
+            // 
+            this.btnDeletePopust.BackColor = System.Drawing.Color.Crimson;
+            this.btnDeletePopust.Location = new System.Drawing.Point(620, 179);
+            this.btnDeletePopust.Name = "btnDeletePopust";
+            this.btnDeletePopust.Size = new System.Drawing.Size(141, 37);
+            this.btnDeletePopust.TabIndex = 30;
+            this.btnDeletePopust.Text = "Izbrisi popust";
+            this.btnDeletePopust.UseVisualStyleBackColor = false;
+            this.btnDeletePopust.Click += new System.EventHandler(this.btnDeletePopust_Click);
+            // 
             // frmDodajPopust
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(985, 571);
+            this.ClientSize = new System.Drawing.Size(1024, 571);
+            this.Controls.Add(this.btnDeletePopust);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtVrijednostPopusta);
             this.Controls.Add(this.label3);
@@ -239,11 +283,15 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtVrijednostPopusta;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.DataGridViewTextBoxColumn PopustId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UslugaId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImeKreatoraPopusta;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OdabranaUsluga;
         private System.Windows.Forms.DataGridViewTextBoxColumn PopustOdDatuma;
         private System.Windows.Forms.DataGridViewTextBoxColumn PopustDoDatuma;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CijenaUsluge;
         private System.Windows.Forms.DataGridViewTextBoxColumn VrijednostPopusta;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CijenaSPopustom;
+        private System.Windows.Forms.Button btnDeletePopust;
     }
 }

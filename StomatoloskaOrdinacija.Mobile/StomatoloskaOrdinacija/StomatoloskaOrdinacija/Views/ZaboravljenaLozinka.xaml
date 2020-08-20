@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.ZaboravljenaLozinka">
+    <ContentPage.BindingContext>
+        <viewModels:ZaboravljenaLozinkaViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label TextColor="White" Text="ZABORAVLJENA LOZINKA" Grid.ColumnSpan="2" FontSize="25" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <Image Source="dental.jpg" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="5"/>
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Email:" Grid.Row="1" Grid.Column="0"/>
+                    <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" Grid.Row="1" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding EmailValidate}" Text="Niste unijeli/ispravan email(max 320 karaktera)" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Button BackgroundColor="LawnGreen"  Command="{Binding PosaljiCommand}" HorizontalOptions="FillAndExpand"  Text="POŠALJI KOD" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

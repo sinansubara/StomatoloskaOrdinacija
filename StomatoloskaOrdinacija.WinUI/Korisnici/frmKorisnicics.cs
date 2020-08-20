@@ -36,6 +36,10 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             var list = await _korisniciService.GetAll<IList<Model.Korisnici>>(searchRequest);
             dgvKorisnici.AutoGenerateColumns = false;
             dgvKorisnici.DataSource = list;
+            if (dgvKorisnici.RowCount > 0)
+            {
+                dgvKorisnici.Columns[6].DefaultCellStyle.Format = "dd.MM.yyyy";
+            }
         }
 
         private void dgvKorisnici_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -45,16 +49,23 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
 
         private void dgvKorisnici_DoubleClick(object sender, EventArgs e)
         {
-            if (APIService.Permisije == 1)
+            if (dgvKorisnici.RowCount > 0)
             {
-                var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-                int.TryParse(id.ToString(), out int convertKorisnici);
-                frmKorisniciDetalji frm = new frmKorisniciDetalji(convertKorisnici);
-                frm.Show();
+                if (APIService.Permisije == 1)
+                {
+                    var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
+                    int.TryParse(id.ToString(), out int convertKorisnici);
+                    frmKorisniciDetalji frm = new frmKorisniciDetalji(convertKorisnici);
+                    frm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Ova funkcija je za administratora samo, ako želite izmjeniti podatke pacijenta, morate otići na tab namjenjen za pacijente!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
-                MessageBox.Show("Ova funkcija je za administratora samo, ako želite izmjeniti podatke pacijenta, morate otići na tab namjenjen za pacijente!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -65,16 +76,23 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
-            if (APIService.Permisije == 1)
+            if (dgvKorisnici.RowCount > 0)
             {
-                var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-                int.TryParse(id.ToString(), out int convertDetalji);
-                frmKorisniciDetalji frm = new frmKorisniciDetalji(convertDetalji);
-                frm.Show();
+                if (APIService.Permisije == 1)
+                {
+                    var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
+                    int.TryParse(id.ToString(), out int convertDetalji);
+                    frmKorisniciDetalji frm = new frmKorisniciDetalji(convertDetalji);
+                    frm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Ova funkcija je za administratora samo, ako želite izmjeniti podatke pacijenta, morate otići na tab namjenjen za pacijente!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
-                MessageBox.Show("Ova funkcija je za administratora samo, ako želite izmjeniti podatke pacijenta, morate otići na tab namjenjen za pacijente!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -103,6 +121,10 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
             var list = await _korisniciService.GetAll<IList<Model.Korisnici>>(null);
             dgvKorisnici.AutoGenerateColumns = false;
             dgvKorisnici.DataSource = list;
+            if (dgvKorisnici.RowCount > 0)
+            {
+                dgvKorisnici.Columns[6].DefaultCellStyle.Format = "dd.MM.yyyy";
+            }
         }
     }
 }

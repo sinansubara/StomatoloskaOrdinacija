@@ -14,5 +14,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public int SkladisteId { get; set; }
 
         public string Napomena { get; set; }
+        public string IsUplacenPregledRequest { get; set; }
     }
 }

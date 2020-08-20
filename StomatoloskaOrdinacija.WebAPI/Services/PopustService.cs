@@ -37,6 +37,26 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             var entities = query.ToList();
             var result = _mapper.Map<List<Model.Popust>>(entities);
+
+            foreach (var finalPopustlist in result)
+            {
+                var temp = _context.Popusts
+                    .Include(i=>i.Korisnici)
+                    .Include(i=>i.Usluga)
+                    .FirstOrDefault(i => i.PopustId == finalPopustlist.PopustId);
+
+                if (temp != null)
+                {
+                    finalPopustlist.ImeKreatoraPopusta = temp.Korisnici.KorisnickoIme;
+                    finalPopustlist.OdabranaUsluga = temp.Usluga.Naziv;
+                    finalPopustlist.CijenaUsluge = temp.Usluga.Cijena;
+                    finalPopustlist.CijenaSPopustom = (temp.Usluga.Cijena) -
+                                                      (temp.Usluga.Cijena * (temp.VrijednostPopusta / (decimal) 100));
+
+                }
+                
+            }
+
             return result;
         }
 
@@ -48,6 +68,26 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 request.PopustOdDatuma = request.PopustDoDatuma; 
                 request.PopustDoDatuma = tempDatum;
             }
+            var popust = _context.Popusts.FirstOrDefault(i => i.UslugaId == request.UslugaId);
+            if (popust != null)
+            {
+                if (request.PopustOdDatuma > popust.PopustOdDatuma && request.PopustOdDatuma < popust.PopustDoDatuma)
+                {
+                    throw new UserException("Pocetak popusta kojeg zelite dodati vec postoji u odabranom vremenu!");
+                }else if (request.PopustDoDatuma > popust.PopustOdDatuma &&
+                          request.PopustDoDatuma < popust.PopustDoDatuma)
+                {
+                    throw new UserException("Kraj popusta kojeg zelite dodati vec postoji u odabranom vremenu!");//testirati
+                }
+            }
+            //var popust = _context.Popusts.FirstOrDefault(i => i.UslugaId == request.UslugaId &&
+            //                                                  i.PopustOdDatuma.Day == request.PopustOdDatuma.Day &&
+            //                                                  i.PopustOdDatuma.Month == request.PopustOdDatuma.Month &&
+            //                                                  i.PopustOdDatuma.Year == request.PopustOdDatuma.Year);
+            //if (popust != null)
+            //{
+            //    throw new UserException("Termin je odbijen!");
+            //}
             var entity = _mapper.Map<Database.Popust>(request);
             
             _context.Add(entity);

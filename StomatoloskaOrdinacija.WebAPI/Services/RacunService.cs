@@ -37,8 +37,14 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 .Include(i=>i.Pregled.Skladiste.UlazUSkladiste)
                 .Include(i=>i.Pregled.Termin)
                 .Include(i=>i.Pregled.Termin.Usluga)
+                .Include(i=>i.Pregled.Termin.Pacijent)
+                .Include(i=>i.Pregled.Termin.Pacijent.Korisnici)
                 .AsQueryable();
 
+            if (search?.RacunId != 0)
+            {
+                query = query.Where(x => x.RacunId == search.RacunId);
+            }
             if (search?.KorisnikId != 0)
             {
                 query = query.Where(x => x.Korisnici.KorisnikId == search.KorisnikId);
@@ -59,9 +65,49 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             {
                 query = query.Where(x => x.DatumIzdavanjaRacuna.Year == search.Godina);
             }
+            if (!string.IsNullOrWhiteSpace(search?.Ime))
+            {
+                query = query.Where(x => x.Pregled.Termin.Pacijent.Korisnici.Ime == search.Ime);
+            }
+            if (!string.IsNullOrWhiteSpace(search?.Prezime))
+            {
+                query = query.Where(x => x.Pregled.Termin.Pacijent.Korisnici.Prezime == search.Prezime);
+            }
+            if (search?.NijeUplatioRequest == true)
+            {
+                query = query.Where(x => x.IsPlatio == false);
+            }
 
             var entities = query.ToList();
             var result = _mapper.Map<List<Model.Racun>>(entities);
+
+            foreach (var finalRacunlist in result)
+            {
+                var temp = _context.Racuns
+                    .Include(i=>i.Korisnici)
+                    .Include(i=>i.Pregled)
+                    .Include(i=>i.Pregled.Skladiste)
+                    .Include(i=>i.Pregled.Termin)
+                    .Include(i=>i.Pregled.Termin.Usluga)
+                    .Include(i=>i.Pregled.Termin.Pacijent)
+                    .Include(i=>i.Pregled.Termin.Pacijent.Korisnici)
+                    .FirstOrDefault(i => i.PregledId == finalRacunlist.PregledId);//mozda ne treba ako ima u finalpregledlist vec svi objekti
+
+                if (temp != null)
+                {
+                    finalRacunlist.RacunDoktorIme = temp.Korisnici.Ime + " " + temp.Korisnici.Prezime;
+                    finalRacunlist.PregledPacijentIme = temp.Pregled.Termin.Pacijent.Korisnici.Ime + " " +
+                                                        temp.Pregled.Termin.Pacijent.Korisnici.Prezime;
+                    finalRacunlist.PregledUslugaNaziv = temp.Pregled.Termin.Usluga.Naziv;
+                    finalRacunlist.PregledMaterijalNaziv = temp.Pregled.Skladiste.Naziv;
+                    finalRacunlist.PregledMaterijalKolicina = temp.Pregled.KolicinaOdabranogMaterijala.ToString("F");
+
+                }
+                
+            }
+
+
+
             return result;
         }
 
@@ -76,10 +122,17 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 .Include(i=>i.Termin)
                 .Include(i=>i.Termin.Usluga)
                 .FirstOrDefault(i => i.PregledId == entity.PregledId);
-            var IsSnizeno = _context.Popusts.FirstOrDefault(i => i.UslugaId == pregled.Termin.UslugaId);
+            var IsSnizeno = _context.Popusts.FirstOrDefault(i =>
+                                    i.UslugaId == pregled.Termin.UslugaId && 
+                                    i.PopustOdDatuma < DateTime.Now &&
+                                    i.PopustDoDatuma > DateTime.Now);
             if (IsSnizeno != null)
             {
                 snizenje = (pregled.Termin.Usluga.Cijena) - ((pregled.Termin.Usluga.Cijena * IsSnizeno.VrijednostPopusta) / 100);
+            }
+            else
+            {
+                snizenje = pregled.Termin.Usluga.Cijena;
             }
             var skladisteMaterijal = _context.Skladistes.FirstOrDefault(i => i.SkladisteId == pregled.SkladisteId);
             var formirajCijenu = (skladisteMaterijal.Cijena * pregled.KolicinaOdabranogMaterijala) + snizenje;
@@ -100,6 +153,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             _mapper.Map(request, entity);
             entity.IsPlatio = request.IsPlatio;
+            entity.DatumIzdavanjaRacuna = DateTime.Now;
             _context.SaveChanges();
 
             return _mapper.Map<Model.Racun>(entity);

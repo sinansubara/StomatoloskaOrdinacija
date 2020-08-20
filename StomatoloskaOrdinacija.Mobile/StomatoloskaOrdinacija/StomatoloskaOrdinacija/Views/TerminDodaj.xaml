@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.TerminDodaj">
+    <ContentPage.BindingContext>
+        <viewModels:TerminDodajViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label TextColor="White" Text="ZAKAZIVANJE TERMINA" FontSize="25" FontAttributes="Bold" 
+                           HorizontalOptions="CenterAndExpand" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+                    <Image Source="dental.jpg" 
+                           Opacity="0.5" 
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="16"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Usluga:" Grid.Row="1" Grid.Column="0"/>
+                    <Picker ItemsSource="{Binding UslugaList}" 
+                            ItemDisplayBinding="{Binding Naziv}"
+                            SelectedItem="{Binding SelectedUsluga}"
+                            Grid.Row="1" Grid.Column="1"></Picker>
+                    <Label TextColor="Red" IsVisible="{Binding UslugaValidation}" Text="Niste odabrali uslugu!" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Datum:" Grid.Row="3" Grid.Column="0"/>
+                    <DatePicker Date="{Binding DatumRezervacije}"
+                                Grid.Row="3" Grid.Column="1"></DatePicker>
+                    <Label TextColor="Red" IsVisible="{Binding DatumValidation}" Text="Odabrali ste datum koji je prosao!" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Vrijeme:" Grid.Row="5" Grid.Column="0"/>
+                    <TimePicker Time="{Binding VrijemeRezervacije}"
+                                Grid.Row="5" Grid.Column="1"></TimePicker>
+                    <Label TextColor="Red" IsVisible="{Binding VrijemeValidation}" Text="Radno vrijeme je od 8 do 20 sati!" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Razlog:" Grid.Row="7" Grid.Column="0"/>
+                    <Editor Placeholder="Razlog zbog kojeg rezervisete termin" 
+                            AutoSize="TextChanges"
+                            Text="{Binding RazlogTermina}"
+                            Grid.Row="7" Grid.Column="1"></Editor>
+                    <Label TextColor="Red" IsVisible="{Binding RazlogValidation}" Text="Morate unijeti razlog(max. 200 karaktera)!" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Hitan:" Grid.Row="9" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding HitanTermin}" Grid.Row="9" Grid.Column="1" HorizontalOptions="Start"></Switch>
+
+
+
+                    <Button BackgroundColor="LawnGreen"  
+                            Clicked="RezervisiButtonClicked"
+                            HorizontalOptions="FillAndExpand"  
+                            Text="Rezervisi termin" 
+                            Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

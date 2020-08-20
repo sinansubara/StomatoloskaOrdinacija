@@ -9,5 +9,6 @@ namespace StomatoloskaOrdinacija.Model
         public int UslugaId { get; set; }
         public string Naziv { get; set; }
         public decimal Cijena { get; set; }
+        public decimal SumaCijena { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using StomatoloskaOrdinacija.WebAPI.Services;
 using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
 
@@ -21,7 +22,6 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public GradService(MyContext context, IMapper mapper) : base(context, mapper)
         {
         }
-
 
         public override IList<Model.Grad> GetAll(GradSearchRequest search = default)
         {

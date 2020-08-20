@@ -5,77 +5,122 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="StomatoloskaOrdinacija.Views.AboutPage"
-             xmlns:vm="clr-namespace:StomatoloskaOrdinacija.ViewModels"
-             Title="{Binding Title}">
-    
+             xmlns:vm="clr-namespace:StomatoloskaOrdinacija.ViewModels">
     <ContentPage.BindingContext>
         <vm:AboutViewModel />
     </ContentPage.BindingContext>
-    
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Color x:Key="Accent">#96d1ff</Color>
-            <Color x:Key="LightTextColor">#999999</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                
+                    <Label TextColor="White" Text="IZMJENA PODATAKA PROFILA" Grid.ColumnSpan="2" FontSize="25" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <Image Source="dental.jpg" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="29"/>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackLayout BackgroundColor="{StaticResource Accent}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
-                    <Image Source="xamarin_logo.png" VerticalOptions="Center" HeightRequest="64" />
-                </ContentView>
-            </StackLayout>
-        </StackLayout>
-        <ScrollView Grid.Row="1">
-            <StackLayout Orientation="Vertical" Padding="16,40,16,40" Spacing="10">
-                <Label FontSize="22">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="AppName" FontAttributes="Bold" FontSize="22" />
-                                <Span Text=" " />
-                                <Span Text="1.0" ForegroundColor="{StaticResource LightTextColor}" />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="This app is written in C# and native APIs using the" />
-                                <Span Text=" " />
-                                <Span Text="Xamarin Platform" FontAttributes="Bold" />
-                                <Span Text="." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Label>
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <FormattedString.Spans>
-                                <Span Text="It shares code with its" />
-                                <Span Text=" " />
-                                <Span Text="iOS, Android, and Windows" FontAttributes="Bold" />
-                                <Span Text=" " />
-                                <Span Text="versions." />
-                            </FormattedString.Spans>
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-                <Button Margin="0,10,0,0" Text="Learn more"
-                        Command="{Binding OpenWebCommand}"
-                        BackgroundColor="{StaticResource Primary}"
-                        TextColor="White" />
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Ime:" Grid.Row="1" Grid.Column="0"/>
+                    <Entry Placeholder="Ime" Text="{Binding Ime}" Grid.Row="1" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding ImeValidation}" Text="Niste unijeli ime(max. 100 karaktera)" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Prezime:" Grid.Row="3" Grid.Column="0"/>
+                    <Entry Placeholder="Prezime" Text="{Binding Prezime}" Grid.Row="3" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding PrezimeValidate}" Text="Niste unijeli prezime(max. 100 karaktera)" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="JMBG:" Grid.Row="5" Grid.Column="0"/>
+                    <Entry Placeholder="JMBG" Text="{Binding JMBG}" Keyboard="Numeric" Grid.Row="5" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding JMBGValidate}" Text="JMBG mora da sadrži 13 brojeva" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Email:" Grid.Row="7" Grid.Column="0"/>
+                    <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email" Grid.Row="7" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding EmailValidate}" Text="Niste unijeli/ispravan email(max 320 karaktera)" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Datum rođenja:" Grid.Row="9" Grid.Column="0"/>
+                    <DatePicker Date="{Binding DatumRodjenja}" Grid.Row="9" Grid.Column="1" />
+
+
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Mobitel:" Grid.Row="16" Grid.Column="0"/>
+                    <Entry Placeholder="Mobitel" Text="{Binding Mobitel}" Grid.Row="16" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding MobitelValidate}" Text="Mobitel 1-30 karaktera" Grid.Row="17" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Adresa:" Grid.Row="18" Grid.Column="0"/>
+                    <Entry Placeholder="Adresa" Text="{Binding Adresa}" Grid.Row="18" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding AdresaValidate}" Text="3-200 karaktera" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Grad:" Grid.Row="20" Grid.Column="0"/>
+                    <Picker ItemsSource="{Binding gradoviList}" SelectedItem="{Binding SelectedGrad}" ItemDisplayBinding="{Binding Naziv}" Grid.Row="20" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding GradValidate}" Text="Odaberite grad" Grid.Row="21" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Alergija na lijek:" Grid.Row="22" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding AlergijaNaLijek}" Grid.Row="22" Grid.Column="1" HorizontalOptions="Start"></Switch>
+
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Proteza:" Grid.Row="23" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding Proteza}" Grid.Row="23" Grid.Column="1" HorizontalOptions="Start"></Switch>
+                    
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Terapija:" Grid.Row="24" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding Terapija}" Grid.Row="24" Grid.Column="1" HorizontalOptions="Start"></Switch>
+                   
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Navlake:" Grid.Row="25" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding Navlake}" Grid.Row="25" Grid.Column="1" HorizontalOptions="Start"></Switch>
+                    
+                    <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Aparatic:" Grid.Row="26" Grid.Column="0"/>
+                    <Switch IsToggled="{Binding Aparatic}" Grid.Row="26" Grid.Column="1" HorizontalOptions="Start"></Switch>
+
+
+
+                    <Button BackgroundColor="LawnGreen"  Command="{Binding SnimiCommand}" HorizontalOptions="FillAndExpand"  Text="Snimi izmjene profila" Grid.Row="27" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+                    
+                    
+                    
+
+                </Grid>
             </StackLayout>
         </ScrollView>
-    </Grid>
+    </ContentPage.Content>
+    
     
 </ContentPage>

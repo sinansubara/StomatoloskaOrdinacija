@@ -31,9 +31,6 @@
             this.cbNacekanju = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvTermini = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnOdobri = new System.Windows.Forms.Button();
-            this.btnOdbij = new System.Windows.Forms.Button();
             this.TerminId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PacijentIme = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UslugaNaziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +39,8 @@
             this.Hitan = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.IsOdobren = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.IsNaCekanju = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.btnOdobri = new System.Windows.Forms.Button();
+            this.btnOdbij = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTermini)).BeginInit();
             this.SuspendLayout();
@@ -49,22 +48,24 @@
             // cbNacekanju
             // 
             this.cbNacekanju.AutoSize = true;
-            this.cbNacekanju.Location = new System.Drawing.Point(450, 33);
+            this.cbNacekanju.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbNacekanju.Location = new System.Drawing.Point(600, 33);
             this.cbNacekanju.Name = "cbNacekanju";
             this.cbNacekanju.Size = new System.Drawing.Size(87, 17);
             this.cbNacekanju.TabIndex = 0;
             this.cbNacekanju.Text = "Na čekanju?";
             this.cbNacekanju.UseVisualStyleBackColor = true;
+            this.cbNacekanju.CheckedChanged += new System.EventHandler(this.cbNacekanju_CheckedChanged);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvTermini);
             this.groupBox1.Location = new System.Drawing.Point(10, 76);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(829, 475);
+            this.groupBox1.Size = new System.Drawing.Size(871, 495);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Korisnici";
+            this.groupBox1.Text = "Termini";
             // 
             // dgvTermini
             // 
@@ -85,44 +86,9 @@
             this.dgvTermini.Name = "dgvTermini";
             this.dgvTermini.ReadOnly = true;
             this.dgvTermini.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvTermini.Size = new System.Drawing.Size(823, 456);
+            this.dgvTermini.Size = new System.Drawing.Size(865, 476);
             this.dgvTermini.TabIndex = 0;
             this.dgvTermini.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKorisnici_CellContentClick);
-            // 
-            // button1
-            // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Location = new System.Drawing.Point(554, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 34);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Osvježi tabelu";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnOdobri
-            // 
-            this.btnOdobri.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.btnOdobri.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOdobri.Location = new System.Drawing.Point(705, 12);
-            this.btnOdobri.Name = "btnOdobri";
-            this.btnOdobri.Size = new System.Drawing.Size(134, 23);
-            this.btnOdobri.TabIndex = 20;
-            this.btnOdobri.Text = "Odobri";
-            this.btnOdobri.UseVisualStyleBackColor = false;
-            this.btnOdobri.Click += new System.EventHandler(this.btnOdobri_Click);
-            // 
-            // btnOdbij
-            // 
-            this.btnOdbij.BackColor = System.Drawing.Color.Crimson;
-            this.btnOdbij.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnOdbij.Location = new System.Drawing.Point(705, 47);
-            this.btnOdbij.Name = "btnOdbij";
-            this.btnOdbij.Size = new System.Drawing.Size(134, 23);
-            this.btnOdbij.TabIndex = 21;
-            this.btnOdbij.Text = "Odbij";
-            this.btnOdbij.UseVisualStyleBackColor = false;
-            this.btnOdbij.Click += new System.EventHandler(this.btnOdbij_Click);
             // 
             // TerminId
             // 
@@ -188,14 +154,37 @@
             this.IsNaCekanju.ReadOnly = true;
             this.IsNaCekanju.Width = 70;
             // 
+            // btnOdobri
+            // 
+            this.btnOdobri.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.btnOdobri.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOdobri.Location = new System.Drawing.Point(705, 12);
+            this.btnOdobri.Name = "btnOdobri";
+            this.btnOdobri.Size = new System.Drawing.Size(134, 23);
+            this.btnOdobri.TabIndex = 20;
+            this.btnOdobri.Text = "Odobri";
+            this.btnOdobri.UseVisualStyleBackColor = false;
+            this.btnOdobri.Click += new System.EventHandler(this.btnOdobri_Click);
+            // 
+            // btnOdbij
+            // 
+            this.btnOdbij.BackColor = System.Drawing.Color.Crimson;
+            this.btnOdbij.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnOdbij.Location = new System.Drawing.Point(705, 47);
+            this.btnOdbij.Name = "btnOdbij";
+            this.btnOdbij.Size = new System.Drawing.Size(134, 23);
+            this.btnOdbij.TabIndex = 21;
+            this.btnOdbij.Text = "Odbij";
+            this.btnOdbij.UseVisualStyleBackColor = false;
+            this.btnOdbij.Click += new System.EventHandler(this.btnOdbij_Click);
+            // 
             // frmPregledTermina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(871, 576);
+            this.ClientSize = new System.Drawing.Size(940, 574);
             this.Controls.Add(this.btnOdbij);
             this.Controls.Add(this.btnOdobri);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cbNacekanju);
             this.Name = "frmPregledTermina";
@@ -213,7 +202,6 @@
         private System.Windows.Forms.CheckBox cbNacekanju;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dgvTermini;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnOdobri;
         private System.Windows.Forms.Button btnOdbij;
         private System.Windows.Forms.DataGridViewTextBoxColumn TerminId;

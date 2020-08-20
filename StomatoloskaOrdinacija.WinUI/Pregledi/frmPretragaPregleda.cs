@@ -27,8 +27,15 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
 
         private void btnDodajNovog_Click(object sender, EventArgs e)
         {
-            frmUnosPregleda frm = new frmUnosPregleda();
-            frm.Show();
+            if (APIService.Permisije == 1 || APIService.Permisije == 2)
+            {
+                frmUnosPregleda frm = new frmUnosPregleda();
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Samo stomatolog moze dodavati informacije o pregledima pacijenata!", "Autorizacija", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private async void frmPretragaPregleda_Load(object sender, EventArgs e)
@@ -105,7 +112,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             }
             catch (Exception exception)
             {
-               
+                MessageBox.Show("Greska pri pretrazivanju pregleda, prikazat ce se citava lista pregleda!" + exception.Message);
                 var list2 = await _servicePregled.GetAll<IList<Model.Pregled>>(null);
                 dgvKorisnici.AutoGenerateColumns = false;
                 dgvKorisnici.DataSource = list2;
@@ -116,18 +123,32 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
 
         private void dgvKorisnici_DoubleClick(object sender, EventArgs e)
         {
-            var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            int.TryParse(id.ToString(), out int convertDetalji);
-            frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
-            frm.Show();
+            if (dgvKorisnici.RowCount > 0)
+            {
+                var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
+                int.TryParse(id.ToString(), out int convertDetalji);
+                frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void btnDetalji_Click(object sender, EventArgs e)
         {
-            var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
-            int.TryParse(id.ToString(), out int convertDetalji);
-            frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
-            frm.Show();
+            if (dgvKorisnici.RowCount > 0)
+            {
+                var id = dgvKorisnici.SelectedRows[0].Cells[0].Value;
+                int.TryParse(id.ToString(), out int convertDetalji);
+                frmDetaljiPregleda frm = new frmDetaljiPregleda(convertDetalji);
+                frm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lista još nije ucitana, pricekajte malo pa pokusajte ponovno.","Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private async void btnSviPregleda_Click(object sender, EventArgs e)

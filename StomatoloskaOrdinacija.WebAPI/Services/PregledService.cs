@@ -29,6 +29,9 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             var query = _context.Pregleds
                 .Include(i=>i.Dijagnoza)
                 .Include(i=>i.Termin)
+                .Include(i=>i.Termin.Usluga)
+                .Include(i=>i.Termin.Pacijent)
+                .Include(i=>i.Termin.Pacijent.Korisnici)
                 .Include(i=>i.Korisnici)
                 .Include(i=>i.Lijek)
                 .Include(i=>i.Skladiste)
@@ -51,6 +54,30 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 query = query.Where(x => x.Napomena.ToLower().Contains(search.Napomena.ToLower()));
             }
             var entities = query.ToList();
+            var NovaLista = new List<Database.Pregled>();
+
+            if (search.IsUplacenPregledRequest == "Ne")
+            {
+                foreach (var pregled in entities)
+                {
+                    var flag = _context.Racuns.FirstOrDefault(i => i.PregledId == pregled.PregledId && i.IsPlatio == false);
+                    if (flag != null)
+                    {
+                        NovaLista.Add(pregled);
+                    }
+                }
+
+                var result1 = _mapper.Map<List<Model.Pregled>>(NovaLista);
+                foreach (var convert in result1)
+                {
+                    convert.PregledIme = "Usluga: " + convert.Termin.Usluga.Naziv + "  |   Pacijent: " + convert.Termin.Pacijent.Korisnici.Ime + " " +
+                                        convert.Termin.Pacijent.Korisnici.Prezime;
+                }
+                return result1;
+            }
+
+
+
             var result = _mapper.Map<List<Model.Pregled>>(entities);
 
             foreach (var finalPregledlist in result)
@@ -160,5 +187,40 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             return _mapper.Map<Model.Pregled>(entity);
         }
+
+        public override Model.Pregled Update(int id, PregledInsertRequest request)
+        {
+            var pretragaPregled = _context.Pregleds.FirstOrDefault(i => i.PregledId == id);
+
+            var kolicinaNaSkladistu =
+                _context.Skladistes.FirstOrDefault(i => i.SkladisteId == request.SkladisteId);
+
+            if (kolicinaNaSkladistu != null && kolicinaNaSkladistu.Kolicina < request.KolicinaOdabranogMaterijala)
+            {
+                throw new UserException("Unijeli ste kolicinu materijala vecu nego sto ima na skladistu!");
+            }
+
+            if (kolicinaNaSkladistu != null && kolicinaNaSkladistu.Kolicina >= request.KolicinaOdabranogMaterijala)
+            {
+                kolicinaNaSkladistu.Kolicina = kolicinaNaSkladistu.Kolicina -
+                                               (request.KolicinaOdabranogMaterijala -
+                                                pretragaPregled.KolicinaOdabranogMaterijala);//testiraj
+                _context.SaveChanges();
+            }
+
+            _mapper.Map(request, pretragaPregled);
+            _context.SaveChanges();
+
+            var updateMedicinskiKarton = _context.MedicinskiKartons.FirstOrDefault(i => i.PregledId == id);
+            if (updateMedicinskiKarton != null)
+            {
+                updateMedicinskiKarton.Datum = DateTime.Now;
+                updateMedicinskiKarton.Napomena = pretragaPregled.Napomena;
+            }
+            _context.SaveChanges();
+
+            return _mapper.Map<Model.Pregled>(pretragaPregled);
+        }
+
     }
 }

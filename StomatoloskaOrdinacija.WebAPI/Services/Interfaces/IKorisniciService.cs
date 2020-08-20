@@ -10,6 +10,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services.Interfaces
     public interface IKorisniciService : ICRUDService<Model.Korisnici, KorisniciSearchRequest, KorisniciInsertRequest, KorisniciUpdateRequest>
     {
         Model.Korisnici Login(KorisniciLoginRequest request);
+        Model.Korisnici LoginMobile(KorisniciLoginRequest request);
         Model.Korisnici Registracija(KorisniciRegistracijaRequest request);
         IList<Model.Pacijent> GetAllPacijenti(KorisniciSearchRequest search = default);
         Model.Pacijent Update(int id, KorisniciPacijentUpdateRequest request);
@@ -20,5 +21,6 @@ namespace StomatoloskaOrdinacija.WebAPI.Services.Interfaces
         Model.Korisnici GetNajboljeOsoblje();
         Model.Korisnici GetNajBoljiPacijent();
         IList<Model.Korisnici> GetAllDatumOdDo(KorisniciSearchRequest search = default);
+        IList<Model.Korisnici> TopPacijenti(KorisniciSearchRequest search = default);
     }
 }

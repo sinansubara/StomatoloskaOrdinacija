@@ -9,14 +9,29 @@
     <ContentPage.BindingContext>
         <viewModels:LoginViewModel />
     </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
     <ContentPage.Content>
-        <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
-            <Label Text="Korisničko ime:" />
-            <Entry Text="{Binding Username}"></Entry>
-            <Label Text="Lozinka:" />
-            <Entry Text="{Binding Password}"></Entry>
-            <Button Command="{Binding LoginCommand}" HorizontalOptions="FillAndExpand"  Text="Login"></Button>
-            <Label IsVisible="{Binding IsBusy}" Text="Working..."></Label>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Label TextColor="White" Text="STOMATOLOŠKA ORDINACIJA" FontSize="25" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                <Image Source="dental240.jpg"/>
+
+
+                <Label FontSize="16" TextColor="White" Text="Korisničko ime:" />
+                <Entry Placeholder="Username" Text="{Binding Username}"></Entry>
+                <Label TextColor="Red" IsVisible="{Binding UsernameValidation}" Text="Niste unijeli korisničko ime!"></Label>
+
+                <Label FontSize="16" TextColor="White" Text="Lozinka:" />
+                <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}"></Entry>
+                <Label TextColor="Red" IsVisible="{Binding PasswordValidation}" Text="Niste unijeli lozinku!"></Label>
+
+                <Button TextColor="White" BackgroundColor="DodgerBlue" Command="{Binding LoginCommand}" HorizontalOptions="FillAndExpand"  Text="PRIJAVI SE"></Button>
+                <Button BackgroundColor="LawnGreen"  Command="{Binding RegisterCommand}" HorizontalOptions="FillAndExpand"  Text="REGISTRACIJA"></Button>
+                <Button TextColor="White" BackgroundColor="DodgerBlue" Command="{Binding ZaboravljenaLozinkaCommand}" HorizontalOptions="FillAndExpand"  Text="ZABORAVLJENA LOZINKA"></Button>
+                <Label IsVisible="{Binding IsBusy}" Text="Working..."></Label>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

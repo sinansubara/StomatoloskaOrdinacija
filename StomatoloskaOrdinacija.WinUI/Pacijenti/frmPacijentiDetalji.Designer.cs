@@ -72,6 +72,7 @@
             // 
             // cbSpol
             // 
+            this.cbSpol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSpol.FormattingEnabled = true;
             this.cbSpol.Location = new System.Drawing.Point(556, 181);
             this.cbSpol.Name = "cbSpol";
@@ -80,6 +81,7 @@
             // 
             // cbGrad
             // 
+            this.cbGrad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGrad.FormattingEnabled = true;
             this.cbGrad.Location = new System.Drawing.Point(299, 181);
             this.cbGrad.Name = "cbGrad";

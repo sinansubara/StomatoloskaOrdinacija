@@ -52,7 +52,20 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             {
                 query = query.Where(x => x.IsNaCekanju == search.IsNaCekanju);
             }
-            var entities = query.ToList();
+            if (search?.IsOdobren == "Da")
+            {
+                query = query.Where(x => x.IsOdobren == true);
+            }
+            if (search?.IsOdobren == "Ne")
+            {
+                query = query.Where(x => x.IsOdobren == false);
+            }
+
+            if (search?.IsOdbijenMobile == "Da")
+            {
+                query = query.Where(x => x.IsNaCekanju == false && x.IsOdobren == false);
+            }
+            var entities = query.OrderByDescending(i=>i.DatumVrijeme).ToList();
             var NovaLista = new List<Database.Termin>();
             if (search.IsIskoristenRequest == "Da")
             {
@@ -92,7 +105,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
                 return result;
 
             }
-            
+
             var result2 = _mapper.Map<List<Model.Termin>>(entities);
 
             foreach (var convert in result2)

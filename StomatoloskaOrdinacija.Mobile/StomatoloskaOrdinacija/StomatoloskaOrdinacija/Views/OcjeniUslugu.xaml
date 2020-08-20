@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.OcjeniUslugu">
+
+    <ContentPage.BindingContext>
+        <viewModels:OcjeniUsluguViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                
+                    <Label TextColor="White" Text="OCJENA USLUGE" Grid.ColumnSpan="2" FontSize="25" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                    <Image Source="dental.jpg" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="16"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Ocjena:" Grid.Row="1" Grid.Column="0"/>
+                    <Entry Placeholder="Ocjena(1-10)" Text="{Binding Ocjena}" Grid.Row="1" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding OcjenaValidation}" Text="Ocjena 1-10!" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Komentar:" Grid.Row="3" Grid.Column="0"/>
+                    <Entry Placeholder="Komentar" Text="{Binding Komentar}" Grid.Row="3" Grid.Column="1"/>
+                    <Label TextColor="Red" IsVisible="{Binding KomentarValidation}" Text="Komentar 1-300 karaktera!" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+                    <Button BackgroundColor="LawnGreen"  Command="{Binding SnimiCommand}" HorizontalOptions="FillAndExpand"  Text="Snimi ocjenu" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+
+
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
