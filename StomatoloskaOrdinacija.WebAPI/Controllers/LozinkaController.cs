@@ -116,17 +116,20 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
                 throw new UserException("Niste unijeli ispravan kod za ovo korisnicko ime!");
             }
 
-
-            if (!string.IsNullOrWhiteSpace(request.Lozinka))
+            if (string.IsNullOrWhiteSpace(request.Lozinka))
             {
-                if (request.Lozinka != request.PotvrdaLozinke)
-                {
-                    throw new UserException("Password i potvrda se ne slažu!");
-                }
-
-                korisnik.LozinkaSalt = GenerateSalt();
-                korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Lozinka);
+                throw new UserException("Niste unijeli lozinku!");
             }
+
+           
+            if (request.Lozinka != request.PotvrdaLozinke)
+            {
+                throw new UserException("Password i potvrda se ne slažu!");
+            }
+
+            korisnik.LozinkaSalt = GenerateSalt();
+            korisnik.LozinkaHash = GenerateHash(korisnik.LozinkaSalt, request.Lozinka);
+            
 
             var tempconvert = new Model.PromjenaLozinke
             {

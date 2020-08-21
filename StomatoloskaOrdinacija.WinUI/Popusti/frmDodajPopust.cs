@@ -29,7 +29,7 @@ namespace StomatoloskaOrdinacija.WinUI.Popusti
 
         private async void frmDodajPopust_Load(object sender, EventArgs e)
         {
-            await LoadUsluge();
+            
             var request = await _servicePopust.GetAll<List<Model.Popust>>(null);
             dgvPopust.AutoGenerateColumns = false;
             dgvPopust.DataSource = request;
@@ -38,6 +38,7 @@ namespace StomatoloskaOrdinacija.WinUI.Popusti
                 dgvPopust.Columns[3].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
                 dgvPopust.Columns[4].DefaultCellStyle.Format = "dd.MM.yyyy HH:mm";
             }
+            await LoadUsluge();
         }
 
         private void cmbUsluga_SelectedIndexChanged(object sender, EventArgs e)

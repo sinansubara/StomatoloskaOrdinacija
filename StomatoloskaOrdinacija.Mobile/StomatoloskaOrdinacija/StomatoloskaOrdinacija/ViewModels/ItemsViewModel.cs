@@ -14,7 +14,7 @@ namespace StomatoloskaOrdinacija.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private readonly APIService _gradService = new APIService("Usluga");
+        private readonly APIService _gradService = new APIService("Usluga/RecommendedUsluge");
 
         public ItemsViewModel()
         {
@@ -26,7 +26,9 @@ namespace StomatoloskaOrdinacija.ViewModels
 
         public async Task Init()
         {
-            var list = await _gradService.GetAll<List<Model.Usluga>>(null);
+            //eventsList = await _eventsService.GetRecommendedEvents<IEnumerable<EventDto>>(user.Id);
+            //var list = await _gradService.GetAll<List<Model.Usluga>>(null);
+            var list = await _gradService.GetById<IEnumerable<Usluga>>(APIService.PacijentId);
 
             UslugeList.Clear();
             foreach (var usluga in list)

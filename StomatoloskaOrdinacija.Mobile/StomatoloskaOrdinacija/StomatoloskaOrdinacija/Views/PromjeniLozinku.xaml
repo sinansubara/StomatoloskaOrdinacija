@@ -45,10 +45,10 @@
                     <Entry Placeholder="Kod" Text="{Binding Vrijednost}" Grid.Row="2" Grid.Column="1"/>
 
                     <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Lozinka:" Grid.Row="3" Grid.Column="0"/>
-                    <Entry Placeholder="Lozinka" Text="{Binding Lozinka}" Grid.Row="3" Grid.Column="1"/>
+                    <Entry IsPassword="True"  Placeholder="Lozinka" Text="{Binding Lozinka}" Grid.Row="3" Grid.Column="1"/>
 
                     <Label VerticalTextAlignment="Center" FontSize="18" TextColor="White" Text="Potvrda lozinke:" Grid.Row="4" Grid.Column="0"/>
-                    <Entry Placeholder="Potvrda lozinke" Text="{Binding PotvrdaLozinke}" Grid.Row="4" Grid.Column="1"/>
+                    <Entry IsPassword="True" Placeholder="Potvrda lozinke" Text="{Binding PotvrdaLozinke}" Grid.Row="4" Grid.Column="1"/>
 
                     <Button BackgroundColor="LawnGreen"  Command="{Binding SnimiCommand}" HorizontalOptions="FillAndExpand"  Text="SNIMI LOZINKU" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"></Button>
                 </Grid>

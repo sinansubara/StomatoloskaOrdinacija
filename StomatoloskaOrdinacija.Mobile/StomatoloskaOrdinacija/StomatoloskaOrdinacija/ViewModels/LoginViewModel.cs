@@ -88,10 +88,12 @@ namespace StomatoloskaOrdinacija.ViewModels
                     APIService.Permisije = temp.UlogaId;
                     if (APIService.Permisije == 4)
                     {
-                        Application.Current.MainPage = new MainPage();
-                   
                         var temp2 = await _serviceKorisnikPacijenti.GetById<Model.KorisnikPacijent>(temp.KorisnikId);
                         APIService.PacijentId = temp2.PacijentId;
+
+                        Application.Current.MainPage = new MainPage();
+                   
+                        
                     }
                     else
                     {

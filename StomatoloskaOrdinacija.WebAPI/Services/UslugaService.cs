@@ -10,14 +10,17 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using StomatoloskaOrdinacija.WebAPI.CBF;
 using StomatoloskaOrdinacija.WebAPI.Services;
 using StomatoloskaOrdinacija.WebAPI.Services.Interfaces;
+using Termin = StomatoloskaOrdinacija.Model.Termin;
+using Usluga = StomatoloskaOrdinacija.Model.Usluga;
 
 namespace StomatoloskaOrdinacija.WebAPI.Services
 {
     public class UslugaService : BaseCRUDService<Model.Usluga, UslugaSearchRequest, UslugaInsertRequest, UslugaInsertRequest, Database.Usluga>
     {
-
+        
         public UslugaService(MyContext context, IMapper mapper) : base(context, mapper)
         {
         }
@@ -35,5 +38,6 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             var result = _mapper.Map<List<Model.Usluga>>(entities);
             return result;
         }
+
     }
 }

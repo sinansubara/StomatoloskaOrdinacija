@@ -40,13 +40,14 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
 
         private async void frmPretragaPregleda_Load(object sender, EventArgs e)
         {
+            var list = await _servicePregled.GetAll<IList<Model.Pregled>>(new PregledSearchRequest() {KorisnikId = APIService.KorisnikId});
+            dgvKorisnici.AutoGenerateColumns = false;
+            dgvKorisnici.DataSource = list;
+
             await LoadTermine();
             await LoadOsoblje();
             await LoadMaterijale();
 
-            var list = await _servicePregled.GetAll<IList<Model.Pregled>>(new PregledSearchRequest() {KorisnikId = APIService.KorisnikId});
-            dgvKorisnici.AutoGenerateColumns = false;
-            dgvKorisnici.DataSource = list;
         }
 
         private async Task LoadOsoblje()
