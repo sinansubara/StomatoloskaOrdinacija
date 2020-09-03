@@ -66,7 +66,12 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public override Model.Ocjene Insert(OcjeneUpsertRequest request)
         {
             var entity = _mapper.Map<Database.Ocjene>(request);
-            
+
+            if (request.Ocjena > 10 || request.Ocjena < 1) 
+            {
+                throw new UserException("Ocjena mora biti od 1 do 10!");
+            }
+
             _context.Add(entity);
             entity.Kreirano = DateTime.Now;
 
@@ -77,6 +82,10 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public override Model.Ocjene Update(int id, OcjeneUpsertRequest request)
         {
             var entity = _context.Ocjenes.Find(id);
+            if (request.Ocjena > 10 || request.Ocjena < 1) 
+            {
+                throw new UserException("Ocjena mora biti od 1 do 10!");
+            }
 
             _mapper.Map(request, entity);
             entity.Kreirano = DateTime.Now;

@@ -93,8 +93,13 @@ namespace StomatoloskaOrdinacija
             {
                 var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
-                
-                await Application.Current.MainPage.DisplayAlert("Greška", "Nisi autorizovan!", "OK");
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
                 return default(T);
             }
 
@@ -112,8 +117,13 @@ namespace StomatoloskaOrdinacija
             {
                 var errors = await ex.GetResponseJsonAsync<Dictionary<string, string[]>>();
 
-                
-                await Application.Current.MainPage.DisplayAlert("Greška", "Nisi autorizovan!", "OK");
+                var stringBuilder = new StringBuilder();
+                foreach (var error in errors)
+                {
+                    stringBuilder.AppendLine($"{error.Key}, ${string.Join(",", error.Value)}");
+                }
+
+                await Application.Current.MainPage.DisplayAlert("Greška", stringBuilder.ToString(), "OK");
                 return default(T);
             }
 

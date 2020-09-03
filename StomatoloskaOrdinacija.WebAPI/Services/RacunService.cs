@@ -27,17 +27,8 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         {
             var query = _context.Racuns
                 .Include(i=>i.Korisnici)
-                .Include(i=>i.Korisnici.Grad)
-                .Include(i=>i.Korisnici.Grad.Drzava)
-                .Include(i=>i.Korisnici.Uloga)
-                .Include(i=>i.Pregled)
-                .Include(i=>i.Pregled.Lijek)
-                .Include(i=>i.Pregled.Dijagnoza)
                 .Include(i=>i.Pregled.Skladiste)
-                .Include(i=>i.Pregled.Skladiste.UlazUSkladiste)
-                .Include(i=>i.Pregled.Termin)
                 .Include(i=>i.Pregled.Termin.Usluga)
-                .Include(i=>i.Pregled.Termin.Pacijent)
                 .Include(i=>i.Pregled.Termin.Pacijent.Korisnici)
                 .AsQueryable();
 
@@ -83,27 +74,12 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             foreach (var finalRacunlist in result)
             {
-                var temp = _context.Racuns
-                    .Include(i=>i.Korisnici)
-                    .Include(i=>i.Pregled)
-                    .Include(i=>i.Pregled.Skladiste)
-                    .Include(i=>i.Pregled.Termin)
-                    .Include(i=>i.Pregled.Termin.Usluga)
-                    .Include(i=>i.Pregled.Termin.Pacijent)
-                    .Include(i=>i.Pregled.Termin.Pacijent.Korisnici)
-                    .FirstOrDefault(i => i.PregledId == finalRacunlist.PregledId);//mozda ne treba ako ima u finalpregledlist vec svi objekti
-
-                if (temp != null)
-                {
-                    finalRacunlist.RacunDoktorIme = temp.Korisnici.Ime + " " + temp.Korisnici.Prezime;
-                    finalRacunlist.PregledPacijentIme = temp.Pregled.Termin.Pacijent.Korisnici.Ime + " " +
-                                                        temp.Pregled.Termin.Pacijent.Korisnici.Prezime;
-                    finalRacunlist.PregledUslugaNaziv = temp.Pregled.Termin.Usluga.Naziv;
-                    finalRacunlist.PregledMaterijalNaziv = temp.Pregled.Skladiste.Naziv;
-                    finalRacunlist.PregledMaterijalKolicina = temp.Pregled.KolicinaOdabranogMaterijala.ToString("F");
-
-                }
-                
+                finalRacunlist.RacunDoktorIme = finalRacunlist.Korisnici.Ime + " " + finalRacunlist.Korisnici.Prezime;
+                    finalRacunlist.PregledPacijentIme = finalRacunlist.Pregled.Termin.Pacijent.Korisnici.Ime + " " +
+                                                        finalRacunlist.Pregled.Termin.Pacijent.Korisnici.Prezime;
+                    finalRacunlist.PregledUslugaNaziv = finalRacunlist.Pregled.Termin.Usluga.Naziv;
+                    finalRacunlist.PregledMaterijalNaziv = finalRacunlist.Pregled.Skladiste.Naziv;
+                    finalRacunlist.PregledMaterijalKolicina = finalRacunlist.Pregled.KolicinaOdabranogMaterijala.ToString("F");
             }
 
 

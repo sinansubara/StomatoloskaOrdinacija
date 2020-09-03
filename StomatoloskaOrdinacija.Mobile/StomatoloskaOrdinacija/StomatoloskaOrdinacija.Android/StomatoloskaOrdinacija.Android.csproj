@@ -92,13 +92,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="dental.jpg" />
-    <AndroidResource Include="dental240.jpg" />
-    <AndroidResource Include="dentalmin.jpg" />
-    <AndroidResource Include="no_image.jpeg" />
     <AndroidResource Include="Resources\drawable\dental.jpg" />
     <AndroidResource Include="Resources\drawable\dental240.jpg" />
     <AndroidResource Include="Resources\drawable\dentalmin.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\no_image.jpeg">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

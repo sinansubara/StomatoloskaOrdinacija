@@ -28,9 +28,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         {
             var query = _context.Pregleds
                 .Include(i=>i.Dijagnoza)
-                .Include(i=>i.Termin)
                 .Include(i=>i.Termin.Usluga)
-                .Include(i=>i.Termin.Pacijent)
                 .Include(i=>i.Termin.Pacijent.Korisnici)
                 .Include(i=>i.Korisnici)
                 .Include(i=>i.Lijek)
@@ -82,28 +80,14 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             foreach (var finalPregledlist in result)
             {
-                var temp = _context.Pregleds
-                    .Include(i => i.Lijek)
-                    .Include(i => i.Termin)
-                    .Include(i => i.Termin.Pacijent)
-                    .Include(i => i.Termin.Pacijent.Korisnici)
-                    .Include(i => i.Dijagnoza)
-                    .Include(i => i.Skladiste)
-                    .Include(i=>i.Korisnici)
-                    .FirstOrDefault(i => i.PregledId == finalPregledlist.PregledId);//mozda ne treba ako ima u finalpregledlist vec svi objekti
-
-                if (temp != null)
-                {
-                    finalPregledlist.DijagnozaTekst = temp.Dijagnoza.Naziv;
-                    finalPregledlist.DoktorIme = temp.Korisnici.Ime + " " + temp.Korisnici.Prezime;
-                    finalPregledlist.Materijal = temp.Skladiste.Naziv;
-                    finalPregledlist.LijekTekst = temp.Lijek.Naziv;
-                    finalPregledlist.TerminRazlog = temp.Termin.Razlog;
+               
+                    finalPregledlist.DijagnozaTekst = finalPregledlist.Dijagnoza.Naziv;
+                    finalPregledlist.DoktorIme = finalPregledlist.Korisnici.Ime + " " + finalPregledlist.Korisnici.Prezime;
+                    finalPregledlist.Materijal = finalPregledlist.Skladiste.Naziv;
+                    finalPregledlist.LijekTekst = finalPregledlist.Lijek.Naziv;
+                    finalPregledlist.TerminRazlog = finalPregledlist.Termin.Razlog;
                     finalPregledlist.TerminImePacijenta =
-                        temp.Termin.Pacijent.Korisnici.Ime + " " + temp.Termin.Pacijent.Korisnici.Prezime;
-                    
-                }
-                
+                        finalPregledlist.Termin.Pacijent.Korisnici.Ime + " " + finalPregledlist.Termin.Pacijent.Korisnici.Prezime;
             }
 
             return result;

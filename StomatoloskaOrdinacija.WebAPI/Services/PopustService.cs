@@ -40,21 +40,13 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
             foreach (var finalPopustlist in result)
             {
-                var temp = _context.Popusts
-                    .Include(i=>i.Korisnici)
-                    .Include(i=>i.Usluga)
-                    .FirstOrDefault(i => i.PopustId == finalPopustlist.PopustId);
-
-                if (temp != null)
-                {
-                    finalPopustlist.ImeKreatoraPopusta = temp.Korisnici.KorisnickoIme;
-                    finalPopustlist.OdabranaUsluga = temp.Usluga.Naziv;
-                    finalPopustlist.CijenaUsluge = temp.Usluga.Cijena;
-                    finalPopustlist.CijenaSPopustom = (temp.Usluga.Cijena) -
-                                                      (temp.Usluga.Cijena * (temp.VrijednostPopusta / (decimal) 100));
-
-                }
                 
+                finalPopustlist.ImeKreatoraPopusta = finalPopustlist.Korisnici.KorisnickoIme;
+                finalPopustlist.OdabranaUsluga = finalPopustlist.Usluga.Naziv;
+                finalPopustlist.CijenaUsluge = finalPopustlist.Usluga.Cijena;
+                finalPopustlist.CijenaSPopustom = (finalPopustlist.Usluga.Cijena) -
+                                                      (finalPopustlist.Usluga.Cijena * (finalPopustlist.VrijednostPopusta / (decimal) 100));
+
             }
 
             return result;

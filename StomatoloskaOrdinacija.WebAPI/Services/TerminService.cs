@@ -27,7 +27,6 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
         public override IList<Model.Termin> GetAll(TerminSearchRequest search = default)
         {
             var query = _context.Termins
-                .Include(i=>i.Pacijent)
                 .Include(i=>i.Pacijent.Korisnici)
                 .Include(i=>i.Usluga)
                 .AsQueryable();
@@ -112,25 +111,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             {
                 convert.UslugaIme = "Usluga: " + convert.Usluga.Naziv + "    |    Pacijent: " + convert.Pacijent.Korisnici.Ime + " " +
                                     convert.Pacijent.Korisnici.Prezime;
+                convert.UslugaNaziv = convert.Usluga.Naziv;
+                convert.PacijentIme = convert.Pacijent.Korisnici.Ime + " " +
+                                      convert.Pacijent.Korisnici.Prezime;
             }
 
-            foreach (var finalPregledlist in result2)
-            {
-                var temp = _context.Termins
-                    .Include(i => i.Usluga)
-                    .Include(i => i.Pacijent)
-                    .Include(i => i.Pacijent.Korisnici);
-                    
-
-                if (temp != null)
-                {
-                    finalPregledlist.UslugaNaziv = finalPregledlist.Usluga.Naziv;
-                    finalPregledlist.PacijentIme = finalPregledlist.Pacijent.Korisnici.Ime + " " +
-                                                   finalPregledlist.Pacijent.Korisnici.Prezime;
-
-                }
-                
-            }
 
 
             return result2;
