@@ -9,6 +9,7 @@
 #
 
 # Odraditi restore baze ili preko .bak ili preko.mdf i .ldf fajlova
+# Docker nije testiran, vjerovatno nije u funkciji, jer ne mogu pokrenut docker program
 # Dodatni Admin acc Username: subarasinan | Password: test
 # --------------------------------------------------------------
 
