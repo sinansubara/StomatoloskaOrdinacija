@@ -19,6 +19,7 @@ namespace StomatoloskaOrdinacija
         public static int KorisnikId { get; set; }
         public static int PacijentId { get; set; }
         public static int UlazUSkladisteId { get; set; }
+        public static Korisnici LogiraniKorisnik { get; set; }
 
 #if DEBUG
         private string _apiUrl = "http://localhost:55745/api";

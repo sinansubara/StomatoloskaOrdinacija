@@ -11,6 +11,11 @@ namespace StomatoloskaOrdinacija.Model
         public int PregledId { get; set; }
         public Pregled Pregled { get; set; }
 
+        
+        public string ImePacijenta { get; set; }
+        public string ImeUsluge { get; set; }
+        public decimal Cijena { get; set; }
+
         public int PacijentId { get; set; }
         public Pacijent Pacijent { get; set; }
 

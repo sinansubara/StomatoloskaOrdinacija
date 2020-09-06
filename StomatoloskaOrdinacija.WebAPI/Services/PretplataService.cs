@@ -52,6 +52,25 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             }
             
             var entities = query.ToList();
+            //var novaLista = new List<Database.Pretplata>();
+            var novaLista = new List<Model.Pretplata>();
+            if (search?.IsNaSnizenju == "Da")
+            {
+                foreach (var pretplata in entities)
+                {
+                    var flag = _context.Popusts.FirstOrDefault(i =>
+                        i.PopustOdDatuma < DateTime.Now && i.PopustDoDatuma > DateTime.Now && pretplata.UslugaId == i.UslugaId);
+                    if (flag != null)
+                    {
+                        var temp = _mapper.Map<Model.Pretplata>(pretplata);
+                        temp.SnizenaCijena =
+                            (temp.Usluga.Cijena) - ((temp.Usluga.Cijena * flag.VrijednostPopusta) / 100);
+                        novaLista.Add(temp);
+                    }
+                }
+               
+                return novaLista;
+            }
             var result = _mapper.Map<List<Model.Pretplata>>(entities);
             return result;
         }

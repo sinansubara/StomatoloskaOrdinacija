@@ -13,5 +13,6 @@ namespace StomatoloskaOrdinacija.Model
         public Pacijent Pacijent { get; set; }
         public DateTime DatumPretplate { get; set; }
         public bool IsAktivna { get; set; }
+        public decimal SnizenaCijena { get; set; }
     }
 }

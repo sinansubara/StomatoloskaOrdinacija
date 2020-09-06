@@ -8,7 +8,10 @@ namespace StomatoloskaOrdinacija.Models
     {
         Browse,
         About,
-        Termini
+        Termini,
+        Pretplate,
+        Racuni,
+        Odjava
     }
     public class HomeMenuItem
     {

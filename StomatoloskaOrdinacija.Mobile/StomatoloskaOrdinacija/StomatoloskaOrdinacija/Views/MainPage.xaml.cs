@@ -39,6 +39,15 @@ namespace StomatoloskaOrdinacija.Views
                     case (int)MenuItemType.Termini:
                         MenuPages.Add(id, new NavigationPage(new Termini()));
                         break;
+                    case (int)MenuItemType.Pretplate:
+                        MenuPages.Add(id, new NavigationPage(new Pretplate()));
+                        break;
+                    case (int)MenuItemType.Racuni:
+                        MenuPages.Add(id, new NavigationPage(new Racuni()));
+                        break;
+                    case (int)MenuItemType.Odjava:
+                        MenuPages.Add(id, new NavigationPage(new Odjava()));
+                        break;
                 }
             }
 

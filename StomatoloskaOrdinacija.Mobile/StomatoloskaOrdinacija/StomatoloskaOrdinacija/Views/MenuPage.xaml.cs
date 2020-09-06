@@ -22,7 +22,10 @@ namespace StomatoloskaOrdinacija.Views
             {
                 new HomeMenuItem {Id = MenuItemType.Browse, Title="Browse" },
                 new HomeMenuItem {Id = MenuItemType.About, Title="About" },
-                new HomeMenuItem {Id = MenuItemType.Termini, Title="Termini" }
+                new HomeMenuItem {Id = MenuItemType.Termini, Title="Termini" },
+                new HomeMenuItem {Id = MenuItemType.Pretplate, Title="Pretplate" },
+                new HomeMenuItem {Id = MenuItemType.Racuni, Title="Racuni" },
+                new HomeMenuItem {Id = MenuItemType.Odjava, Title="Odjava" }
             };
 
             ListViewMenu.ItemsSource = menuItems;

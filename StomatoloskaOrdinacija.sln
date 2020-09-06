@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StomatoloskaOrdinacija.Andr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StomatoloskaOrdinacija.iOS", "StomatoloskaOrdinacija.Mobile\StomatoloskaOrdinacija\StomatoloskaOrdinacija.iOS\StomatoloskaOrdinacija.iOS.csproj", "{04BFCEEF-6202-4014-9656-20B54CC9A9C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StomatoloskaOrdinacija", "StomatoloskaOrdinacija.Mobile\StomatoloskaOrdinacija\StomatoloskaOrdinacija\StomatoloskaOrdinacija.csproj", "{0ECE0A64-78EC-46A6-8910-B485D7C2FBA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StomatoloskaOrdinacija", "StomatoloskaOrdinacija.Mobile\StomatoloskaOrdinacija\StomatoloskaOrdinacija\StomatoloskaOrdinacija.csproj", "{0ECE0A64-78EC-46A6-8910-B485D7C2FBA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +112,8 @@ Global
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|ARM.Build.0 = Debug|ARM
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|ARM.Deploy.0 = Debug|ARM
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|iPhone.ActiveCfg = Debug|x86
+		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|iPhone.Build.0 = Debug|x86
+		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|iPhone.Deploy.0 = Debug|x86
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|iPhoneSimulator.ActiveCfg = Debug|x86
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|x64.ActiveCfg = Debug|x64
 		{9A244CDA-0EDD-4882-8F86-46C38DE93193}.Debug|x64.Build.0 = Debug|x64
@@ -138,8 +140,6 @@ Global
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|ARM.Build.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|ARM.Deploy.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhone.Deploy.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|iPhoneSimulator.Deploy.0 = Debug|Any CPU
@@ -147,8 +147,6 @@ Global
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|x64.Build.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|x64.Deploy.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|x86.Build.0 = Debug|Any CPU
-		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Debug|x86.Deploy.0 = Debug|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53B38EB6-6A17-4574-9BFD-85CDDBFFAF42}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -170,7 +168,6 @@ Global
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|Any CPU.ActiveCfg = Debug|iPhone
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|ARM.ActiveCfg = Debug|iPhone
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|iPhone.Build.0 = Debug|iPhone
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
 		{04BFCEEF-6202-4014-9656-20B54CC9A9C4}.Debug|x64.ActiveCfg = Debug|iPhone

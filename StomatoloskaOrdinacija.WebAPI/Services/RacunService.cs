@@ -40,6 +40,10 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             {
                 query = query.Where(x => x.Korisnici.KorisnikId == search.KorisnikId);
             }
+            if (search?.PacijentId != 0)
+            {
+                query = query.Where(x => x.Pregled.Termin.PacijentId == search.PacijentId);
+            }
             if (search?.PregledId != 0)
             {
                 query = query.Where(x => x.Pregled.PregledId == search.PregledId);

@@ -11,5 +11,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public int Dan { get; set; }
         public int Mjesec { get; set; }
         public int Godina { get; set; }
+        public string IsNaSnizenju { get; set; }
     }
 }

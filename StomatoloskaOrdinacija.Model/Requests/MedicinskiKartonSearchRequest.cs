@@ -13,5 +13,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public int Mjesec { get; set; }
         public int Godina { get; set; }
 
+        public DateTime DatumPretrageReport { get; set; }
     }
 }

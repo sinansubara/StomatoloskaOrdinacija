@@ -8,5 +8,7 @@ namespace StomatoloskaOrdinacija.Model.Requests
     public class UslugaSearchRequest
     {
         public string Naziv { get; set; }
+        public int PacijentId { get; set; }
+        public string IsPretplacen { get; set; }
     }
 }

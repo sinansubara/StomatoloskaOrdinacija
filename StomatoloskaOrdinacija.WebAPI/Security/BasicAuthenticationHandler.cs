@@ -52,7 +52,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
                 
                 if ("Registracija".Equals(context))
                 {
-                    RegistrovaniKorisnik = _userService.LoginMobile(new Model.Requests.KorisniciLoginRequest()
+                    RegistrovaniKorisnik = _userService.LoginMobile(new Model.Requests.KorisniciLoginRequest()//dodaj await
                     {
                         Username = username,
                         Password = password
@@ -60,7 +60,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Security
                 }
                 else
                 {
-                    PrijavljeniKorisnik = _userService.Login(
+                    PrijavljeniKorisnik = _userService.Login( //dodaj await
                         new Model.Requests.KorisniciLoginRequest()
                         {
                             Username = username,

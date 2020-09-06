@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.Pretplate">
+
+    <ContentPage.BindingContext>
+        <viewModels:PretplateViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label TextColor="White" Text="PRETPLACENE USLUGE" FontSize="25" FontAttributes="Bold" 
+                   HorizontalOptions="CenterAndExpand"/>
+            <ListView ItemsSource="{Binding PretplateList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Margin="1,1,1,5" Padding="10" BackgroundColor="LawnGreen">
+                                <Label Text="{Binding Usluga.Naziv}" 
+                                       d:Text="{Binding  .}"
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="16" />
+                                <Label Text="{Binding Usluga.Cijena, StringFormat='{0:F2} KM'}" 
+                                       d:Text="{Binding .}"
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="14" />
+                                <Label Text="{Binding DatumPretplate, StringFormat='{}{0:dd.MM.yyyy}'}" 
+                                       d:Text="{Binding .}"
+                                       LineBreakMode="NoWrap" 
+                                       Style="{DynamicResource ListItemTextStyle}" 
+                                       FontSize="14" />
+
+                                <Button BackgroundColor="#3897F0" x:Name="IzbrisiPretplatu" 
+                                        HorizontalOptions="EndAndExpand" HeightRequest="40" WidthRequest="160" 
+                                        FontSize="13" TextColor="White" Text="Izbrisi pretplatu" 
+                                        Clicked="IzbrisiPretplatu_Clicked" 
+                                        BindingContext="{Binding PretplataId}"></Button>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button BackgroundColor="#3897F0" x:Name="DodajPretplatu" 
+                    HorizontalOptions="CenterAndExpand" HeightRequest="40" WidthRequest="160" 
+                    FontSize="13" TextColor="White" Text="Dodajte novu pretplatu" 
+                    Clicked="DodajPretplatu_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

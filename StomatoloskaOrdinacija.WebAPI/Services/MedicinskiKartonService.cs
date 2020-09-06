@@ -61,6 +61,5 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             var result = _mapper.Map<IList<Model.MedicinskiKarton>>(entities);
             return result;
         }
-
     }
 }

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.DodajPretplatu">
+    <ContentPage.BindingContext>
+        <viewModels:DodajPretplatuViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label TextColor="White" Text="DODAVANJE PRETPLATE" Grid.ColumnSpan="2" FontSize="25" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+
+                <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Usluga:" Grid.Row="1" Grid.Column="0"/>
+                <Picker ItemsSource="{Binding uslugeList}" SelectedItem="{Binding SelectedUsluga}" ItemDisplayBinding="{Binding Naziv}" Grid.Column="1" Grid.Row="1"/>
+
+                <Button BackgroundColor="LawnGreen"  Command="{Binding SnimiCommand}" HorizontalOptions="FillAndExpand"  Text="Dodaj pretplatu" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></Button>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

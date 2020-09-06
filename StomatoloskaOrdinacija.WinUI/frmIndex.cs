@@ -301,5 +301,17 @@ namespace StomatoloskaOrdinacija.WinUI
             reportViewerUslugePoZaradi frm = new reportViewerUslugePoZaradi();
             frm.Show();
         }
+
+        private void dnevniIzvjestajSvihPregledaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            reportViewerPregledPrometa frm = new reportViewerPregledPrometa();
+            frm.Show();
+        }
+
+        private void qRCodeScannerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmQRCodeReader frm = new frmQRCodeReader();
+            frm.Show();
+        }
     }
 }

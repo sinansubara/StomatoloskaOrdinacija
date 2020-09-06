@@ -26,7 +26,7 @@
                                    LineBreakMode="NoWrap" 
                                    Style="{DynamicResource ListItemTextStyle}" 
                                    FontSize="16" />
-                            <Label Text="{Binding Cijena}" 
+                            <Label Text="{Binding Cijena, StringFormat='{0:F2} KM'}" 
                                    d:Text="{Binding .}"
                                    LineBreakMode="NoWrap" 
                                    Style="{DynamicResource ListItemTextStyle}" 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using StomatoloskaOrdinacija.Model.Requests;
 using StomatoloskaOrdinacija.Views;
 using Xamarin.Essentials;
@@ -84,13 +85,14 @@ namespace StomatoloskaOrdinacija.ViewModels
                 try
                 {
                     var temp = await _service.Login<Model.Korisnici>(newLogin);
+
                     APIService.KorisnikId = temp.KorisnikId;
                     APIService.Permisije = temp.UlogaId;
+                    APIService.LogiraniKorisnik = temp;
                     if (APIService.Permisije == 4)
                     {
                         var temp2 = await _serviceKorisnikPacijenti.GetById<Model.KorisnikPacijent>(temp.KorisnikId);
                         APIService.PacijentId = temp2.PacijentId;
-
                         Application.Current.MainPage = new MainPage();
                    
                         

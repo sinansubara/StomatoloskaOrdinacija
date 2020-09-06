@@ -15,5 +15,6 @@ namespace StomatoloskaOrdinacija.Model.Requests
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public bool NijeUplatioRequest { get; set; }
+        public int PacijentId { get; set; }
     }
 }

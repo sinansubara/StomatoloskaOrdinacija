@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             xmlns:common="clr-namespace:ZXing.Common;assembly=zxing.portable"
+             xmlns:viewModels="clr-namespace:StomatoloskaOrdinacija.ViewModels;assembly=StomatoloskaOrdinacija"
+             mc:Ignorable="d"
+             x:Class="StomatoloskaOrdinacija.Views.QRCodeGenerator">
+    <ContentPage.BindingContext>
+        <viewModels:QRCodeGeneratorViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.BackgroundColor>
+        <Color>Gray</Color>
+    </ContentPage.BackgroundColor>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Margin="5" TextColor="LawnGreen" FontSize="Large" Text="Odlično, transakcija je uspješno obavljena!"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+            <Label Margin="5" TextColor="DeepSkyBlue" FontSize="Medium" Text="Ovaj code uslikajte/spasite(screenshot) i donesite u ordinaciju kao dokaz o plaćanju!"
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+            <forms:ZXingBarcodeImageView
+                BarcodeValue="{Binding Code}"
+                BarcodeFormat="QR_CODE"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+                <forms:ZXingBarcodeImageView.BarcodeOptions>
+                    <common:EncodingOptions Width="200" Height="200" />
+                </forms:ZXingBarcodeImageView.BarcodeOptions>
+            </forms:ZXingBarcodeImageView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

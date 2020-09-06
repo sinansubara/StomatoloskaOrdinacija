@@ -34,7 +34,23 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
             {
                 query = query.Where(x => x.Naziv.ToLower().Contains(search.Naziv.ToLower()));
             }
+
+            var novaLista = new List<Database.Usluga>();
             var entities = query.ToList();
+            if (search?.IsPretplacen == "Ne" && search?.PacijentId != 0)
+            {
+                foreach (var usluga in entities)
+                {
+                    var flag = _context.Pretplatas.FirstOrDefault(i => i.UslugaId == usluga.UslugaId && i.PacijentId == search.PacijentId);
+                    if (flag == null)
+                    {
+                        novaLista.Add(usluga);
+                    }
+                }
+                var result2 = _mapper.Map<List<Model.Usluga>>(novaLista);
+                return result2;
+            }
+            
             var result = _mapper.Map<List<Model.Usluga>>(entities);
             return result;
         }

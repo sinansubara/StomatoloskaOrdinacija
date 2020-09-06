@@ -34,7 +34,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Controllers
         public IList<Model.Usluga> UslugePoZaradi()
         {
             var usluge = _context.Uslugas.ToList();
-            decimal suma = 0;
+            //decimal suma = 0;
             var lista = new List<Model.Usluga>();
             foreach (var usluga in usluge)
             {

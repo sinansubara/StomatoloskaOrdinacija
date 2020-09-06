@@ -22,7 +22,7 @@ namespace StomatoloskaOrdinacija.WinUI.Reporti
 
         private async void reportViewerPacijentiPoDatumu_Load(object sender, EventArgs e)
         {
-            dtpDatumDo.Value = DateTime.Now;
+            //dtpDatumDo.Value = DateTime.Now;
             //treba uzet datum sa reporta
             var temp = await _serviceKorisnici.GetAll<List<Model.Korisnici>>(new KorisniciSearchRequest
             {

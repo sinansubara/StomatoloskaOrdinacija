@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using StomatoloskaOrdinacija.Model;
 using StomatoloskaOrdinacija.Model.Requests;
 using Xamarin.Forms;
@@ -24,6 +25,7 @@ namespace StomatoloskaOrdinacija.ViewModels
 
         public async Task Init()
         {
+            UserDialogs.Instance.ShowLoading("Učitavanje odbijenih termina..");
             var request = new TerminSearchRequest();
             request.IsOdobren = "Ne";
             request.IsOdbijenMobile = "Da";
@@ -35,6 +37,7 @@ namespace StomatoloskaOrdinacija.ViewModels
             {
                 TerminiList.Add(termin);
             }
+            UserDialogs.Instance.HideLoading();
         }
     }
 }
