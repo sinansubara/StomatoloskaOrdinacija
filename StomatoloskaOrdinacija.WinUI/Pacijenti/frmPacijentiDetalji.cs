@@ -135,8 +135,14 @@ namespace StomatoloskaOrdinacija.WinUI.Pacijenti
                     try
                     {
                         var temp = await _service.Update<Model.Pacijent>(_id, UpdateRequest);
-                        
-                        MessageBox.Show("Uspješno ste uredili pacijenta!");
+                        if (temp != null)
+                        {
+                            MessageBox.Show("Uspješno ste uredili pacijenta!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Uredjivanje pacijenta nije uspjelo!");
+                        }
                         
                     }
                     catch (Exception exception)

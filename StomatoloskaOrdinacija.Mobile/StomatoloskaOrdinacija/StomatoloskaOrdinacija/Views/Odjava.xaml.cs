@@ -19,7 +19,7 @@ namespace StomatoloskaOrdinacija.Views
 
         protected override void OnAppearing()
         {
-            App.Current.MainPage = new Login();
+            App.Current.MainPage = new NavigationPage(new Login()); 
         }
     }
 }

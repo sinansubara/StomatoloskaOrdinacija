@@ -48,7 +48,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public string JMBG { get; set; }
 
         [Required]
-        [Column(TypeName = "SMALLDATETIME")]
+        [DataType(DataType.Date)]
         public DateTime DatumRodjenja { get; set; }
 
         [StringLength(30)]

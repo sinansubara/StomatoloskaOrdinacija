@@ -18,7 +18,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public Korisnici Korisnici { get; set; }
 
         [Required]
-        [Column(TypeName = "SMALLDATETIME")]
+        [DataType(DataType.Date)]
         [Display(Name = "Datum promjene")]
         public DateTime DatumPromjene { get; set; }
     }

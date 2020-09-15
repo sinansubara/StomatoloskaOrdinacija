@@ -56,7 +56,7 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
             var newResult = new List<Model.Korisnici>();
             foreach (var res in result)
             {
-                if (res.UlogaId != 4)
+                if (res.UlogaId == 1 || res.UlogaId == 2)
                 {
                     newResult.Add(res);
                 }

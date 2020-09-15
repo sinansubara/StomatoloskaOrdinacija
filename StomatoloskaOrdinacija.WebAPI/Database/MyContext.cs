@@ -3,7 +3,7 @@ using StomatoloskaOrdinacija.WebAPI.Database;
 
 namespace StomatoloskaOrdinacija.WebAPI.Database
 {
-    public class MyContext:DbContext
+    public partial class MyContext:DbContext
     {
         public MyContext(DbContextOptions<MyContext> x) : base(x)
         {
@@ -28,5 +28,11 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public DbSet<Popust> Popusts { get; set; }
         public DbSet<Pretplata> Pretplatas { get; set; }
         public DbSet<Materijali> Materijalis { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            OnModelCreatingPartial(modelBuilder);
+        }
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

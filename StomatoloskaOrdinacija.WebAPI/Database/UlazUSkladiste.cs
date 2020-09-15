@@ -19,7 +19,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public string BrojFakture { get; set; }
 
         [Required]
-        [Column(TypeName = "SMALLDATETIME")]
+        [DataType(DataType.Date)]
         public DateTime Datum { get; set; }
 
         [Required]

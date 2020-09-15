@@ -73,14 +73,21 @@ namespace StomatoloskaOrdinacija.WinUI.Pregledi
         }
         private async Task LoadTermine()
         {
-            var result = await _serviceTermin.GetAll<List<Model.Termin>>( new TerminSearchRequest {IsIskoristenRequest = "Ne"});
-            
-            cmbTermin.DisplayMember = "UslugaIme";
-            cmbTermin.ValueMember = "TerminId";
-            cmbTermin.DataSource = result;
-            txtImeIPrezime.Text = result[0].Pacijent.Korisnici.Ime+ " "+result[0].Pacijent.Korisnici.Prezime;
-            txtTerminNapomena.Text = result[0].DatumVrijeme.ToString("F");
-            txtRazlogTermina.Text = result[0].Razlog;
+            var result = await _serviceTermin.GetAll<List<Model.Termin>>( new TerminSearchRequest {IsIskoristenRequest = "Ne", IsOdobren = "Da"});
+            if (result.Count == 0)
+            {
+                this.Close();
+                MessageBox.Show("Nema odobrenih termina!");
+            }
+            else
+            {
+                cmbTermin.DisplayMember = "UslugaIme";
+                cmbTermin.ValueMember = "TerminId";
+                cmbTermin.DataSource = result;
+                txtImeIPrezime.Text = result[0].Pacijent.Korisnici.Ime+ " "+result[0].Pacijent.Korisnici.Prezime;
+                txtTerminNapomena.Text = result[0].DatumVrijeme.ToString("F");
+                txtRazlogTermina.Text = result[0].Razlog;
+            }
         }
         private async Task LoadMaterijali()
         {

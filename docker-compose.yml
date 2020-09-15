@@ -1,0 +1,31 @@
+version: '3'
+services:
+#mssql docker
+ stomatoloska-sql:
+  image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  restart: unless-stopped
+  environment:
+   - ACCEPT_EULA=Y
+   - SA_PASSWORD=QWElkj132!
+   - MSSQL_PID=Developer
+  ports:
+   - 1401:1433
+  networks:
+   - stomatoloskanet
+ stomatoloska-api:
+  restart: unless-stopped
+  build:
+   context: .
+  environment:
+   - ConnectionStrings:StomatoloskaOrdinacija=Server=stomatoloska-sql,1433;Database=IB140049;User=sa;Password=QWElkj132!;ConnectRetryCount=0
+  ports:
+   - 58555:5050
+  networks:
+   - stomatoloskanet
+  links:
+   - stomatoloska-sql
+  depends_on:
+   - stomatoloska-sql
+networks:
+ stomatoloskanet:
+  driver: bridge

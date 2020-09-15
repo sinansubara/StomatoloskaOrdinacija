@@ -25,7 +25,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public decimal Kolicina { get; set; }
 
         [Required]
-        [Column(TypeName = "SMALLDATETIME")]
+        [DataType(DataType.Date)]
         public DateTime Datum { get; set; }
     }
 }

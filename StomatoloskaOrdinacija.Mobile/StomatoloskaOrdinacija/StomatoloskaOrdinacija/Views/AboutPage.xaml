@@ -96,7 +96,7 @@
 
 
                     <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Alergija na lijek:" Grid.Row="22" Grid.Column="0"/>
-                    <Switch IsToggled="{Binding AlergijaNaLijek}" Grid.Row="22" Grid.Column="1" HorizontalOptions="Start"></Switch>
+                    <Switch IsToggled="{Binding AlergijaNaLijekove}" Grid.Row="22" Grid.Column="1" HorizontalOptions="Start"></Switch>
 
                     <Label VerticalTextAlignment="Center" FontSize="16" TextColor="White" Text="Proteza:" Grid.Row="23" Grid.Column="0"/>
                     <Switch IsToggled="{Binding Proteza}" Grid.Row="23" Grid.Column="1" HorizontalOptions="Start"></Switch>

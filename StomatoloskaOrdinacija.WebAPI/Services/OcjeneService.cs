@@ -65,6 +65,12 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
         public override Model.Ocjene Insert(OcjeneUpsertRequest request)
         {
+            var ocjena = _context.Ocjenes.FirstOrDefault(i =>
+                i.PacijentId == request.PacijentId && i.UslugaId == request.UslugaId);
+            if (ocjena != null)
+            {
+                throw new UserException("Vec ste unijeli ocjenu za ovu uslugu!");
+            }
             var entity = _mapper.Map<Database.Ocjene>(request);
 
             if (request.Ocjena > 10 || request.Ocjena < 1) 

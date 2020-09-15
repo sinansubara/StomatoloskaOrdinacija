@@ -65,7 +65,10 @@ namespace StomatoloskaOrdinacija.WinUI.Korisnici
                         var temp = await _service.Update<Model.Korisnici>(_id, UpdateRequest);
                         if (temp.KorisnickoIme == APIService.Username)
                         {
-                            APIService.Password = UpdateRequest.Password;
+                            if (UpdateRequest.Password != "")
+                            {
+                                APIService.Password = UpdateRequest.Password;
+                            }
                             APIService.Permisije = UpdateRequest.UlogaId;
                         }
 

@@ -23,7 +23,7 @@ namespace StomatoloskaOrdinacija.WebAPI.Database
         public decimal UkupnaCijena { get; set; }
 
         [Required]
-        [Column(TypeName = "SMALLDATETIME")]
+        [DataType(DataType.Date)]
         [Display(Name = "Datum izdavanja racuna")]
         public DateTime DatumIzdavanjaRacuna { get; set; }
 

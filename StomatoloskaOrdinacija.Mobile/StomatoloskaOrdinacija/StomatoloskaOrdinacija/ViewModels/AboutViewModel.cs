@@ -207,6 +207,24 @@ namespace StomatoloskaOrdinacija.ViewModels
             {
                 EmailValidate = false;
             }
+            if (string.IsNullOrWhiteSpace(Mobitel) || Mobitel.Length >= 30)
+            {
+                IsValidated = false;
+                MobitelValidate = true;
+            }
+            else
+            {
+                MobitelValidate = false;
+            }
+            if (string.IsNullOrWhiteSpace(Adresa) || Adresa.Length >= 200 || Adresa.Length < 3)
+            {
+                IsValidated = false;
+                AdresaValidate = true;
+            }
+            else
+            {
+                AdresaValidate = false;
+            }
 
             return IsValidated;
         }
@@ -264,11 +282,12 @@ namespace StomatoloskaOrdinacija.ViewModels
                     Mobitel = Mobitel,
                     Adresa = Adresa,
                     GradId = SelectedGrad.GradId,
-                    AlergijaNaLijek =AlergijaNaLijekove,
+                    AlergijaNaLijek = AlergijaNaLijekove,
                     Navlake = Navlake,
                     Aparatic = Aparatic,
                     Proteza = Proteza,
-                    Terapija = Terapija
+                    Terapija = Terapija,
+                    Status = true
                 };
                 var temp = await _service.Update<Model.KorisnikPacijent>(APIService.KorisnikId, request);
                 if(temp != null)

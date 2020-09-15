@@ -28,15 +28,25 @@ namespace StomatoloskaOrdinacija.WinUI.Racun
             filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
             foreach (FilterInfo filterInfo in filterInfoCollection)
                 cmbKamera.Items.Add(filterInfo.Name);
-            cmbKamera.SelectedIndex = 0;
+            if (cmbKamera.Items.Count > 0)
+            {
+                cmbKamera.SelectedIndex = 0;
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            captureDevice = new VideoCaptureDevice(filterInfoCollection[cmbKamera.SelectedIndex].MonikerString);
-            captureDevice.NewFrame += CaptureDevice_NewFrame;
-            captureDevice.Start();
-            timer1.Start();
+            if (cmbKamera.SelectedIndex == -1)
+            {
+                MessageBox.Show("Ne mozete pokrenut kameru, jer nije detektovana ni jedna!");
+            }
+            else
+            {
+                captureDevice = new VideoCaptureDevice(filterInfoCollection[cmbKamera.SelectedIndex].MonikerString);
+                captureDevice.NewFrame += CaptureDevice_NewFrame;
+                captureDevice.Start();
+                timer1.Start();
+            }
         }
 
         private void CaptureDevice_NewFrame(object sender, NewFrameEventArgs eventArgs)
@@ -53,8 +63,11 @@ namespace StomatoloskaOrdinacija.WinUI.Racun
 
         private void frmQRCodeReader_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (captureDevice.IsRunning)
-                captureDevice.Stop();
+            if (captureDevice != null)
+            {
+                if (captureDevice.IsRunning)
+                    captureDevice.Stop();
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

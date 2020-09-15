@@ -132,6 +132,14 @@ namespace StomatoloskaOrdinacija.WebAPI.Services
 
         public override Model.Termin Insert(TerminInsertRequest request)
         {
+            var termin = _context.Termins.FirstOrDefault(i =>
+                i.UslugaId == request.UslugaId && i.PacijentId == request.PacijentId &&
+                i.DatumVrijeme.Year == request.DatumVrijeme.Year &&
+                i.DatumVrijeme.Month == request.DatumVrijeme.Month && i.DatumVrijeme.Day == request.DatumVrijeme.Day);
+            if (termin != null)
+            {
+                throw new UserException("Vec ste poslali zahtjev za termin, za odabranu uslugu i datum!");
+            }
             var entity = _mapper.Map<Database.Termin>(request);
             
             _context.Add(entity);
